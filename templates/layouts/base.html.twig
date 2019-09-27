@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="{{ asset('bootstrap4/css/bootstrap-grid.css') }}">
+    <script src="{{ asset('bootstrap4/js/bootstrap.js') }}"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="{{ asset('fonts/SanFrancisco/stylesheet.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/all.css') }}">
+</head>
+<body>
+{% include 'layouts/top-menu.html.twig' %}
+
+<div class="container">
+    <div class="row main-row">
+        <div class="col-4">
+            <div class="rounded-block left-main-block">
+                <div class="content">
+                    <h1>Promotions block</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="rounded-block right-main-block">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
