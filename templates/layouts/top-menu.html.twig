@@ -2,14 +2,16 @@
     <div class="row">
         <div class="col-12 top-menu-box rounded-block ff-ui-text">
             <div class="top-menu-item unhoverable left">
-                <a href="/"><b>Best SNG blind typer</b></a>
+                <a href="{{ path('index') }}"><b>Best SNG blind typer</b></a>
             </div>
             <div class="top-menu-item left">
                 Typing course
             </div>
-            <div class="top-menu-item left">
-                Typing test
-            </div>
+            <a href="{{ path('test') }}">
+                <div class="top-menu-item left">
+                    Typing test
+                </div>
+            </a>
             <div class="top-menu-item left">
                 Typing games
             </div>

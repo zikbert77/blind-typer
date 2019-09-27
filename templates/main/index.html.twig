@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block content %}
+{% block two_rows_content %}
 
 <div class="content">
     <h1>Start typing without eyes keyboard tracking</h1>
@@ -9,6 +9,10 @@
         Vel pretium lectus quam id leo in vitae turpis. Lectus nulla at volutpat diam ut. Bibendum ut tristique et egestas. Ipsum a arcu cursus vitae congue mauris rhoncus aenean.
         Auctor augue mauris augue neque. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Neque convallis a cras semper auctor neque vitae tempus quam. A diam maecenas sed enim ut.
     </p>
-    <button>Start typing <i class="fad fa-keyboard"></i></button>
+    <a href="{{ path('test') }}">
+        <button>
+            Start typing <i class="fad fa-keyboard"></i>
+        </button>
+    </a>
 </div>
 {% endblock %}

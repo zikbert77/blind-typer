@@ -66,7 +66,39 @@ button:hover {
     background-color: #cee4f0;
 }
 
+/* One row */
+.test-box {
+    width: 100%;
+    background-color: #fafafa;
+}
 
+.test-wrapper {
+    padding: 20px;
+}
+
+.test-container {
+    width: 900px;
+    left: -450px;
+    margin: 0 auto;
+}
+
+.test-text-display {
+    border: 5px solid black;
+    height: 300px;
+    overflow-x: hidden;
+    text-align: justify;
+    background-color: white;
+    padding: 25px;
+    font-size: 44px;
+    font-weight: 700;
+}
+
+img.keyboard {
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+/* Two rows */
 .main-row {
     margin-top: 20px;
 }

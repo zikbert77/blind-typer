@@ -18,21 +18,32 @@
 <body>
 {% include 'layouts/top-menu.html.twig' %}
 
-<div class="container">
-    <div class="row main-row">
-        <div class="col-4">
-            <div class="rounded-block left-main-block">
-                <div class="content">
-                    <h1>Promotions block</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-8">
-            <div class="rounded-block right-main-block">
-                {% block content %}{% endblock %}
+{% block one_row %}
+    <div class="container">
+        <div class="row main-row">
+            <div class="rounded-block test-box">
+                {% block one_row_content %}{% endblock %}
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+{% block two_rows %}
+    <div class="container">
+        <div class="row main-row">
+            <div class="col-4">
+                <div class="rounded-block left-main-block">
+                    <div class="content">
+                        <h1>Promotions block</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="rounded-block right-main-block">
+                    {% block two_rows_content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 </body>
 </html>
