@@ -93,6 +93,19 @@ button:hover {
     font-weight: 700;
 }
 
+span.current {
+    color: #9fcdff;
+    text-decoration: underline;
+}
+
+span.pass {
+    color: lightgray;
+}
+
+span.wrong {
+    color: rgba(255, 0, 0, 0.65);
+}
+
 img.keyboard {
     margin-top: 10px;
     max-width: 100%;
