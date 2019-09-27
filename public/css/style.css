@@ -12,6 +12,23 @@ a:hover {
     color: #576268;
 }
 
+button {
+    font-size: 14px;
+    font-weight: 100;
+    padding: 12px 40px;
+    border-radius: 20px;
+    background-color: #ffbb00;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    transition: all .3s;
+    outline: none;
+}
+
+button:hover {
+    background-color: #ffa200;
+}
+
 .ff-ui-text {
     font-family: 'SF UI Text';
     letter-spacing: -0.022em;
@@ -62,6 +79,7 @@ a:hover {
 .right-main-block {
     width: 100%;
     background-color: #fafafa;
+    padding-bottom: 15px;
 }
 
 .content {
