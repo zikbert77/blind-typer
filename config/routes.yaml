@@ -5,3 +5,8 @@ index:
 test:
     path: /test
     controller: App\Controller\MainController::test
+
+
+prepareText:
+    path: /api/text/prepare
+    controller: App\Controller\ApiController::prepareText

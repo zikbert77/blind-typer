@@ -3,9 +3,11 @@
 {% block one_row_content %}
     <div class="test-wrapper">
         <div class="test-container">
+            <h5>Wrong letter: <span id="accuracy"></span></h5>
+
             <div class="test-text-display">
                 <span id="original-text">
-                    <span class="current">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Sit amet porttitor eget dolor morbi non arcu. Consectetur lorem donec massa sapien faucibus.
                     Pulvinar pellentesque habitant morbi tristique senectus. Cursus metus aliquam eleifend mi in nulla posuere sollicitudin aliquam.
                     Urna et pharetra pharetra massa massa ultricies mi quis. Lacinia quis vel eros donec ac odio. Consectetur adipiscing elit ut aliquam purus.
@@ -31,9 +33,11 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous">
     </script>
+    <script src="{{ asset('js/test.js') }}"></script>
     <script>
         $(document).ready(function () {
             let originalText = $("#original-text").text().trim();
+            compareInputWithText(originalText.charAt(0));
 
             $(".test-text-display").click(function () {
                 $("textarea#test-input").focus();
@@ -47,6 +51,7 @@
                 let inputIndex = input.length - 1;
                 let originalChar = originalText.charAt(inputIndex);
                 let inputChar = input.charAt(inputIndex);
+
                 if (originalChar === inputChar) {
                     //set letter style pass
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');

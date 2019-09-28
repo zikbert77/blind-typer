@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Texts{% endblock %}
+
+{% block body %}
+    <h1>Texts</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ text.id }}</td>
+            </tr>
+            <tr>
+                <th>Text_body</th>
+                <td>{{ text.textBody }}</td>
+            </tr>
+            <tr>
+                <th>Words_count</th>
+                <td>{{ text.wordsCount }}</td>
+            </tr>
+            <tr>
+                <th>Letter_counts</th>
+                <td>{{ text.letterCounts }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ text.createdAt ? text.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('texts_index') }}">back to list</a>
+
+    <a href="{{ path('texts_edit', {'id': text.id}) }}">edit</a>
+
+    {{ include('texts/_delete_form.html.twig') }}
+{% endblock %}
