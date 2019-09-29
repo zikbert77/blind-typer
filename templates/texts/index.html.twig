@@ -11,7 +11,6 @@
                 <th>Id</th>
                 <th>Text_body</th>
                 <th>Parsed text</th>
-                <th>Parsed text for js</th>
                 <th>Words_count</th>
                 <th>Letter_counts</th>
                 <th>Created_at</th>
@@ -24,7 +23,6 @@
                 <td>{{ text.id }}</td>
                 <td>{{ text.textBody|slice(0, 50) }}...</td>
                 <td>{{ text.parsedText|slice(0, 50) }}...</td>
-                <td>{{ text.parsedTextForJs|slice(0, 50) }}...</td>
                 <td>{{ text.wordsCount }}</td>
                 <td>{{ text.letterCounts ?? 0 }}</td>
                 <td>{{ text.createdAt ? text.createdAt|date('Y-m-d H:i:s') : '' }}</td>

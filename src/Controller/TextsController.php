@@ -37,9 +37,9 @@ class TextsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $parser = new TextParser($text->getTextBody());
-            $text->setParsedText($parser->parse());
-            $parser->parseForJs();
+            $text->setParsedText($parser->parseForJs());
             $text->setWordsCount($parser->calculateWords());
+            $text->setLetterCounts($parser->calculateLetters());
             $text->setCreatedAt(new \DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();

@@ -9,6 +9,7 @@ class TextParser
     const DELIMITER_UNIVERSAL = '%&%';
 
     private $originalText;
+    private $lettersCount = 0;
     private $glues = [
         self::DELIMITER_ENTER => '%e',
         self::DELIMITER_SPACE => '%s',
@@ -32,9 +33,25 @@ class TextParser
         return $this->getText();
     }
     
-    public function parseForJs()
+    public function parseForJs(): string
     {
-        $this->parseTextForJs();
+        $this->parse();
+        return $this->parseTextForJs();
+    }
+
+    public function calculateWords(): int
+    {
+        $text = $this->originalText;
+        foreach ($this->glues as $glue) {
+            $text = str_replace($glue, self::DELIMITER_UNIVERSAL, $text);
+        }
+
+        return count(explode(self::DELIMITER_UNIVERSAL, $text)) ?? 0;
+    }
+
+    public function calculateLetters(): int
+    {
+        return $this->lettersCount;
     }
 
     private function prepareText()
@@ -59,44 +76,41 @@ class TextParser
         );
     }
     
-    private function parseTextForJs()
+    private function parseTextForJs(): string
     {
-        $text = $this->originalText;
-        $sentences = [];
         $words = [];
-        $letters = [];
-
+        $parsedText = [];
+        $response = '';
+        $text = $this->originalText;
         $sentences = explode($this->glues[self::DELIMITER_ENTER], $text);
-        $i = 0;
+
+        $i = 1;
+        $this->lettersCount = 0;
         foreach ($sentences as $sentence) {
-            $words[$i] = explode($this->glues[self::DELIMITER_SPACE], $sentence);
-            $j = 0;
-            foreach ($words[$i] as $word) {
+            $words['sentence-' . $i] = explode($this->glues[self::DELIMITER_SPACE], $sentence);
+            foreach ($words['sentence-' . $i] as $word) {
                 $wordLength = strlen($word);
                 for ($letterIterator = 0; $letterIterator < $wordLength; $letterIterator++) {
-                    $letters[$word][$j][] = $word[$letterIterator];
+                    $letter = $word[$letterIterator];
+                    $letterClasses = 'letter letter-' . $this->lettersCount;
+                    if (!isset($word[$letterIterator + 1])) {
+                        $letterClasses .= ' end-word';
+                    }
+                    $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $letter . '</span>';
+                    $parsedText['sentence-' . $i][$word][$letterIterator] = $letter;
+                    $this->lettersCount++;
                 }
-                $j++;
             }
             $i++;
         }
 
-        echo "<pre>";
-        var_dump($sentences);
-        var_dump($words);
-        var_dump($letters);
-        echo "</pre>";
-        exit;
-    }
-
-    public function calculateWords(): int
-    {
-        $text = $this->originalText;
-        foreach ($this->glues as $glue) {
-            $text = str_replace($glue, self::DELIMITER_UNIVERSAL, $text);
+        foreach ($parsedText as $sentence) {
+            foreach ($sentence as $word => $letters) {
+                $response .= implode('', $letters);
+            }
         }
 
-        return count(explode(self::DELIMITER_UNIVERSAL, $text)) ?? 0;
+        return $response;
     }
 
     private function getRules(): array 

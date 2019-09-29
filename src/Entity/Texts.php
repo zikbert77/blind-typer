@@ -27,11 +27,6 @@ class Texts
     private $parsed_text;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $parsed_text_for_js;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $words_count;
@@ -71,18 +66,6 @@ class Texts
     public function setParsedText(string $parsed_text): self
     {
         $this->parsed_text = $parsed_text;
-
-        return $this;
-    }
-
-    public function getParsedTextForJs(): ?string
-    {
-        return $this->parsed_text_for_js;
-    }
-
-    public function setParsedTextForJs(string $parsed_text_for_js): self
-    {
-        $this->parsed_text_for_js = $parsed_text_for_js;
 
         return $this;
     }
