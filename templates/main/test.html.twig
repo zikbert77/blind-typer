@@ -9,15 +9,20 @@
                 <option value="3">3 minute</option>
                 <option value="5">5 minute</option>
             </select> |
-            <span id="words-per-minute">
-                Words per minute: <span id="count-words-per-minute">0</span>
-            </span> |
-            <span id="typing-accuracy">
-                Typing accuracy: <span id="count-typing-accuracy">0</span>%
-            </span> |
-            <span id="timer">
-                Time left: <span id="timer-left">60</span>s
-            </span>
+            <div class="right">
+                <span id="words-per-minute">
+                    <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
+                </span> |
+                    <span id="chars-per-minute">
+                    <b>Chars per minute:</b> <span id="count-chars-per-minute">0</span>
+                </span> |
+                    <span id="typing-accuracy">
+                    <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
+                </span> |
+                    <span id="timer">
+                    <b>Time left:</b> <span id="timer-left">60</span>s
+                </span>
+            </div>
             <hr>
         </div>
         <div class="test-container">
@@ -27,7 +32,7 @@
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
             <div class="test-keyboard-box">
-                <img class="keyboard" src="{{ asset('img/index.jpg') }}" alt="">
+                <img class="keyboard" src="{{ asset('img/keyboard.jpg') }}" alt="">
             </div>
         </div>
     </div>
@@ -46,7 +51,8 @@
 
             let passedWords = 0;
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
-            
+            let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
+
             initText();
             
             $("select#test-duration").on('change', function () {
@@ -85,6 +91,7 @@
                 }
 
                 calculateWPM();
+                calculateCPM(inputIndex);
 
                 $('#original-text').find('span.letter-' + (inputIndex + 1)).addClass('current');
             }
@@ -100,6 +107,7 @@
                         alert('End!');
                     }
                 }, 1000);
+                clearInterval(int);
             }
             
             function getPassedTime() {
@@ -116,6 +124,14 @@
                 let wpm = Math.ceil((passedWords * 60) / passedTime);
 
                 $countWordsPerMinuteBox.text(wpm);
+            }
+
+            function calculateCPM(inputIndex) {
+
+                let passedTime = getPassedTime();
+                let cpm = Math.ceil((inputIndex * 60) / passedTime);
+
+                $countCharsPerMinuteBox.text(cpm);
             }
 
             function initText() {

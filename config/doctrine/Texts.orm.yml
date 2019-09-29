@@ -1,0 +1,63 @@
+App\Entity\Texts:
+    type: entity
+    table: texts
+    repositoryClass: App\Repository\TextsRepository
+    indexes:
+        language_id:
+            columns:
+                - language_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        textBody:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+                default: 'NULL'
+            column: text_body
+        wordsCount:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: words_count
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        letterCounts:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: 'NULL'
+            column: letter_counts
+        parsedText:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+                default: 'NULL'
+            column: parsed_text
+    manyToOne:
+        language:
+            targetEntity: Languages
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                language_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

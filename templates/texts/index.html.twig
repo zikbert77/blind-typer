@@ -1,12 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title %}Texts index{% endblock %}
 
-{% block body %}
-    <h1>Texts index</h1>
+{% block one_row_content %}
+    <div class="content">
+        <h1>Texts index</h1>
 
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Text_body</th>
@@ -16,28 +17,31 @@
                 <th>Created_at</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for text in texts %}
-            <tr>
-                <td>{{ text.id }}</td>
-                <td>{{ text.textBody|slice(0, 50) }}...</td>
-                <td>{{ text.parsedText|slice(0, 50) }}...</td>
-                <td>{{ text.wordsCount }}</td>
-                <td>{{ text.letterCounts ?? 0 }}</td>
-                <td>{{ text.createdAt ? text.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('texts_show', {'id': text.id}) }}">show</a>
-                    <a href="{{ path('texts_edit', {'id': text.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for text in texts %}
+                <tr>
+                    <td>{{ text.id }}</td>
+                    <td>{{ text.textBody|slice(0, 50) }}...</td>
+                    <td>{{ text.parsedText|slice(0, 50) }}...</td>
+                    <td>{{ text.wordsCount }}</td>
+                    <td>{{ text.letterCounts ?? 0 }}</td>
+                    <td>{{ text.createdAt ? text.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('texts_show', {'id': text.id}) }}">show</a>
+                        <a href="{{ path('texts_edit', {'id': text.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('texts_new') }}">Create new</a>
+        <a href="{{ path('texts_new') }}">Create new</a>
+    </div>
 {% endblock %}
+
+{% block two_rows %}{% endblock %}

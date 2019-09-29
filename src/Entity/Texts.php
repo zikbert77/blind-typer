@@ -4,42 +4,21 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TextsRepository")
- */
 class Texts
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     private $id;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $text_body;
+    private $textBody;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $parsed_text;
+    private $wordsCount;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $words_count;
+    private $createdAt;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $letter_counts;
+    private $letterCounts;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $created_at;
+    private $parsedText;
+
+    private $language;
 
     public function getId(): ?int
     {
@@ -48,60 +27,72 @@ class Texts
 
     public function getTextBody(): ?string
     {
-        return $this->text_body;
+        return $this->textBody;
     }
 
-    public function setTextBody(string $text_body): self
+    public function setTextBody(string $textBody): self
     {
-        $this->text_body = $text_body;
+        $this->textBody = $textBody;
 
         return $this;
     }
 
     public function getParsedText(): ?string
     {
-        return $this->parsed_text;
+        return $this->parsedText;
     }
 
-    public function setParsedText(string $parsed_text): self
+    public function setParsedText(string $parsedText): self
     {
-        $this->parsed_text = $parsed_text;
+        $this->parsedText = $parsedText;
 
         return $this;
     }
 
     public function getWordsCount(): ?int
     {
-        return $this->words_count;
+        return $this->wordsCount;
     }
 
-    public function setWordsCount(int $words_count): self
+    public function setWordsCount(int $wordsCount): self
     {
-        $this->words_count = $words_count;
+        $this->wordsCount = $wordsCount;
 
         return $this;
     }
 
     public function getLetterCounts(): ?int
     {
-        return $this->letter_counts;
+        return $this->letterCounts;
     }
 
-    public function setLetterCounts(?int $letter_counts): self
+    public function setLetterCounts(?int $letterCounts): self
     {
-        $this->letter_counts = $letter_counts;
+        $this->letterCounts = $letterCounts;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Languages
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Languages $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }
