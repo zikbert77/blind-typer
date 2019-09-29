@@ -19,32 +19,31 @@ class TextsRepository extends ServiceEntityRepository
         parent::__construct($registry, Texts::class);
     }
 
-    // /**
-    //  * @return Texts[] Returns an array of Texts objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function selectRandomText($duration = 1): Texts
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $minWordsLimit = 120;
+        $maxWordsLimit = 360;
 
-    /*
-    public function findOneBySomeField($value): ?Texts
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('t');
+        switch ($duration) {
+            case 3:
+                $minWordsLimit = 360;
+                $maxWordsLimit = 600;
+                break;
+            case 5:
+                $minWordsLimit = 600;
+                $maxWordsLimit = 2400;
+                break;
+        }
+
+        $qb->andWhere('t.words_count > :min_words_limit');
+        $qb->setParameter('min_words_limit', $minWordsLimit);
+        $qb->andWhere('t.words_count <= :max_words_limit');
+        $qb->setParameter('max_words_limit', $maxWordsLimit);
+
+//        $qb->orderBy('t.id', 'RAND()');
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
-    */
 }

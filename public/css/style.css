@@ -96,6 +96,18 @@ button:hover {
 span.current {
     color: #9fcdff;
     text-decoration: underline;
+    -webkit-animation: blink1 1.3s linear infinite;
+    animation: blink1 1.3s linear infinite;
+}
+@-webkit-keyframes blink1 {
+    0% { color: rgba(159, 205, 255, 1); }
+    50% { color: rgba(159, 205, 255, 0.5); }
+    100% { color: rgba(159, 205, 255, 1); }
+}
+@keyframes blink1 {
+    0% { color: rgba(159, 205, 255, 1); }
+    50% { color: rgba(159, 205, 255, 0.5); }
+    100% { color: rgba(159, 205, 255, 1); }
 }
 
 span.pass {
@@ -104,6 +116,7 @@ span.pass {
 
 span.wrong {
     color: rgba(255, 0, 0, 0.65);
+    text-decoration: underline;
 }
 
 img.keyboard {

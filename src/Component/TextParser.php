@@ -89,11 +89,12 @@ class TextParser
         foreach ($sentences as $sentence) {
             $words['sentence-' . $i] = explode($this->glues[self::DELIMITER_SPACE], $sentence);
             foreach ($words['sentence-' . $i] as $word) {
+                $word .= self::DELIMITER_SPACE;
                 $wordLength = strlen($word);
                 for ($letterIterator = 0; $letterIterator < $wordLength; $letterIterator++) {
                     $letter = $word[$letterIterator];
                     $letterClasses = 'letter letter-' . $this->lettersCount;
-                    if (!isset($word[$letterIterator + 1])) {
+                    if (isset($word[$letterIterator + 1]) && $word[$letterIterator + 1] == self::DELIMITER_SPACE) {
                         $letterClasses .= ' end-word';
                     }
                     $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $letter . '</span>';

@@ -10,3 +10,7 @@ test:
 prepareText:
     path: /api/text/prepare
     controller: App\Controller\ApiController::prepareText
+
+getRandText:
+    path: /api/text/get/{duration}
+    controller: App\Controller\ApiController::getText

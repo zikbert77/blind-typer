@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Component\TextParser;
 use App\Entity\Texts;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiController extends AbstractController
 {
@@ -18,17 +20,16 @@ class ApiController extends AbstractController
                     Vel elit scelerisque mauris pellentesque. Placerat duis ultricies lacus sed turpis tincidunt id. At auctor urna nunc id cursus metus.
                     Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Et sollicitudin ac orci phasellus egestas tellus. Orci ac auctor augue mauris.
                     Mattis pellentesque id nibh tortor. Etiam non quam lacus suspendisse faucibus interdum posuere.";
-//
-//        $parser = new TextParser($originalText);
-//        $parser->parse();
-//
-//        $text = new Texts();
-//        $text->setTextBody($parser->getText());
-//        $text->setWordsCount($parser->calculateWords());
-//        $text->setCreatedAt(new \DateTime());
-//
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $entityManager->persist($text);
-//        $entityManager->flush();
+    }
+
+    public function getText($duration = 1)
+    {
+        /** @var Texts $text */
+        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($duration);
+
+        return new JsonResponse([
+            'parsedText' => $text->getParsedText(),
+            'wordsCount' => $text->getWordsCount()
+        ]);
     }
 }
