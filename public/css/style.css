@@ -2,6 +2,12 @@ html, body {
     font-family: 'SF UI Display';
 }
 
+hr {
+    border: 0;
+    height: 1px;
+    background-color: lightgray;
+}
+
 a {
     text-decoration: none;
     color: black;
@@ -15,7 +21,7 @@ a:hover {
 button {
     font-size: 14px;
     font-weight: 100;
-    padding: 12px 40px;
+    padding: 10px 40px;
     border-radius: 20px;
     background-color: #ffbb00;
     box-shadow: none;
@@ -27,6 +33,23 @@ button {
 
 button:hover {
     background-color: #ffa200;
+}
+
+button.btn-block {
+    width: 100%;
+}
+
+.form-group {
+    margin: 15px 0;
+}
+
+.form-control {
+    font-size: 14px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    width: 100%;
+    padding: 10px 15px;
 }
 
 .ff-ui-text {
@@ -70,6 +93,12 @@ button:hover {
 .test-box {
     width: 100%;
     background-color: #fafafa;
+}
+
+.test-settings-container {
+    width: 900px;
+    left: -450px;
+    margin: 0 auto;
 }
 
 .test-wrapper {
@@ -142,4 +171,8 @@ img.keyboard {
 
 .content {
     padding: 5px 25px;
+}
+
+form.login-form a {
+    font-size: 14px;
 }

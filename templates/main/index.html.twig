@@ -1,6 +1,27 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block two_rows_content %}
+{% block two_rows_content_1 %}
+<div class="content" style="text-align: center">
+    <h1>Sign in</h1>
+    <form class="login-form">
+        <div class="form-group">
+            <input type="text" class="form-control rounded-block" name="login" placeholder="Login">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control rounded-block" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <button class="btn-block">
+                Sign in
+            </button>
+        </div>
+        <div class="form-group">
+            <a href="#">Create new account</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block two_rows_content_2 %}
 
 <div class="content">
     <h1>Start typing without eyes keyboard tracking</h1>

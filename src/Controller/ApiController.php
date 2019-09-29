@@ -29,7 +29,8 @@ class ApiController extends AbstractController
 
         return new JsonResponse([
             'parsedText' => $text->getParsedText(),
-            'wordsCount' => $text->getWordsCount()
+            'wordsCount' => $text->getWordsCount(),
+            'lettersCount' => $text->getLetterCounts(),
         ]);
     }
 }

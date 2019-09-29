@@ -32,14 +32,12 @@
         <div class="row main-row">
             <div class="col-4">
                 <div class="rounded-block left-main-block">
-                    <div class="content">
-                        <h1>Promotions block</h1>
-                    </div>
+                    {% block two_rows_content_1 %}{% endblock %}
                 </div>
             </div>
             <div class="col-8">
                 <div class="rounded-block right-main-block">
-                    {% block two_rows_content %}{% endblock %}
+                    {% block two_rows_content_2 %}{% endblock %}
                 </div>
             </div>
         </div>

@@ -2,6 +2,24 @@
 
 {% block one_row_content %}
     <div class="test-wrapper">
+        <div class="test-settings-container">
+            <label for="test-duration">Test duration: </label>
+            <select name="test-duration" id="test-duration">
+                <option value="1">1 minute</option>
+                <option value="3">3 minute</option>
+                <option value="5">5 minute</option>
+            </select> |
+            <span id="words-per-minute">
+                Words per minute: <span id="count-words-per-minute">0</span>
+            </span> |
+            <span id="typing-accuracy">
+                Typing accuracy: <span id="count-typing-accuracy">0</span>%
+            </span> |
+            <span id="timer">
+                Time left: <span id="timer-left">60</span>s
+            </span>
+            <hr>
+        </div>
         <div class="test-container">
             <div class="test-text-display">
                 <span id="original-text"></span>
@@ -26,13 +44,21 @@
     <script>
         $(document).ready(function () {
 
+            let passedWords = 0;
+            let $countWordsPerMinuteBox = $("span#count-words-per-minute");
+            
             initText();
+            
+            $("select#test-duration").on('change', function () {
+                $('#timer-left').text($(this).val() * 60);
+            });
 
             $(".test-text-display").click(function () {
                 $("textarea#test-input").focus();
             });
 
             $("textarea#test-input").on('input', function () {
+                startTimer();
                 compareInputWithText($(this).val());
             });
 
@@ -53,8 +79,43 @@
                     $originalLetter.addClass('wrong');
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
                 }
+                
+                if ($originalLetter.hasClass('end-word')) {
+                    passedWords++;
+                }
+
+                calculateWPM();
 
                 $('#original-text').find('span.letter-' + (inputIndex + 1)).addClass('current');
+            }
+
+            function startTimer() {
+                let _Seconds = $('#timer-left').text(), int;
+                int = setInterval(function() {
+                    if (_Seconds > 0) {
+                        _Seconds--;
+                        $('#timer-left').text(_Seconds);
+                    } else {
+                        clearInterval(int);
+                        alert('End!');
+                    }
+                }, 1000);
+            }
+            
+            function getPassedTime() {
+                let leftTime = $('#timer-left').text();
+                let totalTime = $("select#test-duration").val() * 60;
+                let passedTime = totalTime - leftTime;
+
+                return passedTime;
+            }
+            
+            function calculateWPM() {
+
+                let passedTime = getPassedTime();
+                let wpm = Math.ceil((passedWords * 60) / passedTime);
+
+                $countWordsPerMinuteBox.text(wpm);
             }
 
             function initText() {
@@ -62,12 +123,11 @@
                     if (status === 'success') {
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
+                        let lettersCount = data.lettersCount;
                         let $originalTextBox = $("#original-text");
 
                         $originalTextBox.append(text);
                         $('#original-text').find('span.letter-0').addClass('current');
-
-                        return $originalTextBox.text().trim();
                     }
                 });
             }
