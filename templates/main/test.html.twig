@@ -8,7 +8,7 @@
                 <option value="1">1 minute</option>
                 <option value="3">3 minute</option>
                 <option value="5">5 minute</option>
-            </select> |
+            </select>
             <div class="right">
                 <span id="words-per-minute">
                     <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
@@ -20,7 +20,7 @@
                     <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
                 </span> |
                     <span id="timer">
-                    <b>Time left:</b> <span id="timer-left">60</span>s
+                    <b>Time left:</b> <span id="timer-left"></span>s
                 </span>
             </div>
             <hr>
@@ -50,27 +50,44 @@
         $(document).ready(function () {
 
             let passedWords = 0;
+            let isTimerStarted = false;
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
+            let $timerLeftBox = $('#timer-left');
+            let $testDurationBox = $("select#test-duration");
 
             initText();
-            
-            $("select#test-duration").on('change', function () {
-                $('#timer-left').text($(this).val() * 60);
+            focusOnTextarea();
+            $timerLeftBox.text($testDurationBox.val() * 60);
+
+            $testDurationBox.on('change', function () {
+                $timerLeftBox.text($(this).val() * 60);
             });
 
             $(".test-text-display").click(function () {
-                $("textarea#test-input").focus();
+                focusOnTextarea();
             });
 
             $("textarea#test-input").on('input', function () {
-                startTimer();
+                if (!isTimerStarted) {
+                    startTimer();
+                }
                 compareInputWithText($(this).val());
+            });
+
+            $("textarea#test-input").keyup(function(e) {
+                switch (e.keyCode) {
+                    case 8:  // Backspace
+                        backspaceAction($(this).val());
+                        break;
+                    default:
+                        break;
+                }
             });
 
             function compareInputWithText(input) {
                 let inputIndex = input.length - 1;
-                let $originalLetter = $('#original-text').find('span.letter-'+inputIndex);
+                let $originalLetter = $('#original-text').find('span.letter-' + inputIndex);
                 let originalChar = $originalLetter.data('letter');
                 let inputChar = input.charAt(inputIndex);
 
@@ -90,29 +107,66 @@
                     passedWords++;
                 }
 
-                calculateWPM();
                 calculateCPM(inputIndex);
 
                 $('#original-text').find('span.letter-' + (inputIndex + 1)).addClass('current');
             }
 
+            function backspaceAction(input) {
+
+                let inputIndex = input.length;
+                // let $previousLetter = $('#original-text').find('span.letter-' + (inputIndex - 1));
+                let $currentLetter = $('#original-text').find('span.letter-' + inputIndex);
+                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+
+                //Remove all current letter classes
+                if ($currentLetter.hasClass('pass')) {
+                    $currentLetter.removeClass('pass');
+                }
+
+                if ($currentLetter.hasClass('current')) {
+                    $currentLetter.removeClass('current');
+                }
+
+                if ($currentLetter.hasClass('wrong')) {
+                    $currentLetter.removeClass('wrong');
+                }
+
+                //Remove all next letter classes
+                if ($nextLetter.hasClass('current')) {
+                    $nextLetter.removeClass('current');
+                }
+
+                //Set previous letter as current
+                $currentLetter.addClass('current');
+            }
+
             function startTimer() {
-                let _Seconds = $('#timer-left').text(), int;
-                int = setInterval(function() {
+                isTimerStarted = true;
+
+                let _Seconds = parseInt($timerLeftBox.text());
+                interval = setInterval(function() {
                     if (_Seconds > 0) {
                         _Seconds--;
-                        $('#timer-left').text(_Seconds);
+                        $timerLeftBox.text(_Seconds);
+                        calculateWPM();
                     } else {
-                        clearInterval(int);
-                        alert('End!');
+                        stopTimer(interval);
+                        alert('WPM: ' + $countWordsPerMinuteBox.text());
+                        window.location.reload();
                     }
                 }, 1000);
-                clearInterval(int);
+
+                setTimeout(stopTimer, 10000);
+            }
+
+            function stopTimer(interval) {
+                clearInterval(interval);
             }
             
             function getPassedTime() {
-                let leftTime = $('#timer-left').text();
-                let totalTime = $("select#test-duration").val() * 60;
+                let leftTime = $timerLeftBox.text();
+                let totalTime = $testDurationBox.val() * 60;
                 let passedTime = totalTime - leftTime;
 
                 return passedTime;
@@ -131,7 +185,15 @@
                 let passedTime = getPassedTime();
                 let cpm = Math.ceil((inputIndex * 60) / passedTime);
 
+                if (cpm < 0) {
+                    cpm = 0;
+                }
+
                 $countCharsPerMinuteBox.text(cpm);
+            }
+
+            function focusOnTextarea() {
+                $("textarea#test-input").focus();
             }
 
             function initText() {
