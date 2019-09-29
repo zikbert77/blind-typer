@@ -18,31 +18,49 @@
 <body>
 {% include 'layouts/top-menu.html.twig' %}
 
-{% block one_row %}
-    <div class="container">
-        <div class="row main-row">
-            <div class="rounded-block test-box">
-                {% block one_row_content %}{% endblock %}
-            </div>
-        </div>
-    </div>
-{% endblock %}
-{% block two_rows %}
-    <div class="container">
-        <div class="row main-row">
-            <div class="col-4">
-                <div class="rounded-block left-main-block">
-                    {% block two_rows_content_1 %}{% endblock %}
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="rounded-block right-main-block">
-                    {% block two_rows_content_2 %}{% endblock %}
+<div class="wrapper">
+    {% block one_row %}
+        <div class="container">
+            <div class="row main-row">
+                <div class="rounded-block test-box">
+                    {% block one_row_content %}{% endblock %}
                 </div>
             </div>
         </div>
+    {% endblock %}
+    {% block two_rows %}
+        <div class="container">
+            <div class="row main-row">
+                <div class="col-4">
+                    <div class="rounded-block left-main-block">
+                        {% block two_rows_content_1 %}{% endblock %}
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="rounded-block right-main-block">
+                        {% block two_rows_content_2 %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row main-row">
+            <div class="col-12 footer">
+                <span><b>BlindTyper</b> &copy; all rights reserved</span>
+                <div class="right">
+                    Development and support:
+                    <a href="http://zikbert77.zzz.com.ua" target="_blank">
+                        <b>zikbert77</b>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-{% endblock %}
+</footer>
 {%block scripts %}{% endblock %}
 </body>
 </html>

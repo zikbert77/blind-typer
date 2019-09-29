@@ -1,5 +1,7 @@
 html, body {
     font-family: 'SF UI Display';
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 hr {
@@ -39,6 +41,10 @@ button.btn-block {
     width: 100%;
 }
 
+.wrapper {
+    min-height: 78vh;
+}
+
 .form-group {
     margin: 15px 0;
 }
@@ -74,7 +80,7 @@ button.btn-block {
 }
 
 .top-menu-box {
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #ddf3ff;
 }
 
@@ -87,6 +93,39 @@ button.btn-block {
 
 .top-menu-item:hover:not(.unhoverable) {
     background-color: #cee4f0;
+}
+
+.dropdown {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+}
+
+.dropdown-content {
+    background-color: #ffffff;
+    border: 5px solid #ddf3ff;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    left: -14px;
+    z-index: 1;
+}
+
+.dropdown-item {
+    margin-top: 5px;
+    transition: all .3s;
+}
+
+.dropdown-item:hover .language-img {
+    opacity: .7;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.language-img {
+    max-width: 16px;
 }
 
 /* One row */
@@ -175,4 +214,18 @@ img.keyboard {
 
 form.login-form a {
     font-size: 14px;
+}
+
+/* Footer */
+
+footer {
+    padding: 0;
+}
+
+.footer {
+    padding: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #fafafa;
+    font-size: 12px;
 }
