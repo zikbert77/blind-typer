@@ -20,7 +20,7 @@ a:hover {
     color: #576268;
 }
 
-button {
+button, a.btn {
     font-size: 14px;
     font-weight: 100;
     padding: 10px 40px;
@@ -33,7 +33,7 @@ button {
     outline: none;
 }
 
-button:hover {
+button:hover, a.btn:hover {
     background-color: #ffa200;
 }
 

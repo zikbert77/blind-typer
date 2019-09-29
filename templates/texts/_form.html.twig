@@ -1,11 +1,18 @@
 <style>
     textarea {
-        width: 1000px;
         height: 400px;
     }
 </style>
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="form-group">
+        {{ form_widget(form.text_body, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}
