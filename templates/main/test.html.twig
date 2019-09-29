@@ -104,7 +104,7 @@
                 }
                 
                 if ($originalLetter.hasClass('end-word')) {
-                    passedWords++;
+                    updatePassedWords('+');
                 }
 
                 calculateCPM(inputIndex);
@@ -115,9 +115,12 @@
             function backspaceAction(input) {
 
                 let inputIndex = input.length;
-                // let $previousLetter = $('#original-text').find('span.letter-' + (inputIndex - 1));
                 let $currentLetter = $('#original-text').find('span.letter-' + inputIndex);
                 let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                
+                if ($currentLetter.hasClass('end-word')) {
+                    updatePassedWords('-');
+                }
 
                 //Remove all current letter classes
                 if ($currentLetter.hasClass('pass')) {
@@ -170,6 +173,20 @@
                 let passedTime = totalTime - leftTime;
 
                 return passedTime;
+            }
+
+            function updatePassedWords(action = '+') {
+                switch (action) {
+                    case "+":
+                        passedWords++;
+                        break;
+                    case "-":
+                        passedWords--;
+                        if (passedWords < 0) {
+                            passedWords = 0;
+                        }
+                        break;
+                }
             }
             
             function calculateWPM() {
