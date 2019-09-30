@@ -1,0 +1,24 @@
+#Display without any pages except of /
+#RewriteEngine on
+#RewriteCond %{HTTP_HOST} ^blindtyper.zzz.com.ua$ [NC,OR]
+#RewriteCond %{HTTP_HOST} ^www.blindtyper.zzz.com.ua$
+#RewriteCond %{REQUEST_URI} !public/
+#RewriteRule (.*) /public/$1 [L]
+
+#Display without css and ks
+#RewriteEngine On
+#RewriteBase /
+##DocumentRoot /var/www/domains/b/bl/bli/blindtyper.zzz.com.ua/public
+#
+#RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+#RewriteRule ^ %1 [L,NE,R=302]
+#
+#RewriteRule ^((?!public/).*)$ public/index.php [L,NC]
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^blindtyper.zzz.com.ua$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.blindtyper.zzz.com.ua$
+RewriteCond %{REQUEST_URI} !public/
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^css/(.*) /public/css/$1 [QSA,L]
+RewriteRule ^ /public/index.php [QSA,L]
