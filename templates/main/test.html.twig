@@ -2,7 +2,7 @@
 
 {% block one_row_content %}
     <div class="test-wrapper">
-        <div class="test-settings-container">
+        <div class="test-settings-container" id="test-settings-container">
             <label for="test-duration">Test duration: </label>
             <select name="test-duration" id="test-duration">
                 <option value="1">1 minute</option>
@@ -88,8 +88,8 @@
             function compareInputWithText(input) {
                 let inputIndex = input.length - 1;
                 let $originalLetter = $('#original-text').find('span.letter-' + inputIndex);
-                let originalChar = $originalLetter.data('letter');
-                let inputChar = input.charAt(inputIndex);
+                let originalChar = $originalLetter.data('letter').toString();
+                let inputChar = input.charAt(inputIndex).toString();
 
                 if (originalChar === inputChar) {
                     //set letter style pass

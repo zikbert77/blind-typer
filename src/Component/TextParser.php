@@ -88,17 +88,18 @@ class TextParser
         $this->lettersCount = 0;
         foreach ($sentences as $sentence) {
             $words['sentence-' . $i] = explode($this->glues[self::DELIMITER_SPACE], $sentence);
-            foreach ($words['sentence-' . $i] as $word) {
+            foreach ($words['sentence-' . $i] as $key => $word) {
                 $word .= self::DELIMITER_SPACE;
-                $wordLength = strlen($word);
+                $wordArray = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
+                $wordLength = count($wordArray);
                 for ($letterIterator = 0; $letterIterator < $wordLength; $letterIterator++) {
-                    $letter = $word[$letterIterator];
+                    $letter = $wordArray[$letterIterator];
                     $letterClasses = 'letter letter-' . $this->lettersCount;
-                    if (isset($word[$letterIterator + 1]) && $word[$letterIterator + 1] == self::DELIMITER_SPACE) {
+                    if (isset($wordArray[$letterIterator + 1]) && $wordArray[$letterIterator + 1] == self::DELIMITER_SPACE && $wordLength > 2) {
                         $letterClasses .= ' end-word';
                     }
                     $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $letter . '</span>';
-                    $parsedText['sentence-' . $i][$word][$letterIterator] = $letter;
+                    $parsedText['sentence-' . $i][$word . $key][$letterIterator] = $letter;
                     $this->lettersCount++;
                 }
             }
