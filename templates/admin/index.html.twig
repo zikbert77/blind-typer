@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Admin - index{% endblock %}
+
+{% block one_row_content %}
+    <div class="content">
+        <br>
+        <a class="btn" href="{{ path('clearCache') }}">Clear cache</a>
+        <a class="btn" href="{{ path('texts_index') }}">Texts</a>
+        <br>
+        <br>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}
+
