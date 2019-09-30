@@ -14,3 +14,16 @@ prepareText:
 getRandText:
     path: /api/text/get/{duration}
     controller: App\Controller\ApiController::getText
+
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
+#-------------------admin-------------------
+adminIndex:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+clearCache:
+    path: /admin/cache/clear
+    controller: App\Controller\UtilsController::clearCache
