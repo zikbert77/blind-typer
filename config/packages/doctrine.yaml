@@ -20,3 +20,6 @@ doctrine:
                 dir: '%kernel.project_dir%/config/doctrine'
                 prefix: 'App\Entity'
 #                alias: App
+        dql:
+            numeric_functions:
+                rand: App\DQL\RandFunction
