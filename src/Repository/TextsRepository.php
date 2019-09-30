@@ -41,7 +41,8 @@ class TextsRepository extends ServiceEntityRepository
 //        $qb->andWhere('t.wordsCount <= :max_words_limit');
 //        $qb->setParameter('max_words_limit', $maxWordsLimit);
 
-        $qb->orderBy('t.id', 'DESC');
+        $qb->addSelect('RAND() as HIDDEN rand')
+            ->orderBy('rand');
         $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
