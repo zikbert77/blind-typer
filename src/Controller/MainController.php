@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Component\Keyboard;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
@@ -13,6 +14,8 @@ class MainController extends AbstractController
 
     public function test($time = 1)
     {
-        return $this->render('main/test.html.twig');
+        return $this->render('main/test.html.twig', [
+            'keyboard' => Keyboard::loadKeyboard(Keyboard::KEYBOARD_ANSI)
+        ]);
     }
 }

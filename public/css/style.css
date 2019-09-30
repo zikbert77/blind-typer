@@ -192,6 +192,44 @@ img.keyboard {
     max-width: 100%;
 }
 
+/* Keyboard */
+.keyboardRow {
+    text-align: center
+}
+
+.key {
+    display: inline-block;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    min-width: 40px;
+    min-height: 40px;
+    margin-bottom: 5px;
+}
+
+span.key.key-current {
+    color: white;
+    background-color: #9fcdff;
+}
+
+.key.space {
+    min-width: 350px;
+}
+
+.key-length-1 {
+    padding: 10px 20px;
+}
+
+.key-length-2 {
+    padding: 10px 30px;
+}
+
+.key-length-3 {
+    padding: 10px 40px;
+}
+
 /* Two rows */
 .main-row {
     margin-top: 20px;
