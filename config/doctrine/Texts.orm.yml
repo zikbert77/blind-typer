@@ -16,6 +16,19 @@ App\Entity\Texts:
             generator:
                 strategy: IDENTITY
     fields:
+        wordsCount:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: words_count
+        letterCounts:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: 'NULL'
+            column: letter_counts
         textBody:
             type: text
             nullable: true
@@ -24,31 +37,18 @@ App\Entity\Texts:
                 fixed: false
                 default: 'NULL'
             column: text_body
-        wordsCount:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: words_count
-        createdAt:
-            type: datetime
-            nullable: false
-            column: created_at
-        letterCounts:
-            type: integer
-            nullable: true
-            options:
-                unsigned: false
-                default: 'NULL'
-            column: letter_counts
         parsedText:
             type: text
             nullable: true
-            length: 65535
+            length: 0
             options:
                 fixed: false
                 default: 'NULL'
             column: parsed_text
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
     manyToOne:
         language:
             targetEntity: Languages

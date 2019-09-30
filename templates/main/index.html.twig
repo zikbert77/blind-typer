@@ -2,23 +2,30 @@
 
 {% block two_rows_content_1 %}
 <div class="content" style="text-align: center">
-    <h1>Sign in</h1>
-    <form class="login-form">
-        <div class="form-group">
-            <input type="text" class="form-control rounded-block" name="login" placeholder="Login">
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control rounded-block" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <button class="btn-block">
-                Sign in
-            </button>
-        </div>
-        <div class="form-group">
-            <a href="#">Create new account</a>
-        </div>
-    </form>
+    {% if app.user %}
+        <h1>Welcome</h1>
+        {{ app.user.email }}
+        <br><br>
+    {% else %}
+        <h1>Sign in</h1>
+        <form class="login-form" method="post" action="{{ path('app_login') }}">
+            <div class="form-group">
+                <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="Password" required>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="form-group">
+                <button class="btn-block">
+                    Sign in
+                </button>
+            </div>
+            <div class="form-group">
+                <a href="{{ path('register') }}">Create new account</a>
+            </div>
+        </form>
+    {% endif %}
 </div>
 {% endblock %}
 {% block two_rows_content_2 %}

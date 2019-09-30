@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block one_row_content %}
+    <div class="registration-form">
+        <h1>Register</h1>
+
+        {{ form_start(registrationForm) }}
+
+        <div class="form-control" style="text-align: left">
+            {{ form_widget(registrationForm.email) }}
+        </div>
+
+        {% for passwordField in registrationForm.plainPassword %}
+            <div class="form-control" style="text-align: left">
+                {{ form_widget(passwordField) }}
+            </div>
+        {% endfor %}
+
+        <div class="form-control">
+            <button class="btn">Register</button>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

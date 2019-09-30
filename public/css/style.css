@@ -243,6 +243,9 @@ span.key.key-current {
 .right-main-block {
     width: 100%;
     background-color: #fafafa;
+}
+
+.left-main-block, .right-main-block {
     padding-bottom: 15px;
 }
 
@@ -254,8 +257,15 @@ form.login-form a {
     font-size: 14px;
 }
 
-/* Footer */
+/* Registration */
+.registration-form {
+    text-align: center;
+    margin: 0 auto;
+    width: 450px;
+    padding-bottom: 10px;
+}
 
+/* Footer */
 footer {
     padding: 0;
 }
