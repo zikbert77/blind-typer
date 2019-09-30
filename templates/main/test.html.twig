@@ -32,7 +32,7 @@
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
             <div class="test-keyboard-box">
-                <img class="keyboard" src="{{ asset('img/keyboard.jpg') }}" alt="">
+                {{ keyboard|raw }}
             </div>
         </div>
     </div>
@@ -109,7 +109,23 @@
 
                 calculateCPM(inputIndex);
 
-                $('#original-text').find('span.letter-' + (inputIndex + 1)).addClass('current');
+                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                $nextLetter.addClass('current');
+
+                highlightKeyOnKeyboard($nextLetter.data('letter'));
+
+                console.log()
+            }
+
+            function highlightKeyOnKeyboard(letter) {
+
+                letter = letter.toLowerCase();
+
+                $(".key-current").removeClass('key-current');
+
+                let key = $(".test-keyboard-box").find(`[data-key='${letter}']`);
+                key.addClass('key-current');
+
             }
 
             function backspaceAction(input) {
