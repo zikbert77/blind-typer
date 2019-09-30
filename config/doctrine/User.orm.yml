@@ -1,0 +1,72 @@
+App\Entity\User:
+    type: entity
+    table: users
+    uniqueConstraints:
+        email:
+            columns:
+                - email
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        email:
+            type: string
+            nullable: false
+            length: 180
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+                default: 'NULL'
+        roles:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+                default: 'NULL'
+        firstName:
+            type: string
+            nullable: true
+            length: 60
+            options:
+                fixed: false
+                default: 'NULL'
+            column: first_name
+        lastName:
+            type: string
+            nullable: true
+            length: 60
+            options:
+                fixed: false
+                default: 'NULL'
+            column: last_name
+        isPremium:
+            type: boolean
+            nullable: true
+            options:
+                default: '0'
+            column: is_premium
+        createdAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: updated_at
+    lifecycleCallbacks: {  }
