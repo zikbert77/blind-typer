@@ -36,12 +36,12 @@ class TextsRepository extends ServiceEntityRepository
                 break;
         }
 
-        $qb->andWhere('t.wordsCount > :min_words_limit');
-        $qb->setParameter('min_words_limit', $minWordsLimit);
-        $qb->andWhere('t.wordsCount <= :max_words_limit');
-        $qb->setParameter('max_words_limit', $maxWordsLimit);
+//        $qb->andWhere('t.wordsCount > :min_words_limit');
+//        $qb->setParameter('min_words_limit', $minWordsLimit);
+//        $qb->andWhere('t.wordsCount <= :max_words_limit');
+//        $qb->setParameter('max_words_limit', $maxWordsLimit);
 
-//        $qb->orderBy('t.id', 'RAND()');
+        $qb->orderBy('t.id', 'DESC');
         $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
