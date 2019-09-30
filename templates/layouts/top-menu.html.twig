@@ -28,12 +28,18 @@
                     </div>
                 </div>
             </div>
-            <div class="top-menu-item right unhoverable">
-                <a href="#"><i class="fad fa-sign-in-alt" style="top: 1px;"></i> Log in</a>
-            </div>
-            <div class="top-menu-item right">
-                <a href="/texts/">Texts</a>
-            </div>
+            {% if app.user %}
+                <div class="top-menu-item right unhoverable">
+                    <a href="{{ path('app_logout') }}"><i class="fal fa-sign-out" style="position: relative;top: 1px;"></i> Log out</a>
+                </div>
+                <div class="top-menu-item right">
+                    <a href="{{ path('texts_index') }}">Texts</a>
+                </div>
+            {% else %}
+                <div class="top-menu-item right unhoverable">
+                    <a href="{{ path('app_login') }}"><i class="fal fa-sign-in" style="position: relative;top: 1px;"></i> Log in</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

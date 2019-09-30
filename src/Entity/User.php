@@ -33,9 +33,14 @@ class User implements UserInterface
 
     private $updatedAt;
 
+    private $roleTitle = [
+        self::ROLE_ADMIN => 'ROLE_ADMIN',
+        self::ROLE_USER => 'ROLE_USER',
+    ];
+
     public function __construct()
     {
-        $this->roles = json_encode(array('ROLE_USER'));
+        $this->roles = self::ROLE_USER;
     }
 
     public function getId(): ?int
@@ -77,14 +82,14 @@ class User implements UserInterface
         $this->plainPassword = $password;
     }
 
-    public function getRoles(): ?string
+    public function getRoles(): ?array
     {
-        return $this->roles;
+        return [$this->roleTitle[$this->roles]] ?? null;
     }
 
-    public function setRoles(?string $roles): self
+    public function setRoles(?int $role): self
     {
-        $this->roles = $roles;
+        $this->roles = $role;
 
         return $this;
     }
