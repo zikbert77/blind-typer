@@ -98,7 +98,10 @@ class TextParser
                     if (isset($wordArray[$letterIterator + 1]) && $wordArray[$letterIterator + 1] == self::DELIMITER_SPACE && $wordLength > 2) {
                         $letterClasses .= ' end-word';
                     }
-                    $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $letter . '</span>';
+
+                    $displayedLetter = ($letter == "\r") ? '⏎' : $letter;
+
+                    $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $displayedLetter . '</span>';
                     $parsedText['sentence-' . $i][$word . $key][$letterIterator] = $letter;
                     $this->lettersCount++;
                 }
