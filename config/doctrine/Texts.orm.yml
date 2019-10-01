@@ -3,6 +3,9 @@ App\Entity\Texts:
     table: texts
     repositoryClass: App\Repository\TextsRepository
     indexes:
+        user_id:
+            columns:
+                - user_id
         language_id:
             columns:
                 - language_id
@@ -58,6 +61,16 @@ App\Entity\Texts:
             inversedBy: null
             joinColumns:
                 language_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

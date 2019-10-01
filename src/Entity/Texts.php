@@ -20,6 +20,8 @@ class Texts
 
     private $language;
 
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +95,18 @@ class Texts
     public function setLanguage(?Languages $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
