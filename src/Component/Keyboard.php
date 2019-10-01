@@ -79,7 +79,7 @@ class Keyboard
                     </div>
                     <div class="keyboardRow">   
                     
-                        <span class="key key-length-3" data-key="tab">lshift</span>
+                        <span class="key key-length-3" data-key="shift">shift</span>
                         <span class="key" data-key="z">Z</span>
                         <span class="key" data-key="x">X</span>
                         <span class="key" data-key="c">C</span>
@@ -90,7 +90,7 @@ class Keyboard
                         <span class="key" data-key="<">&lt;</span>
                         <span class="key" data-key=">">&gt;</span>
                         <span class="key" data-key="?">?</span>
-                        <span class="key key-length-3" data-key="rshift">rshift</span>
+                        <span class="key key-length-3" data-key="shift">rshift</span>
 
                     </div>
                     

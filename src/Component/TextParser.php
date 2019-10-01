@@ -103,13 +103,13 @@ class TextParser
                         $letterClasses .= ' end-word';
                     }
 
+                    $displayedLetter = $letter;
                     if ($letter == self::DELIMITER_ENTER) {
                         $displayedLetter = '⏎' . self::DELIMITER_ENTER;
                         $newRow = '<br>';
-                    } else {
-                        $displayedLetter = $letter;
+                    } elseif ($letter == self::DELIMITER_SPACE) {
+                        $letterClasses .= ' space';
                     }
-
 
                     $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $displayedLetter . '</span>' . $newRow;
                     $parsedText['sentence-' . $i][$word . $key][$letterIterator] = $letter;

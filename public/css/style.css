@@ -161,6 +161,10 @@ button.btn-block {
     font-weight: 700;
 }
 
+.letter.space {
+    letter-spacing: 15px;
+}
+
 span.current {
     color: #9fcdff;
     text-decoration: underline;
