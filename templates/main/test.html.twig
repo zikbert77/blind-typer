@@ -26,6 +26,7 @@
             <hr>
         </div>
         <div class="test-container">
+            <input type="hidden" name="text-id" id="text-id" value="undefined">
             <div class="test-text-display">
                 <span id="original-text"></span>
             </div>
@@ -53,6 +54,7 @@
             let isTimerStarted = false;
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
+            let $countAccuracyBox = $("span#count-typing-accuracy");
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
 
@@ -172,7 +174,8 @@
                     } else {
                         stopTimer(interval);
                         alert('WPM: ' + $countWordsPerMinuteBox.text());
-                        window.location.reload();
+                        saveResult();
+                        // window.location.reload();
                     }
                 }, 1000);
 
@@ -229,14 +232,32 @@
                 $("textarea#test-input").focus();
             }
 
+            function saveResult() {
+                $.post('{{ path('saveTestResult') }}', {
+                    textId: $("input#text-id").val(),
+                    testDuration: $testDurationBox.val(),
+                    wpm: $countWordsPerMinuteBox.text(),
+                    cpm: $countCharsPerMinuteBox.text(),
+                    accuracy: $countAccuracyBox.text(),
+                }, function (data, status) {
+                    if (status === 'success') {
+                        console.log('saved');
+                    } else {
+                        console.log(data.error);
+                    }
+                });
+            }
+
             function initText() {
                 $.get('/api/text/get/1', {}, function (data, status) {
                     if (status === 'success') {
+                        let textId = data.textId;
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
                         let lettersCount = data.lettersCount;
                         let $originalTextBox = $("#original-text");
 
+                        $("input#text-id").val(textId);
                         $originalTextBox.append(text);
                         $('#original-text').find('span.letter-0').addClass('current');
                     }

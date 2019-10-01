@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block one_row_content %}
+    <div class="content">
+        <div class="settings">
+            <h1>{{ app.user.email }}</h1>
+            Last wpm is: {{ lastPassedText.wordsPerMinute }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

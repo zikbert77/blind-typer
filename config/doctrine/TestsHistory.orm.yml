@@ -1,0 +1,75 @@
+App\Entity\TestsHistory:
+    type: entity
+    table: tests_history
+    repositoryClass: App\Repository\TestsHistoryRepository
+    indexes:
+        text_id:
+            columns:
+                - text_id
+        user_id:
+            columns:
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        testDuration:
+            type: boolean
+            nullable: true
+            options:
+                default: 'NULL'
+            column: test_duration
+        wordsPerMinute:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+            column: words_per_minute
+        charsPerMinute:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+            column: chars_per_minute
+        accuracy:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+        createdAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: created_at
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        text:
+            targetEntity: Texts
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                text_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
