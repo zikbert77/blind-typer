@@ -89,6 +89,7 @@
             });
 
             function compareInputWithText(input) {
+                $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
                 let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let originalChar = $originalLetter.data('letter').toString();
@@ -124,18 +125,30 @@
                 let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
 
-                if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
-                    let shiftKey = $(".test-keyboard-box").find(`[data-key='shift']`);
+                let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
+                if (shiftKey.data('shift-key') !== undefined) {
                     shiftKey.addClass('key-current');
+                    highlightShift();
+                }
+
+                if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    highlightShift()
                 }
             }
             
             function isShiftKeyShouldBeHighlighted(letter) {
-                if (letter === ' ' || letter === "\n" || letter === "\r") {
+                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
+
+                if (forbiddenShiftHighlight.includes(letter)) {
                     return false;
                 }
 
                 return true;
+            }
+
+            function highlightShift() {
+                let shift = $(".test-keyboard-box").find(`[data-key='shift']`);
+                shift.addClass('key-current');
             }
 
             function backspaceAction(input) {

@@ -54,9 +54,9 @@ class Keyboard
                         <span class="key" data-key="i">I</span>
                         <span class="key" data-key="o">O</span>
                         <span class="key" data-key="p">P</span>
-                        <span class="key" data-key="{">{</span>
-                        <span class="key" data-key="}">}</span>
-                        <span class="key" data-key="|">|</span>
+                        <span class="key" data-key="[" data-shift-key="{">{<sub>[</sub></span>
+                        <span class="key" data-key="]" data-shift-key="}">}<sub>]</sub></span>
+                        <span class="key" data-key="\" data-shift-key="|">|<sub>\</sub></span>
                 
                     </div>
                     
@@ -71,10 +71,10 @@ class Keyboard
                         <span class="key" data-key="h">H</span>
                         <span class="key" data-key="j">J</span>
                         <span class="key" data-key="k">K</span>
-                        <span class="key key-current" data-key="l">L</span>
-                        <span class="key" data-key=":">:</span>
-                        <span class="key" data-key="\"">"</span>
-                        <span class="key key-length-1" data-key="enter">enter</span>
+                        <span class="key" data-key="l">L</span>
+                        <span class="key" data-key=";" data-shift-key=":">:<sub>;</sub></span>
+                        <span class="key" data-key="\'" data-shift-key="&#34;">&#34;<sub>&#39;</sub></span>
+                        <span class="key key-length-1" data-key="&#10;">enter</span>
                 
                     </div>
                     <div class="keyboardRow">   
@@ -87,10 +87,10 @@ class Keyboard
                         <span class="key" data-key="b">B</span>
                         <span class="key" data-key="n">N</span>
                         <span class="key" data-key="m">M</span>
-                        <span class="key" data-key="<">&lt;</span>
-                        <span class="key" data-key=">">&gt;</span>
-                        <span class="key" data-key="?">?</span>
-                        <span class="key key-length-3" data-key="shift">rshift</span>
+                        <span class="key" data-key="," data-shift-key="<">&lt;<sub>,</sub></span>
+                        <span class="key" data-key="." data-shift-key=">">&gt;<sub>.</sub></span>
+                        <span class="key" data-key="/" data-shift-key="?">?<sub>/</sub></span>
+                        <span class="key key-length-3" data-key="shift">shift</span>
 
                     </div>
                     
@@ -98,11 +98,11 @@ class Keyboard
                     
                         <span class="key" data-key="dn">fn</span>
                         <span class="key" data-key="ctrl">ctrl</span>
-                        <span class="key" data-key="lalt">lalt</span>
-                        <span class="key" data-key="lmeta">lmeta</span>
+                        <span class="key" data-key="lalt">alt</span>
+                        <span class="key" data-key="lmeta">meta</span>
                         <span class="key key-length-3 space" data-key=" ">space</span>
-                        <span class="key" data-key="rmeta">rmate</span>
-                        <span class="key" data-key="ralt">ralt</span>
+                        <span class="key" data-key="rmeta">meta</span>
+                        <span class="key" data-key="ralt">alt</span>
 
                     </div>
                 </div>'
