@@ -6,7 +6,7 @@
     <div class="content">
         <div class="settings">
             <h1>{{ app.user.email }}</h1>
-            Last wpm is: {{ lastPassedText.wordsPerMinute }}
+            Last wpm is: {{ lastPassedText.wordsPerMinute ?? "You've not passed typing test yet." }}
         </div>
     </div>
 {% endblock %}
