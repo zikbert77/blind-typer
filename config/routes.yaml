@@ -6,6 +6,11 @@ test:
     path: /test
     controller: App\Controller\MainController::test
 
+#------------------profile------------------
+profileIndex:
+    path: /profile
+    controller: App\Controller\ProfileController::index
+
 #--------------------api--------------------
 prepareText:
     path: /api/text/prepare
