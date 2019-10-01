@@ -57,6 +57,7 @@
             let $countAccuracyBox = $("span#count-typing-accuracy");
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
+            let $originalTextBox = $("#original-text");
 
             initText();
             focusOnTextarea();
@@ -88,8 +89,9 @@
             });
 
             function compareInputWithText(input) {
+                $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
-                let $originalLetter = $('#original-text').find('span.letter-' + inputIndex);
+                let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let originalChar = $originalLetter.data('letter').toString();
                 let inputChar = input.charAt(inputIndex).toString();
 
@@ -111,30 +113,49 @@
 
                 calculateCPM(inputIndex);
 
-                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
 
                 highlightKeyOnKeyboard($nextLetter.data('letter'));
-
-                console.log()
             }
 
             function highlightKeyOnKeyboard(letter) {
-
-                letter = letter.toLowerCase();
-
                 $(".key-current").removeClass('key-current');
 
-                let key = $(".test-keyboard-box").find(`[data-key='${letter}']`);
+                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
 
+                let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
+                if (shiftKey.data('shift-key') !== undefined) {
+                    shiftKey.addClass('key-current');
+                    highlightShift();
+                }
+
+                if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    highlightShift()
+                }
+            }
+            
+            function isShiftKeyShouldBeHighlighted(letter) {
+                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
+
+                if (forbiddenShiftHighlight.includes(letter)) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function highlightShift() {
+                let shift = $(".test-keyboard-box").find(`[data-key='shift']`);
+                shift.addClass('key-current');
             }
 
             function backspaceAction(input) {
 
                 let inputIndex = input.length;
-                let $currentLetter = $('#original-text').find('span.letter-' + inputIndex);
-                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
@@ -255,11 +276,12 @@
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
                         let lettersCount = data.lettersCount;
-                        let $originalTextBox = $("#original-text");
 
                         $("input#text-id").val(textId);
                         $originalTextBox.append(text);
-                        $('#original-text').find('span.letter-0').addClass('current');
+                        let $firstLetter = $originalTextBox.find('span.letter-0');
+                        $firstLetter.addClass('current');
+                        highlightKeyOnKeyboard($firstLetter.data('letter'));
                     }
                 });
             }

@@ -35,9 +35,11 @@
                 <div class="top-menu-item right">
                     <a href="{{ path('profileIndex') }}">Profile</a>
                 </div>
+                {% if is_granted('ROLE_ADMIN') %}
                 <div class="top-menu-item right">
                     <a href="{{ path('adminIndex') }}">Admin</a>
                 </div>
+                {% endif %}
             {% else %}
                 <div class="top-menu-item right unhoverable">
                     <a href="{{ path('app_login') }}"><i class="fal fa-sign-in" style="position: relative;top: 1px;"></i> Log in</a>

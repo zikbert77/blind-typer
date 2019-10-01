@@ -161,6 +161,10 @@ button.btn-block {
     font-weight: 700;
 }
 
+.letter.space {
+    letter-spacing: 15px;
+}
+
 span.current {
     color: #9fcdff;
     text-decoration: underline;
@@ -206,7 +210,14 @@ img.keyboard {
     padding: 10px;
     min-width: 40px;
     min-height: 40px;
+    max-height: 40px;
     margin-bottom: 5px;
+}
+
+.two-letters {
+    line-height: 12px;
+    position:relative;
+    top: 7.5px;
 }
 
 span.key.key-current {
