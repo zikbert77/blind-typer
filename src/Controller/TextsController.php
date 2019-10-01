@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route("/texts")
@@ -28,8 +29,12 @@ class TextsController extends AbstractController
 
     /**
      * @Route("/new", name="texts_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @return Response
+     * @throws \Exception
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TokenStorageInterface $tokenStorage): Response
     {
         $text = new Texts();
         $form = $this->createForm(TextsType::class, $text);
@@ -40,6 +45,7 @@ class TextsController extends AbstractController
             $text->setParsedText($parser->parseForJs());
             $text->setWordsCount($parser->calculateWords());
             $text->setLetterCounts($parser->calculateLetters());
+            $text->setUser($tokenStorage->getToken()->getUser());
             $text->setCreatedAt(new \DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
