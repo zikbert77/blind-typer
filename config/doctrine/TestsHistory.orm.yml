@@ -1,6 +1,7 @@
 App\Entity\TestsHistory:
     type: entity
     table: tests_history
+    repositoryClass: App\Repository\TestsHistoryRepository
     indexes:
         text_id:
             columns:

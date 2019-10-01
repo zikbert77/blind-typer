@@ -6,7 +6,7 @@ test:
     path: /test
     controller: App\Controller\MainController::test
 
-
+#--------------------api--------------------
 prepareText:
     path: /api/text/prepare
     controller: App\Controller\ApiController::prepareText
@@ -14,6 +14,10 @@ prepareText:
 getRandText:
     path: /api/text/get/{duration}
     controller: App\Controller\ApiController::getText
+
+saveTestResult:
+    path: /api/tests/result/save
+    controller: App\Controller\ApiController::saveTestResult
 
 register:
     path: /register
