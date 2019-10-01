@@ -29,12 +29,10 @@ App\Entity\User:
                 fixed: false
                 default: 'NULL'
         roles:
-            type: text
+            type: boolean
             nullable: true
-            length: 65535
             options:
-                fixed: false
-                default: 'NULL'
+                default: '1'
         firstName:
             type: string
             nullable: true
