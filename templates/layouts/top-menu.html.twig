@@ -32,13 +32,17 @@
                 <div class="top-menu-item right unhoverable">
                     <a href="{{ path('app_logout') }}"><i class="fal fa-sign-out" style="position: relative;top: 1px;"></i> Log out</a>
                 </div>
-                <div class="top-menu-item right">
-                    <a href="{{ path('profileIndex') }}">Profile</a>
-                </div>
+                <a href="{{ path('profileIndex') }}">
+                    <div class="top-menu-item right">
+                        Profile
+                    </div>
+                </a>
                 {% if is_granted('ROLE_ADMIN') %}
-                <div class="top-menu-item right">
-                    <a href="{{ path('adminIndex') }}">Admin</a>
-                </div>
+                <a href="{{ path('adminIndex') }}">
+                    <div class="top-menu-item right">
+                        Admin
+                    </div>
+                </a>
                 {% endif %}
             {% else %}
                 <div class="top-menu-item right unhoverable">
