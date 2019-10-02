@@ -1,0 +1,54 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Admin - index{% endblock %}
+
+{% block two_rows_content_1 %}
+    <div class="content">
+        <a href="{{ path('adminIndex') }}" class="btn btn-block">Index</a>
+        <a href="{{ path('adminOverview') }}" class="btn btn-block">Overview</a>
+    </div>
+{% endblock %}
+
+{% block two_rows_content_2 %}
+    <div class="content">
+        <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
+        <script src="{{ asset('chartjs/Chart.js') }}"></script>
+        <h1>Overview</h1>
+        <canvas id="userTestsPasses" height="100"></canvas>
+    </div>
+
+
+    <script>
+        var ctx = document.getElementById('userTestsPasses').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for datetime in userTestsPassed['date'] %}
+                    '{{ datetime }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Tests was passed',
+                    data: [
+                        {% for twp in userTestsPassed['count'] %}
+                        '{{ twp }}',
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgba(61, 163, 232, 1)',
+                    borderColor: 'rgba(61, 163, 242, 1)',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

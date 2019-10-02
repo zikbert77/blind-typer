@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * @method TestsHistory|null find($id, $lockMode = null, $lockVersion = null)
@@ -43,6 +44,44 @@ class TestsHistoryRepository extends ServiceEntityRepository
         }
 
         return $response;
+    }
+
+    public function getForPeriod(\DateTime $startDate, \DateTime $endDate)
+    {
+        $periodStatistic = $this->createQueryBuilder('th')
+            ->select('count(th.id) as count, DATE(th.createdAt) as date')
+            ->where('th.createdAt >= :startDate')
+            ->andWhere('th.createdAt <= :endDate')
+            ->setParameters([
+                'startDate' => $startDate->format('Y-m-d'),
+                'endDate' => $endDate->format('Y-m-d'),
+            ])
+            ->groupBy('date')
+            ->getQuery()
+            ->getResult();
+        
+        $dailyStatistic = [];
+        foreach ($periodStatistic as $daily) {
+            $dailyStatistic['count'][] = $daily['count'];
+            $dailyStatistic['date'][] = $daily['date'];
+        }
+        
+        return $dailyStatistic;
+    }
+
+    /**
+     * @param User $user
+     * @return mixed|object|null
+     */
+    public function getLast(User $user)
+    {
+        $history = $this->_em->getRepository(TestsHistory::class)->findBy(
+            ['user' => $user],
+            ['id' => 'DESC'],
+            11
+        );
+
+        return $history[0] ?? null;
     }
 
     /**
