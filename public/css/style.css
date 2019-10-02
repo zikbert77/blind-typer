@@ -147,7 +147,6 @@ span.small {
 
 .test-settings-container {
     width: 900px;
-    left: -450px;
     margin: 0 auto;
 }
 
@@ -156,8 +155,7 @@ span.small {
 }
 
 .test-container {
-    width: 900px;
-    left: -450px;
+    width: 1050px;
     margin: 0 auto;
 }
 

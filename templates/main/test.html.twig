@@ -27,7 +27,7 @@
         </div>
         <div class="test-container">
             <input type="hidden" name="text-id" id="text-id" value="undefined">
-            <div class="test-text-display">
+            <div class="test-text-display" id="test-text-display">
                 <span id="original-text"></span>
             </div>
             <p class="tesxxxx"></p>
@@ -52,6 +52,9 @@
 
             let passedWords = 0;
             let isTimerStarted = false;
+            let positionToScroll = 195;
+            let scrollPx = 66;
+            let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
             let $countAccuracyBox = $("span#count-typing-accuracy");
@@ -115,6 +118,10 @@
 
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
+
+                if ($nextLetter.position().top > positionToScroll) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
+                }
 
                 highlightKeyOnKeyboard($nextLetter.data('letter'));
             }
