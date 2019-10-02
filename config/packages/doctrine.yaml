@@ -23,3 +23,6 @@ doctrine:
         dql:
             numeric_functions:
                 rand: App\DQL\RandFunction
+            datetime_functions:
+                date: App\DQL\DateFunction
+                date_format: DoctrineExtensions\Query\Mysql\DateFormat

@@ -33,11 +33,17 @@ button, a.btn {
     outline: none;
 }
 
+a.btn {
+    font-weight: 400;
+}
+
 button:hover, a.btn:hover {
     background-color: #ffa200;
 }
 
-button.btn-block {
+button.btn-block, a.btn-block {
+    text-align: center;
+    display: inline-block;
     width: 100%;
 }
 
@@ -126,6 +132,11 @@ button.btn-block {
 
 .language-img {
     max-width: 16px;
+}
+
+span.small {
+    font-size: 14px;
+    color: darkgray;
 }
 
 /* One row */

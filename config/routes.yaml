@@ -33,6 +33,10 @@ adminIndex:
     path: /admin
     controller: App\Controller\AdminController::index
 
+adminOverview:
+    path: /admin/overview
+    controller: App\Controller\AdminController::overview
+
 clearCache:
     path: /admin/cache/clear
     controller: App\Controller\UtilsController::clearCache

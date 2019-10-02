@@ -2,7 +2,14 @@
 
 {% block title %}Admin - index{% endblock %}
 
-{% block one_row_content %}
+{% block two_rows_content_1 %}
+    <div class="content">
+        <a href="{{ path('adminIndex') }}" class="btn btn-block">Index</a>
+        <a href="{{ path('adminOverview') }}" class="btn btn-block">Overview</a>
+    </div>
+{% endblock %}
+
+{% block two_rows_content_2 %}
     <div class="content">
         <br>
         <a class="btn" href="{{ path('clearCache') }}">Clear cache</a>
@@ -11,6 +18,3 @@
         <br>
     </div>
 {% endblock %}
-
-{% block two_rows %}{% endblock %}
-
