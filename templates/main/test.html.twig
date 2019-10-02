@@ -26,7 +26,8 @@
             <hr>
         </div>
         <div class="test-container">
-            <div class="test-text-display">
+            <input type="hidden" name="text-id" id="text-id" value="undefined">
+            <div class="test-text-display" id="test-text-display">
                 <span id="original-text"></span>
             </div>
             <p class="tesxxxx"></p>
@@ -51,10 +52,15 @@
 
             let passedWords = 0;
             let isTimerStarted = false;
+            let positionToScroll = 195;
+            let scrollPx = 66;
+            let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
+            let $countAccuracyBox = $("span#count-typing-accuracy");
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
+            let $originalTextBox = $("#original-text");
 
             initText();
             focusOnTextarea();
@@ -86,8 +92,9 @@
             });
 
             function compareInputWithText(input) {
+                $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
-                let $originalLetter = $('#original-text').find('span.letter-' + inputIndex);
+                let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let originalChar = $originalLetter.data('letter').toString();
                 let inputChar = input.charAt(inputIndex).toString();
 
@@ -109,30 +116,53 @@
 
                 calculateCPM(inputIndex);
 
-                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
 
-                highlightKeyOnKeyboard($nextLetter.data('letter'));
+                if ($nextLetter.position().top > positionToScroll) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
+                }
 
-                console.log()
+                highlightKeyOnKeyboard($nextLetter.data('letter'));
             }
 
             function highlightKeyOnKeyboard(letter) {
-
-                letter = letter.toLowerCase();
-
                 $(".key-current").removeClass('key-current');
 
-                let key = $(".test-keyboard-box").find(`[data-key='${letter}']`);
+                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
 
+                let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
+                if (shiftKey.data('shift-key') !== undefined) {
+                    shiftKey.addClass('key-current');
+                    highlightShift();
+                }
+
+                if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    highlightShift()
+                }
+            }
+            
+            function isShiftKeyShouldBeHighlighted(letter) {
+                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
+
+                if (forbiddenShiftHighlight.includes(letter)) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function highlightShift() {
+                let shift = $(".test-keyboard-box").find(`[data-key='shift']`);
+                shift.addClass('key-current');
             }
 
             function backspaceAction(input) {
 
                 let inputIndex = input.length;
-                let $currentLetter = $('#original-text').find('span.letter-' + inputIndex);
-                let $nextLetter = $('#original-text').find('span.letter-' + (inputIndex + 1));
+                let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
@@ -172,6 +202,7 @@
                     } else {
                         stopTimer(interval);
                         alert('WPM: ' + $countWordsPerMinuteBox.text());
+                        saveResult();
                         window.location.reload();
                     }
                 }, 1000);
@@ -229,16 +260,35 @@
                 $("textarea#test-input").focus();
             }
 
+            function saveResult() {
+                $.post('{{ path('saveTestResult') }}', {
+                    textId: $("input#text-id").val(),
+                    testDuration: $testDurationBox.val(),
+                    wpm: $countWordsPerMinuteBox.text(),
+                    cpm: $countCharsPerMinuteBox.text(),
+                    accuracy: $countAccuracyBox.text(),
+                }, function (data, status) {
+                    if (status === 'success') {
+                        console.log('saved');
+                    } else {
+                        console.log(data.error);
+                    }
+                });
+            }
+
             function initText() {
                 $.get('/api/text/get/1', {}, function (data, status) {
                     if (status === 'success') {
+                        let textId = data.textId;
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
                         let lettersCount = data.lettersCount;
-                        let $originalTextBox = $("#original-text");
 
+                        $("input#text-id").val(textId);
                         $originalTextBox.append(text);
-                        $('#original-text').find('span.letter-0').addClass('current');
+                        let $firstLetter = $originalTextBox.find('span.letter-0');
+                        $firstLetter.addClass('current');
+                        highlightKeyOnKeyboard($firstLetter.data('letter'));
                     }
                 });
             }

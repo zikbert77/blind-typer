@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Languages;
 use App\Entity\Texts;
+use App\Entity\Languages;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,7 +17,7 @@ class TextsType extends AbstractType
         $builder
             ->add('text_body', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'test-text-display'
                 ]
             ])
             ->add('language', EntityType::class, [

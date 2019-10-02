@@ -6,7 +6,12 @@ test:
     path: /test
     controller: App\Controller\MainController::test
 
+#------------------profile------------------
+profileIndex:
+    path: /profile
+    controller: App\Controller\ProfileController::index
 
+#--------------------api--------------------
 prepareText:
     path: /api/text/prepare
     controller: App\Controller\ApiController::prepareText
@@ -14,6 +19,10 @@ prepareText:
 getRandText:
     path: /api/text/get/{duration}
     controller: App\Controller\ApiController::getText
+
+saveTestResult:
+    path: /api/tests/result/save
+    controller: App\Controller\ApiController::saveTestResult
 
 register:
     path: /register
@@ -23,6 +32,10 @@ register:
 adminIndex:
     path: /admin
     controller: App\Controller\AdminController::index
+
+adminOverview:
+    path: /admin/overview
+    controller: App\Controller\AdminController::overview
 
 clearCache:
     path: /admin/cache/clear

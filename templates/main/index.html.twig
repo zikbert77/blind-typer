@@ -6,6 +6,7 @@
         <h1>Welcome</h1>
         {{ app.user.email }}
         <br><br>
+        <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
     {% else %}
         <h1>Sign in</h1>
         <form class="login-form" method="post" action="{{ path('app_login') }}">
@@ -31,7 +32,7 @@
 {% block two_rows_content_2 %}
 
 <div class="content">
-    <h1>Start typing without eyes keyboard tracking</h1>
+    <h1>Increase your typing skill right now</h1>
     <p>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id semper risus in hendrerit gravida.
         Vel pretium lectus quam id leo in vitae turpis. Lectus nulla at volutpat diam ut. Bibendum ut tristique et egestas. Ipsum a arcu cursus vitae congue mauris rhoncus aenean.

@@ -1,0 +1,86 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block one_row_content %}
+    <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
+    <script src="{{ asset('chartjs/Chart.js') }}"></script>
+    <div class="content">
+        <div class="settings">
+            <h1>{{ app.user.email }}</h1>
+        </div>
+        <canvas id="myChart" height="100"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    {% for datetime in testsHistoryData['datetime'] %}
+                        '{{ datetime|date("Y.m.d") }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Words per minute (WPM)',
+                    data: [
+                        {% for wpm in testsHistoryData['wpm'] %}
+                            '{{ wpm }}',
+                        {% endfor %}
+                    ],
+                    backgroundColor: [
+                        'rgba(61, 163, 232, 0.1)',
+                    ],
+                    borderColor: [
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                        'rgba(61, 163, 232, 1)',
+                    ],
+                    borderWidth: 3
+                }, {
+                    label: 'Chars per minute (CPM)',
+                    data: [
+                        {% for cpm in testsHistoryData['cpm'] %}
+                        '{{ cpm }}',
+                        {% endfor %}
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.1)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

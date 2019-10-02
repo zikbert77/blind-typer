@@ -33,11 +33,17 @@ button, a.btn {
     outline: none;
 }
 
+a.btn {
+    font-weight: 400;
+}
+
 button:hover, a.btn:hover {
     background-color: #ffa200;
 }
 
-button.btn-block {
+button.btn-block, a.btn-block {
+    text-align: center;
+    display: inline-block;
     width: 100%;
 }
 
@@ -128,6 +134,11 @@ button.btn-block {
     max-width: 16px;
 }
 
+span.small {
+    font-size: 14px;
+    color: darkgray;
+}
+
 /* One row */
 .test-box {
     width: 100%;
@@ -136,7 +147,6 @@ button.btn-block {
 
 .test-settings-container {
     width: 900px;
-    left: -450px;
     margin: 0 auto;
 }
 
@@ -145,8 +155,7 @@ button.btn-block {
 }
 
 .test-container {
-    width: 900px;
-    left: -450px;
+    width: 1050px;
     margin: 0 auto;
 }
 
@@ -154,11 +163,15 @@ button.btn-block {
     border: 5px solid black;
     height: 300px;
     overflow-x: hidden;
-    text-align: justify;
+    text-align: center;
     background-color: white;
     padding: 25px;
     font-size: 44px;
     font-weight: 700;
+}
+
+.letter.space {
+    letter-spacing: 15px;
 }
 
 span.current {
@@ -206,7 +219,14 @@ img.keyboard {
     padding: 10px;
     min-width: 40px;
     min-height: 40px;
+    max-height: 40px;
     margin-bottom: 5px;
+}
+
+.two-letters {
+    line-height: 12px;
+    position:relative;
+    top: 7.5px;
 }
 
 span.key.key-current {

@@ -2,16 +2,19 @@
 
 namespace App\Component;
 
+use phpDocumentor\Reflection\Types\Self_;
+
 class TextParser
 {
-    const DELIMITER_ENTER = "\n";
+    const DELIMITER_ENTER = "\r";
+    const DELIMITER_NEXT_ROW = "\n";
     const DELIMITER_SPACE = ' ';
     const DELIMITER_UNIVERSAL = '%&%';
 
     private $originalText;
     private $lettersCount = 0;
     private $glues = [
-        self::DELIMITER_ENTER => '%e',
+        self::DELIMITER_NEXT_ROW => '%e',
         self::DELIMITER_SPACE => '%s',
     ];
     
@@ -71,7 +74,7 @@ class TextParser
 
         $this->originalText = str_replace(
             '%e%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s',
-            $this->glues[self::DELIMITER_ENTER],
+            $this->glues[self::DELIMITER_NEXT_ROW],
             $this->originalText
         );
     }
@@ -82,23 +85,33 @@ class TextParser
         $parsedText = [];
         $response = '';
         $text = $this->originalText;
-        $sentences = explode($this->glues[self::DELIMITER_ENTER], $text);
+        $sentences = explode($this->glues[self::DELIMITER_NEXT_ROW], $text);
 
         $i = 1;
         $this->lettersCount = 0;
         foreach ($sentences as $sentence) {
             $words['sentence-' . $i] = explode($this->glues[self::DELIMITER_SPACE], $sentence);
             foreach ($words['sentence-' . $i] as $key => $word) {
-                $word .= self::DELIMITER_SPACE;
+                $word .= strpos($word, self::DELIMITER_ENTER) == false ? self::DELIMITER_SPACE : '';
                 $wordArray = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
                 $wordLength = count($wordArray);
                 for ($letterIterator = 0; $letterIterator < $wordLength; $letterIterator++) {
+                    $newRow = '';
                     $letter = $wordArray[$letterIterator];
                     $letterClasses = 'letter letter-' . $this->lettersCount;
                     if (isset($wordArray[$letterIterator + 1]) && $wordArray[$letterIterator + 1] == self::DELIMITER_SPACE && $wordLength > 2) {
                         $letterClasses .= ' end-word';
                     }
-                    $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $letter . '</span>';
+
+                    $displayedLetter = $letter;
+                    if ($letter == self::DELIMITER_ENTER) {
+                        $displayedLetter = '⏎' . self::DELIMITER_ENTER;
+                        $newRow = '<br>';
+                    } elseif ($letter == self::DELIMITER_SPACE) {
+                        $letterClasses .= ' space';
+                    }
+
+                    $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $displayedLetter . '</span>' . $newRow;
                     $parsedText['sentence-' . $i][$word . $key][$letterIterator] = $letter;
                     $this->lettersCount++;
                 }
@@ -117,6 +130,6 @@ class TextParser
 
     private function getRules(): array 
     {
-        return [self::DELIMITER_ENTER, self::DELIMITER_SPACE];
+        return [self::DELIMITER_NEXT_ROW, self::DELIMITER_SPACE];
     }
 }

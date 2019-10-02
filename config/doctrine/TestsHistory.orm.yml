@@ -1,14 +1,14 @@
-App\Entity\Texts:
+App\Entity\TestsHistory:
     type: entity
-    table: texts
-    repositoryClass: App\Repository\TextsRepository
+    table: tests_history
+    repositoryClass: App\Repository\TestsHistoryRepository
     indexes:
+        text_id:
+            columns:
+                - text_id
         user_id:
             columns:
                 - user_id
-        language_id:
-            columns:
-                - language_id
     id:
         id:
             type: integer
@@ -19,50 +19,39 @@ App\Entity\Texts:
             generator:
                 strategy: IDENTITY
     fields:
-        wordsCount:
+        testDuration:
+            type: boolean
+            nullable: true
+            options:
+                default: 'NULL'
+            column: test_duration
+        wordsPerMinute:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+            column: words_per_minute
+        charsPerMinute:
             type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: words_count
-        letterCounts:
-            type: integer
             nullable: true
             options:
-                unsigned: false
-                default: 'NULL'
-            column: letter_counts
-        textBody:
-            type: text
+                unsigned: true
+                default: '0'
+            column: chars_per_minute
+        accuracy:
+            type: smallint
             nullable: true
-            length: 65535
             options:
-                fixed: false
-                default: 'NULL'
-            column: text_body
-        parsedText:
-            type: text
-            nullable: true
-            length: 0
-            options:
-                fixed: false
-                default: 'NULL'
-            column: parsed_text
+                unsigned: true
+                default: '0'
         createdAt:
             type: datetime
-            nullable: false
+            nullable: true
+            options:
+                default: current_timestamp()
             column: created_at
     manyToOne:
-        language:
-            targetEntity: Languages
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                language_id:
-                    referencedColumnName: id
-            orphanRemoval: false
         user:
             targetEntity: User
             cascade: {  }
@@ -71,6 +60,16 @@ App\Entity\Texts:
             inversedBy: null
             joinColumns:
                 user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        text:
+            targetEntity: Texts
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                text_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }
