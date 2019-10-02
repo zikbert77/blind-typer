@@ -24,6 +24,29 @@ class TestsHistoryRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     * @return array
+     */
+    public function getWpmDataForChart(User $user): array
+    {
+        $history = $this->_em->getRepository(TestsHistory::class)->findBy(
+            ['user' => $user],
+            ['id' => 'ASC'],
+            10
+        );
+
+        $response = [];
+        /** @var TestsHistory $testHistory */
+        foreach ($history as $testHistory) {
+            $response['wpm'][] = $testHistory->getWordsPerMinute();
+            $response['cpm'][] = $testHistory->getCharsPerMinute();
+            $response['datetime'][] = $testHistory->getCreatedAt();
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param User $user
      * @param Texts $text
      * @param int $testDuration
      * @param int $wpm
