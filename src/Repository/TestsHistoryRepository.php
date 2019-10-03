@@ -70,18 +70,22 @@ class TestsHistoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
+     * @param string|User $user
      * @return mixed|object|null
      */
-    public function getLast(User $user)
+    public function getLast($user)
     {
-        $history = $this->_em->getRepository(TestsHistory::class)->findBy(
-            ['user' => $user],
-            ['id' => 'DESC'],
-            11
-        );
+        if ($user instanceof User) {
+            $history = $this->_em->getRepository(TestsHistory::class)->findBy(
+                ['user' => $user],
+                ['id' => 'DESC'],
+                11
+            );
 
-        return $history[0] ?? null;
+            return $history[0] ?? null;
+        }
+
+        return null;
     }
 
     /**
