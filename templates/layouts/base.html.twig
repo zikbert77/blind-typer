@@ -67,7 +67,9 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('div').first().hide();
+        if (document.domain == 'blindtyper.zzz.com.ua') {
+            $('div').first().hide();
+        }
     });
 </script>
 {%block scripts %}{% endblock %}
