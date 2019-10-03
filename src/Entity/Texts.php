@@ -18,6 +18,8 @@ class Texts
 
     private $parsedText;
 
+    private $isChecked;
+
     private $language;
 
     private $user;
@@ -107,6 +109,18 @@ class Texts
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsChecked(): ?bool
+    {
+        return $this->isChecked;
+    }
+
+    public function setIsChecked(?bool $isChecked): self
+    {
+        $this->isChecked = $isChecked;
 
         return $this;
     }

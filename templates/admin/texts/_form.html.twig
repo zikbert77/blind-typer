@@ -1,0 +1,68 @@
+<style>
+    textarea {
+        border: 5px solid black;
+        width: 900px;
+        overflow-x: hidden;
+        text-align: center;
+        background-color: white;
+        padding: 25px;
+        font-size: 44px;
+        font-weight: 700;
+        resize: vertical;
+    }
+
+    .space {
+        text-decoration: underline;
+        color: #9fcdff;
+    }
+</style>
+
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_widget(form.text_body, {'attr': {'style': 'width: 1050px; margin: 0 auto;'}}) }}
+    </div>
+    <div class="form-group">
+        <button type="button" id="update-preview">Update preview</button>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.language) }}:
+        {{ form_widget(form.language) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.is_checked) }}:
+        {{ form_widget(form.is_checked) }}
+    </div>
+    <hr>
+    <div class="form-group">
+        <h2>Formatted text preview: </h2>
+        <div class="test-text-display" id="test-text-display-preview" style="width: 1050px; height: auto;">
+            <span id="original-text">{{ text.parsedText|raw }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#update-preview").click(function () {
+            updatePreview();
+        });
+
+        function updatePreview() {
+            $.get('{{ path('prepareText') }}', $('form[name="texts"]').serialize(), function (data, status) {
+                if (status === 'success') {
+                    $("#test-text-display-preview").html(data);
+                }
+            })
+        }
+    });
+</script>

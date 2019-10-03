@@ -47,6 +47,15 @@ button.btn-block, a.btn-block {
     width: 100%;
 }
 
+.btn-danger {
+    background-color: rgba(255, 0, 0, 0.7);
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: rgba(255, 0, 0, 0.9);
+}
+
 .wrapper {
     min-height: 78vh;
 }
@@ -171,7 +180,7 @@ span.small {
 }
 
 .letter.space {
-    letter-spacing: 15px;
+    letter-spacing: 5px;
 }
 
 span.current {

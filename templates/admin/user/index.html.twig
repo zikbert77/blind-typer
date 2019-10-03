@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block two_rows_content_1 %}
+    <div class="content">
+        <a href="{{ path('adminIndex') }}" class="btn btn-block">Index</a>
+        <a href="{{ path('adminOverview') }}" class="btn btn-block">Overview</a>
+        <a href="{{ path('user_index') }}" class="btn btn-block">User</a>
+    </div>
+{% endblock %}
+
+{% block two_rows_content_2 %}
+    <div class="content">
+        <h1>User index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>IsPremium</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role }}
+                        {% endfor %}
+                    </td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.isPremium ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('user_new') }}">Create new</a>
+    </div>
+{% endblock %}

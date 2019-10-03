@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * @Route("/texts")
+ * @Route("/admin/texts")
  */
 class TextsController extends AbstractController
 {
@@ -22,7 +22,7 @@ class TextsController extends AbstractController
      */
     public function index(TextsRepository $textsRepository): Response
     {
-        return $this->render('texts/index.html.twig', [
+        return $this->render('admin/texts/index.html.twig', [
             'texts' => $textsRepository->findAll(),
         ]);
     }
@@ -55,7 +55,7 @@ class TextsController extends AbstractController
             return $this->redirectToRoute('texts_index');
         }
 
-        return $this->render('texts/new.html.twig', [
+        return $this->render('admin/texts/new.html.twig', [
             'text' => $text,
             'form' => $form->createView(),
         ]);
@@ -66,7 +66,7 @@ class TextsController extends AbstractController
      */
     public function show(Texts $text): Response
     {
-        return $this->render('texts/show.html.twig', [
+        return $this->render('admin/texts/show.html.twig', [
             'text' => $text,
         ]);
     }
@@ -85,7 +85,7 @@ class TextsController extends AbstractController
             return $this->redirectToRoute('texts_index');
         }
 
-        return $this->render('texts/edit.html.twig', [
+        return $this->render('admin/texts/edit.html.twig', [
             'text' => $text,
             'form' => $form->createView(),
         ]);
