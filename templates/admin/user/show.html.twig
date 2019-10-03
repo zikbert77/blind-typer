@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}User view{% endblock %}
+
+{% block two_rows_content_1 %}
+    <div class="content">
+        <a href="{{ path('adminIndex') }}" class="btn btn-block">Index</a>
+        <a href="{{ path('adminOverview') }}" class="btn btn-block">Overview</a>
+        <a href="{{ path('user_index') }}" class="btn btn-block">User</a>
+    </div>
+{% endblock %}
+
+{% block two_rows_content_2 %}
+    <div class="content">
+        <h1>User</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>IsPremium</th>
+                <td>{{ user.isPremium ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('user_index') }}">back to list</a>
+
+        <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+        {{ include('admin/user/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
