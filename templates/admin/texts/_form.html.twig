@@ -13,10 +13,22 @@
 </style>
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-        {{ form_row(form.text_body) }}
+{#    {{ form_widget(form) }}#}
     <div class="form-group">
-        <div class="test-text-display" style="width: 900px; height: auto; margin: 0 auto;">
+        {{ form_widget(form.text_body, {'attr': {'style': 'width: 1050px; margin: 0 auto;'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.language) }}:
+        {{ form_widget(form.language) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.is_checked) }}:
+        {{ form_widget(form.is_checked) }}
+    </div>
+    <hr>
+    <div class="form-group">
+        <h2>Formatted text preview: </h2>
+        <div class="test-text-display" style="width: 1050px; height: auto;">
             <span id="original-text">{{ text.parsedText|raw }}</span>
         </div>
     </div>
