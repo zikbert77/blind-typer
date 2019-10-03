@@ -4,12 +4,12 @@
 
 {% block one_row_content %}
     <div class="content">
-        <a href="{{ path('texts_index') }}">back to list</a>
+        <a href="{{ path('texts_index') }}">&Lt;back to list</a>
         <hr>
 
         <h1>Create new Texts</h1>
 
-        {{ include('texts/_form.html.twig') }}
+        {{ include('admin/texts/_form.html.twig') }}
 
     </div>
 {% endblock %}

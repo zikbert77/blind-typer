@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}Admin - index{% endblock %}
+{% block title %}Edit User{% endblock %}
 
 {% block two_rows_content_1 %}
     <div class="content">
@@ -12,10 +12,12 @@
 
 {% block two_rows_content_2 %}
     <div class="content">
-        <br>
-        <a class="btn" href="{{ path('clearCache') }}">Clear cache</a>
-        <a class="btn" href="{{ path('texts_index') }}">Texts</a>
-        <br>
-        <br>
+        <h1>Edit User</h1>
+
+        {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('user_index') }}">back to list</a>
+
+        {{ include('admin/user/_delete_form.html.twig') }}
     </div>
 {% endblock %}

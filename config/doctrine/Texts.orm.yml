@@ -48,6 +48,12 @@ App\Entity\Texts:
                 fixed: false
                 default: 'NULL'
             column: parsed_text
+        isChecked:
+            type: boolean
+            nullable: true
+            options:
+                default: '0'
+            column: is_checked
         createdAt:
             type: datetime
             nullable: false
