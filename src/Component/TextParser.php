@@ -18,7 +18,12 @@ class TextParser
         self::DELIMITER_SPACE => '%s',
     ];
     
-    public function __construct(string $originalText)
+    public function __construct(string $originalText = null)
+    {
+        $this->originalText = $originalText;
+    }
+
+    public function setOriginalText(string $originalText)
     {
         $this->originalText = $originalText;
     }
