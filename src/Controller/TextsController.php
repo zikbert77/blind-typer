@@ -80,6 +80,10 @@ class TextsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $parser = new TextParser($text->getTextBody());
+            $text->setParsedText($parser->parseForJs());
+            $text->setWordsCount($parser->calculateWords());
+            $text->setLetterCounts($parser->calculateLetters());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('texts_index');
