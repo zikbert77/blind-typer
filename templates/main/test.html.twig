@@ -46,7 +46,9 @@
     <script>
         $(document).ready(function () {
 
+            let lettersCount = 0;
             let passedWords = 0;
+            let mistakes = 0;
             let isTimerStarted = false;
             let positionToScroll = 195;
             let scrollPx = 66;
@@ -101,6 +103,7 @@
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
                 } else {
                     //set letter style wrong
+                    mistakes++;
                     $originalLetter.removeClass('current');
                     $originalLetter.addClass('wrong');
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
@@ -111,6 +114,7 @@
                 }
 
                 calculateCPM(inputIndex);
+                calculateAccuracy(inputIndex);
 
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
@@ -155,7 +159,6 @@
             }
 
             function backspaceAction(input) {
-
                 let inputIndex = input.length;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
@@ -233,7 +236,6 @@
             }
             
             function calculateWPM() {
-
                 let passedTime = getPassedTime();
                 let wpm = Math.ceil((passedWords * 60) / passedTime);
 
@@ -241,15 +243,23 @@
             }
 
             function calculateCPM(inputIndex) {
-
                 let passedTime = getPassedTime();
                 let cpm = Math.ceil((inputIndex * 60) / passedTime);
-
-                if (cpm < 0) {
+                if (cpm < 0 || cpm > 10000) {
                     cpm = 0;
                 }
 
                 $countCharsPerMinuteBox.text(cpm);
+            }
+
+            function calculateAccuracy(inputIndex) {
+                console.log(inputIndex);
+                let accuracy = 0;
+                if (lettersCount > 0) {
+                    accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
+                }
+
+                $countAccuracyBox.text(accuracy);
             }
 
             function focusOnTextarea() {
@@ -278,7 +288,7 @@
                         let textId = data.textId;
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
-                        let lettersCount = data.lettersCount;
+                        lettersCount = data.lettersCount;
 
                         $("input#text-id").val(textId);
                         $originalTextBox.append(text);
