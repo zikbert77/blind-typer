@@ -25,14 +25,15 @@ class TestsHistoryRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     * @param int $limit
      * @return array
      */
-    public function getWpmDataForChart(User $user): array
+    public function getDataForChart(User $user, $limit = 10): array
     {
         $history = $this->_em->getRepository(TestsHistory::class)->findBy(
             ['user' => $user],
-            ['id' => 'ASC'],
-            10
+            ['createdAt' => 'DESC'],
+            $limit
         );
 
         $response = [];
@@ -40,8 +41,14 @@ class TestsHistoryRepository extends ServiceEntityRepository
         foreach ($history as $testHistory) {
             $response['wpm'][] = $testHistory->getWordsPerMinute();
             $response['cpm'][] = $testHistory->getCharsPerMinute();
-            $response['datetime'][] = $testHistory->getCreatedAt();
+            $response['accuracy'][] = $testHistory->getAccuracy();
+            $response['datetime'][] = $testHistory->getCreatedAt()->format('Y-m-d');
         }
+
+        $response['wpm'] = array_reverse($response['wpm']);
+        $response['cpm'] = array_reverse($response['cpm']);
+        $response['accuracy'] = array_reverse($response['accuracy']);
+        $response['datetime'] = array_reverse($response['datetime']);
 
         return $response;
     }
@@ -79,7 +86,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
             $history = $this->_em->getRepository(TestsHistory::class)->findBy(
                 ['user' => $user],
                 ['id' => 'DESC'],
-                11
+                1
             );
 
             return $history[0] ?? null;

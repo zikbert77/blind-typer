@@ -19,7 +19,6 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>IsPremium</th>
@@ -31,10 +30,13 @@
             {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
                     <td>
                         {% for role in user.roles %}
-                            {{ role }}
+                             {% if role == 'ROLE_ADMIN' %}
+                                 <b style="color: red;" title="admin">{{ user.email }}</b>
+                             {% else %}
+                                 {{ user.email }}
+                             {% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ user.firstName }}</td>
@@ -54,6 +56,7 @@
             </tbody>
         </table>
 
-        <a href="{{ path('user_new') }}">Create new</a>
+        <br>
+        <a href="{{ path('user_new') }}" class="btn">Create new</a>
     </div>
 {% endblock %}

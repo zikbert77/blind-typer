@@ -2,6 +2,7 @@
 
 {% block one_row_content %}
     <div class="test-wrapper">
+{#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
             <label for="test-duration">Test duration: </label>
             <select name="test-duration" id="test-duration">
@@ -37,16 +38,57 @@
             </div>
         </div>
     </div>
+
+    <div id="testStatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Your test result</h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <b>Words per minute (WPM):</b> <span id="modal-test-result-wpm">0</span>
+                </p>
+                <p>
+                    <b>Chars per minute (CPM):</b> <span id="modal-test-result-cpm">0</span>
+                </p>
+                <p>
+                   <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
+                </p>
+                {% if app.user %}
+                    <canvas id="lastStatChart" height="100"></canvas>
+
+                    <span style="font-size: 14px;">
+                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
+                    </span>
+                {% else %}
+                    <p>
+                        If you want to view your typing statistic, please
+                        <a href="{{ path('app_login') }}" class="link">log in</a> or
+                        <a href="{{ path('register') }}" class="link">register</a>
+                        .
+                    </p>
+                {% endif %}
+            </div>
+            <hr>
+            <div class="modal-footer">
+                <button class="close right">Ok</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block two_rows %}{% endblock %}
 
 {%block scripts %}
+    <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
+    <script src="{{ asset('chartjs/Chart.js') }}"></script>
     <script src="{{ asset('js/test.js') }}"></script>
     <script>
         $(document).ready(function () {
-
+            let lettersCount = 0;
             let passedWords = 0;
+            let mistakes = 0;
             let isTimerStarted = false;
             let positionToScroll = 195;
             let scrollPx = 66;
@@ -57,6 +99,24 @@
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
             let $originalTextBox = $("#original-text");
+
+            let testStatModal = $("#testStatModal");
+            let testStatModalCloseSpan = $(".close");
+
+            let btn = $("#myBtn");
+            btn.click(function () {
+                showTestStatModal()
+            });
+
+            testStatModalCloseSpan.click(function () {
+                hideTestStatModal();
+            });
+
+            $(window).on('click', function(event){
+                if (event.target.id === 'testStatModal') {
+                    hideTestStatModal();
+                }
+            });
 
             initText();
             focusOnTextarea();
@@ -101,6 +161,7 @@
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
                 } else {
                     //set letter style wrong
+                    mistakes++;
                     $originalLetter.removeClass('current');
                     $originalLetter.addClass('wrong');
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
@@ -111,6 +172,7 @@
                 }
 
                 calculateCPM(inputIndex);
+                calculateAccuracy(inputIndex);
 
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
@@ -155,7 +217,6 @@
             }
 
             function backspaceAction(input) {
-
                 let inputIndex = input.length;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
@@ -197,9 +258,10 @@
                         calculateWPM();
                     } else {
                         stopTimer(interval);
-                        alert('WPM: ' + $countWordsPerMinuteBox.text());
-                        saveResult();
-                        window.location.reload();
+                        $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
+                        $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
+                        $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
+                        showTestStatModal();
                     }
                 }, 1000);
 
@@ -208,6 +270,17 @@
 
             function stopTimer(interval) {
                 clearInterval(interval);
+            }
+
+            function showTestStatModal() {
+                saveResult();
+                getTestHistoryForUser();
+                testStatModal.css("display", "block");
+            }
+
+            function hideTestStatModal() {
+                testStatModal.css("display", "none");
+                window.location.reload();
             }
             
             function getPassedTime() {
@@ -233,7 +306,6 @@
             }
             
             function calculateWPM() {
-
                 let passedTime = getPassedTime();
                 let wpm = Math.ceil((passedWords * 60) / passedTime);
 
@@ -241,19 +313,74 @@
             }
 
             function calculateCPM(inputIndex) {
-
                 let passedTime = getPassedTime();
                 let cpm = Math.ceil((inputIndex * 60) / passedTime);
-
-                if (cpm < 0) {
+                if (cpm < 0 || cpm > 10000) {
                     cpm = 0;
                 }
 
                 $countCharsPerMinuteBox.text(cpm);
             }
 
+            function calculateAccuracy(inputIndex) {
+                console.log(inputIndex);
+                let accuracy = 0;
+                if (lettersCount > 0) {
+                    accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
+                }
+
+                $countAccuracyBox.text(accuracy);
+            }
+
             function focusOnTextarea() {
                 $("textarea#test-input").focus();
+            }
+
+            function buildLastUserTestHistoryChart(data) {
+                let ctx = document.getElementById('lastStatChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.datetime,
+                        datasets: [{
+                            label: 'Words per minute (WPM)',
+                            data: data.wpm,
+                            backgroundColor: [
+                                'rgba(61, 163, 232, 0.1)',
+                            ],
+                            borderColor: [
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                            ],
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        tooltips: {
+                            mode: 'x-axis',
+                            intercept: true
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
             }
 
             function saveResult() {
@@ -272,13 +399,23 @@
                 });
             }
 
+            function getTestHistoryForUser() {
+                $.get('{{ path('getTestHistoryForUser') }}', {
+                    limit: 3
+                }, function (data, status) {
+                    if (status === 'success') {
+                        buildLastUserTestHistoryChart(data);
+                    }
+                });
+            }
+
             function initText() {
                 $.get('/api/text/get/1', {}, function (data, status) {
                     if (status === 'success') {
                         let textId = data.textId;
                         let text = data.parsedText;
                         let wordsCount = data.wordsCount;
-                        let lettersCount = data.lettersCount;
+                        lettersCount = data.lettersCount;
 
                         $("input#text-id").val(textId);
                         $originalTextBox.append(text);

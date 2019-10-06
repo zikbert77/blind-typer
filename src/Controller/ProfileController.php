@@ -11,10 +11,10 @@ class ProfileController extends AbstractController
     public function index(TokenStorageInterface $tokenStorage)
     {
         /** @var TestsHistory $lastPassedTest */
-        $testsHistoryData = $this->getDoctrine()->getRepository(TestsHistory::class)->getWpmDataForChart(
+        $testsHistoryData = $this->getDoctrine()->getRepository(TestsHistory::class)->getDataForChart(
             $tokenStorage->getToken()->getUser()
         );
-        
+
         return $this->render('profile/index.html.twig', [
             'testsHistoryData' => $testsHistoryData
         ]);
