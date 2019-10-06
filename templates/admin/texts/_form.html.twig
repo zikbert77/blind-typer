@@ -35,6 +35,10 @@
     <hr>
     <div class="form-group">
         <h2>Formatted text preview: </h2>
+        <div class="text-info">
+            <b>Words:</b> <span id="text-words-count"></span>;
+            <b>Letters:</b> <span id="text-letters-count"></span>
+        </div>
         <div class="test-text-display" id="test-text-display-preview" style="width: 1050px; height: auto;">
             <span id="original-text">{{ text.parsedText|raw }}</span>
         </div>
@@ -60,7 +64,9 @@
         function updatePreview() {
             $.get('{{ path('prepareText') }}', $('form[name="texts"]').serialize(), function (data, status) {
                 if (status === 'success') {
-                    $("#test-text-display-preview").html(data);
+                    $("#test-text-display-preview").html(data['parsedText']);
+                    $("#text-words-count").html(data['words']);
+                    $("#text-letters-count").html(data['chars']);
                 }
             })
         }

@@ -18,7 +18,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function test($time = 1)
+    public function test(TokenStorageInterface $tokenStorage, $time = 1)
     {
         return $this->render('main/test.html.twig', [
             'keyboard' => Keyboard::loadKeyboard(Keyboard::KEYBOARD_ANSI)

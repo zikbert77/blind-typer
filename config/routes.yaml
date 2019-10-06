@@ -24,6 +24,10 @@ saveTestResult:
     path: /api/tests/result/save
     controller: App\Controller\ApiController::saveTestResult
 
+getTestHistoryForUser:
+    path: /api/tests/history
+    controller: App\Controller\ApiController::getTestHistoryForUser
+
 register:
     path: /register
     controller: App\Controller\RegistrationController::register
