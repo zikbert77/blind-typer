@@ -2,27 +2,30 @@
 
 namespace App\Controller;
 
-use App\Component\TextParser;
-use App\Entity\TestsHistory;
 use App\Entity\Texts;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\TestsHistory;
+use App\Component\TextParser;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ApiController extends AbstractController
 {
-
     private static $textParser = null;
 
-    private static function getParsedText(string $text)
+    private static function getParsedText(string $text): array
     {
         if (is_null(self::$textParser)) {
             self::$textParser = new TextParser();
         }
 
         self::$textParser->setOriginalText($text);
-        return self::$textParser->parseForJs();
+        return [
+            'parsedText' => self::$textParser->parseForJs(),
+            'words' => self::$textParser->calculateWords(),
+            'chars' => self::$textParser->calculateLetters(),
+        ];
     }
 
     public function prepareText(Request $request)

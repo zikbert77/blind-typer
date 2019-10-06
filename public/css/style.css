@@ -232,6 +232,10 @@ img.keyboard {
     margin-bottom: 5px;
 }
 
+sub {
+    margin-left: 5px;
+}
+
 .two-letters {
     line-height: 12px;
     position:relative;

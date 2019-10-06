@@ -2,8 +2,6 @@
 
 namespace App\Component;
 
-use phpDocumentor\Reflection\Types\Self_;
-
 class TextParser
 {
     const DELIMITER_ENTER = "\r";
@@ -100,6 +98,9 @@ class TextParser
                 $word .= strpos($word, self::DELIMITER_ENTER) == false ? self::DELIMITER_SPACE : '';
                 $wordArray = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
                 $wordLength = count($wordArray);
+                if (isset($wordArray[$wordLength - 2]) && $wordArray[$wordLength - 2] == '.' && $wordArray[$wordLength - 1] == self::DELIMITER_SPACE) {
+                    $wordArray[$wordLength - 1] = self::DELIMITER_ENTER;
+                }
                 for ($letterIterator = 0; $letterIterator < $wordLength; $letterIterator++) {
                     $newRow = '';
                     $letter = $wordArray[$letterIterator];
@@ -113,6 +114,7 @@ class TextParser
                         $displayedLetter = '⏎' . self::DELIMITER_ENTER;
                         $newRow = '<br>';
                     } elseif ($letter == self::DELIMITER_SPACE) {
+                        $displayedLetter = '&nbsp;' . self::DELIMITER_SPACE;
                         $letterClasses .= ' space';
                     }
 
