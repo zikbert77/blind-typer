@@ -161,12 +161,15 @@
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
                 } else {
                     //set letter style wrong
-                    mistakes++;
+                    if (!$originalLetter.hasClass('wrong')) {
+                        mistakes++;
+                        console.log('Mistakes was added: ' + mistakes);
+                    }
                     $originalLetter.removeClass('current');
                     $originalLetter.addClass('wrong');
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
                 }
-                
+
                 if ($originalLetter.hasClass('end-word')) {
                     updatePassedWords('+');
                 }
@@ -200,7 +203,7 @@
                     highlightShift()
                 }
             }
-            
+
             function isShiftKeyShouldBeHighlighted(letter) {
                 let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
 
@@ -220,7 +223,7 @@
                 let inputIndex = input.length;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
-                
+
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
                 }
@@ -235,12 +238,17 @@
                 }
 
                 if ($currentLetter.hasClass('wrong')) {
+                    mistakes--;
                     $currentLetter.removeClass('wrong');
                 }
 
                 //Remove all next letter classes
                 if ($nextLetter.hasClass('current')) {
                     $nextLetter.removeClass('current');
+                }
+
+                if ($nextLetter.hasClass('wrong')) {
+                    $nextLetter.removeClass('wrong');
                 }
 
                 //Set previous letter as current
@@ -282,7 +290,7 @@
                 testStatModal.css("display", "none");
                 window.location.reload();
             }
-            
+
             function getPassedTime() {
                 let leftTime = $timerLeftBox.text();
                 let totalTime = $testDurationBox.val() * 60;
@@ -304,7 +312,7 @@
                         break;
                 }
             }
-            
+
             function calculateWPM() {
                 let passedTime = getPassedTime();
                 let wpm = Math.ceil((passedWords * 60) / passedTime);

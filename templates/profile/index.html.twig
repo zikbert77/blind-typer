@@ -7,7 +7,12 @@
     <script src="{{ asset('chartjs/Chart.js') }}"></script>
     <div class="content">
         <div class="settings">
-            <h1>{{ app.user.email }}</h1>
+            <h1>
+                {{ app.user.email }}
+                <span class="user-settings-button" title="settings">
+                   <i class="fal fa-user-edit"></i>
+                </span>
+            </h1>
         </div>
         <canvas id="myChart" height="100"></canvas>
         <canvas id="accuracyChart" height="100"></canvas>
