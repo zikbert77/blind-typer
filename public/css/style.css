@@ -307,6 +307,21 @@ form.login-form a {
     padding-bottom: 10px;
 }
 
+/* Profile */
+.user-settings-button {
+    font-size: 22px;
+    cursor: pointer;
+    transition: all .3s;
+    top: -3px;
+    color: #4a4a4a;
+    position: relative;
+    margin-left: 5px;
+}
+
+.user-settings-button:hover {
+    opacity: .8;
+}
+
 /* Footer */
 footer {
     padding: 0;
@@ -321,7 +336,6 @@ footer {
 }
 
 /* Modals */
-/* The Modal (background) */
 .modal {
     display: none;
     position: fixed;
@@ -367,13 +381,11 @@ footer {
     border-bottom-right-radius: 20px;
 }
 
-/* Add Animation */
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 100px; opacity: 1}
 }
 
-/* The Close Button */
 span.close {
     margin-top: 15px;
     color: #6a6a6a;
