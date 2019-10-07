@@ -23,10 +23,6 @@ class User implements UserInterface
 
     private $roles;
 
-    private $firstName;
-
-    private $lastName;
-
     private $isPremium;
 
     private $createdAt;
@@ -90,30 +86,6 @@ class User implements UserInterface
     public function setRoles(?int $role): self
     {
         $this->roles = $role;
-
-        return $this;
-    }
-
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(?string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): self
-    {
-        $this->lastName = $lastName;
 
         return $this;
     }

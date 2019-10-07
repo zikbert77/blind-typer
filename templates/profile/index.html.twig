@@ -9,9 +9,11 @@
         <div class="settings">
             <h1>
                 {{ app.user.email }}
-                <span class="user-settings-button" title="settings">
-                   <i class="fal fa-user-edit"></i>
-                </span>
+                <a href="{{ path('profileSettings') }}">
+                    <span class="user-settings-button" title="settings">
+                       <i class="fal fa-user-edit"></i>
+                    </span>
+                </a>
             </h1>
         </div>
         <canvas id="myChart" height="100"></canvas>

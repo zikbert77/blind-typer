@@ -33,22 +33,6 @@ App\Entity\User:
             nullable: true
             options:
                 default: '1'
-        firstName:
-            type: string
-            nullable: true
-            length: 60
-            options:
-                fixed: false
-                default: 'NULL'
-            column: first_name
-        lastName:
-            type: string
-            nullable: true
-            length: 60
-            options:
-                fixed: false
-                default: 'NULL'
-            column: last_name
         isPremium:
             type: boolean
             nullable: true

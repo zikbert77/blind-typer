@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TestsHistory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -17,6 +18,13 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'testsHistoryData' => $testsHistoryData
+        ]);
+    }
+
+    public function settings(TokenStorageInterface $tokenStorage, Request $request)
+    {
+        return $this->render('profile/settings.html.twig', [
+            'user' => $tokenStorage->getToken()->getUser()
         ]);
     }
 }
