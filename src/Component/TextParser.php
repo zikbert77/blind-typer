@@ -116,6 +116,8 @@ class TextParser
                     } elseif ($letter == self::DELIMITER_SPACE) {
                         $displayedLetter = '&nbsp;' . self::DELIMITER_SPACE;
                         $letterClasses .= ' space';
+                    } elseif ($letter == '"') {
+                        $letter = '&quot;';
                     }
 
                     $letter = '<span class="' . $letterClasses . '" data-letter="' . $letter . '">' . $displayedLetter . '</span>' . $newRow;

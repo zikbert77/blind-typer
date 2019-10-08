@@ -23,11 +23,11 @@ class User implements UserInterface
 
     private $roles;
 
-    private $firstName;
-
-    private $lastName;
-
     private $isPremium;
+
+    private $defaultKeyboard;
+
+    private $defaultLanguage;
 
     private $createdAt;
 
@@ -94,30 +94,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFirstName(): ?string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(?string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
     public function getIsPremium(): ?bool
     {
         return $this->isPremium;
@@ -126,6 +102,30 @@ class User implements UserInterface
     public function setIsPremium(?bool $isPremium): self
     {
         $this->isPremium = $isPremium;
+
+        return $this;
+    }
+
+    public function getDefaultKeyboard(): ?int
+    {
+        return $this->defaultKeyboard;
+    }
+
+    public function setDefaultKeyboard(?int $defaultKeyboard): self
+    {
+        $this->defaultKeyboard = $defaultKeyboard;
+
+        return $this;
+    }
+
+    public function getDefaultLanguage(): ?Languages
+    {
+        return $this->defaultLanguage;
+    }
+
+    public function setDefaultLanguage(?Languages $defaultLanguage): self
+    {
+        $this->defaultLanguage = $defaultLanguage;
 
         return $this;
     }

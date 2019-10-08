@@ -11,6 +11,10 @@ profileIndex:
     path: /profile
     controller: App\Controller\ProfileController::index
 
+profileSettings:
+    path: /profile/settings
+    controller: App\Controller\ProfileController::settings
+
 #--------------------api--------------------
 prepareText:
     path: /api/text/prepare
