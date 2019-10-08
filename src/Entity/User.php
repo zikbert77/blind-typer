@@ -25,6 +25,10 @@ class User implements UserInterface
 
     private $isPremium;
 
+    private $defaultKeyboard;
+
+    private $defaultLanguage;
+
     private $createdAt;
 
     private $updatedAt;
@@ -98,6 +102,30 @@ class User implements UserInterface
     public function setIsPremium(?bool $isPremium): self
     {
         $this->isPremium = $isPremium;
+
+        return $this;
+    }
+
+    public function getDefaultKeyboard(): ?int
+    {
+        return $this->defaultKeyboard;
+    }
+
+    public function setDefaultKeyboard(?int $defaultKeyboard): self
+    {
+        $this->defaultKeyboard = $defaultKeyboard;
+
+        return $this;
+    }
+
+    public function getDefaultLanguage(): ?Languages
+    {
+        return $this->defaultLanguage;
+    }
+
+    public function setDefaultLanguage(?Languages $defaultLanguage): self
+    {
+        $this->defaultLanguage = $defaultLanguage;
 
         return $this;
     }

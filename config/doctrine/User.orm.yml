@@ -39,6 +39,13 @@ App\Entity\User:
             options:
                 default: '0'
             column: is_premium
+        defaultKeyboard:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+                default: 'NULL'
+            column: default_keyboard
         createdAt:
             type: datetime
             nullable: true
@@ -51,4 +58,15 @@ App\Entity\User:
             options:
                 default: current_timestamp()
             column: updated_at
+    manyToOne:
+        defaultLanguage:
+            targetEntity: Languages
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                default_language:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

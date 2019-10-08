@@ -4,13 +4,18 @@ namespace App\Component;
 
 class Keyboard
 {
-    const KEYBOARD_ANSI = 'ansi';
-    const KEYBOARD_ISO = 'iso';
+    const KEYBOARD_ANSI = 1;
+    const KEYBOARD_ISO = 2;
+
+    const KEYBOARD_TITLES = [
+        self::KEYBOARD_ANSI => 'ansi',
+        self::KEYBOARD_ISO => 'iso',
+    ];
 
     public static function loadKeyboard(string $type)
     {
         $keyboard = new self();
-        $methodName = 'load' . ucfirst($type) . 'Keyboard';
+        $methodName = 'load' . ucfirst(self::KEYBOARD_TITLES[$type]) . 'Keyboard';
         if (method_exists($keyboard, $methodName)) {
             return $keyboard::$methodName();
         }
