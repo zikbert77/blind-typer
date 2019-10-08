@@ -19,7 +19,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function test(TokenStorageInterface $tokenStorage, $time = 1)
+    public function test(TokenStorageInterface $tokenStorage)
     {
         /** @var User $user */
         $user = $tokenStorage->getToken()->getUser();
