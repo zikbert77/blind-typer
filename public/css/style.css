@@ -272,6 +272,11 @@ span.key.key-current {
     padding: 10px 40px;
 }
 
+.iso-enter {
+    /*height: 80px;*/
+    /*max-height: 80px;*/
+}
+
 /* Two rows */
 .main-row {
     margin-top: 20px;
