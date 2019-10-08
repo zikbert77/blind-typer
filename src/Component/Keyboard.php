@@ -73,7 +73,7 @@ class Keyboard
                         <span class="key" data-key="k">K</span>
                         <span class="key" data-key="l">L</span>
                         <span class="key" data-key=";" data-shift-key=":">:<sub>;</sub></span>
-                        <span class="key" data-key="\'" data-shift-key="&#34;">&#34;<sub>&#39;</sub></span>
+                        <span class="key" data-key="\'" data-shift-key="&quot;">&quot;<sub>&#39;</sub></span>
                         <span class="key key-length-1" data-key="&#10;">enter</span>
                 
                     </div>
