@@ -90,7 +90,8 @@
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScroll = 195;
+            let positionToScrollDown = 195;
+            let positionToScrollUp = 130;
             let scrollPx = 64;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
@@ -185,11 +186,16 @@
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
 
-                if ($nextLetter.position().top > positionToScroll) {
-                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
-                }
-
+                scrollTestDisplayBox($nextLetter.position().top);
                 highlightKeyOnKeyboard($nextLetter.data('letter'));
+            }
+
+            function scrollTestDisplayBox(letterPosition) {
+                if (letterPosition > positionToScrollDown) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
+                } else if (letterPosition < positionToScrollUp) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() - scrollPx)
+                }
             }
 
             function highlightKeyOnKeyboard(letter) {
