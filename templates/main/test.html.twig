@@ -230,7 +230,7 @@
             }
 
             function backspaceAction(input) {
-                let inputIndex = input.length;
+                let inputIndex = input.length - 1;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
 
