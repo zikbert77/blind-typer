@@ -42,7 +42,7 @@ class Keyboard
                         <span class="key" data-key="0">0</span>
                         <span class="key" data-key="-">-</span>
                         <span class="key" data-key="=">=</span>
-                        <span class="key key-length-1" data-key="tab">delete</span>
+                        <span class="key key-length-1" data-key="del">delete</span>
                 
                     </div>
 
