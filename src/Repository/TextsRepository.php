@@ -22,7 +22,7 @@ class TextsRepository extends ServiceEntityRepository
     public function selectRandomText($duration = 1): Texts
     {
         $minWordsLimit = 120;
-        $maxWordsLimit = 360;
+        $maxWordsLimit = 600;
 
         $qb = $this->createQueryBuilder('t');
         switch ($duration) {
