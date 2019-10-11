@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +19,12 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function test(TokenStorageInterface $tokenStorage, $time = 1)
+    public function test(TokenStorageInterface $tokenStorage)
     {
+        /** @var User $user */
+        $user = $tokenStorage->getToken()->getUser();
         return $this->render('main/test.html.twig', [
-            'keyboard' => Keyboard::loadKeyboard(Keyboard::KEYBOARD_ANSI)
+            'keyboard' => Keyboard::loadKeyboard(is_string($user) ? Keyboard::KEYBOARD_ANSI : $user->getDefaultKeyboard())
         ]);
     }
 }

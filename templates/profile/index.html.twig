@@ -7,7 +7,22 @@
     <script src="{{ asset('chartjs/Chart.js') }}"></script>
     <div class="content">
         <div class="settings">
-            <h1>{{ app.user.email }}</h1>
+            <h1>
+                {{ app.user.email }}
+                <a href="{{ path('profileSettings') }}">
+                    <span class="user-settings-button" title="settings">
+                       <i class="fal fa-user-edit"></i>
+                    </span>
+                </a>
+            </h1>
+            <hr>
+            <label for="test-type">Statistic for: </label>
+            <select name="test-type" id="test-type">
+                <option value="general">All tests</option>
+                <option value="1minute">1 minute test</option>
+                <option value="3minute">3 minute test</option>
+                <option value="5minute">5 minute test</option>
+            </select>
         </div>
         <canvas id="myChart" height="100"></canvas>
         <canvas id="accuracyChart" height="100"></canvas>

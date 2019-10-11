@@ -6,9 +6,9 @@
         <div class="test-settings-container" id="test-settings-container">
             <label for="test-duration">Test duration: </label>
             <select name="test-duration" id="test-duration">
-                <option value="1">1 minute</option>
-                <option value="3">3 minute</option>
-                <option value="5">5 minute</option>
+                <option value="1" {% if app.request.get('duration') == 1 %} selected {% endif %}>1 minute</option>
+                <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
+                <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
             </select>
             <div class="right">
                 <span id="words-per-minute">
@@ -90,8 +90,9 @@
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScroll = 195;
-            let scrollPx = 66;
+            let positionToScrollDown = 195;
+            let positionToScrollUp = 130;
+            let scrollPx = 64;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
@@ -110,6 +111,11 @@
 
             testStatModalCloseSpan.click(function () {
                 hideTestStatModal();
+            });
+
+            $testDurationBox.change(function () {
+                insertParam('duration', $(this).val());
+                window.location.href;
             });
 
             $(window).on('click', function(event){
@@ -137,7 +143,7 @@
                 compareInputWithText($(this).val());
             });
 
-            $("textarea#test-input").keyup(function(e) {
+            $("textarea#test-input").keydown(function(e) {
                 switch (e.keyCode) {
                     case 8:  // Backspace
                         backspaceAction($(this).val());
@@ -161,12 +167,14 @@
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
                 } else {
                     //set letter style wrong
-                    mistakes++;
+                    if (!$originalLetter.hasClass('wrong')) {
+                        mistakes++;
+                    }
                     $originalLetter.removeClass('current');
                     $originalLetter.addClass('wrong');
                     $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
                 }
-                
+
                 if ($originalLetter.hasClass('end-word')) {
                     updatePassedWords('+');
                 }
@@ -177,11 +185,16 @@
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
                 $nextLetter.addClass('current');
 
-                if ($nextLetter.position().top > positionToScroll) {
-                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
-                }
-
+                scrollTestDisplayBox($nextLetter.position().top);
                 highlightKeyOnKeyboard($nextLetter.data('letter'));
+            }
+
+            function scrollTestDisplayBox(letterPosition) {
+                if (letterPosition > positionToScrollDown) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
+                } else if (letterPosition < positionToScrollUp) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() - scrollPx)
+                }
             }
 
             function highlightKeyOnKeyboard(letter) {
@@ -200,7 +213,7 @@
                     highlightShift()
                 }
             }
-            
+
             function isShiftKeyShouldBeHighlighted(letter) {
                 let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
 
@@ -217,10 +230,10 @@
             }
 
             function backspaceAction(input) {
-                let inputIndex = input.length;
+                let inputIndex = input.length - 1;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
-                
+
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
                 }
@@ -235,12 +248,17 @@
                 }
 
                 if ($currentLetter.hasClass('wrong')) {
+                    mistakes--;
                     $currentLetter.removeClass('wrong');
                 }
 
                 //Remove all next letter classes
                 if ($nextLetter.hasClass('current')) {
                     $nextLetter.removeClass('current');
+                }
+
+                if ($nextLetter.hasClass('wrong')) {
+                    $nextLetter.removeClass('wrong');
                 }
 
                 //Set previous letter as current
@@ -282,7 +300,7 @@
                 testStatModal.css("display", "none");
                 window.location.reload();
             }
-            
+
             function getPassedTime() {
                 let leftTime = $timerLeftBox.text();
                 let totalTime = $testDurationBox.val() * 60;
@@ -304,7 +322,7 @@
                         break;
                 }
             }
-            
+
             function calculateWPM() {
                 let passedTime = getPassedTime();
                 let wpm = Math.ceil((passedWords * 60) / passedTime);
@@ -323,7 +341,6 @@
             }
 
             function calculateAccuracy(inputIndex) {
-                console.log(inputIndex);
                 let accuracy = 0;
                 if (lettersCount > 0) {
                     accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
@@ -410,7 +427,8 @@
             }
 
             function initText() {
-                $.get('/api/text/get/1', {}, function (data, status) {
+                let duration = $testDurationBox.val();
+                $.get('/api/text/get/' + duration, {}, function (data, status) {
                     if (status === 'success') {
                         let textId = data.textId;
                         let text = data.parsedText;

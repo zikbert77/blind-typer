@@ -25,7 +25,9 @@ class TextsType extends AbstractType
                 'class' => Languages::class,
                 'choice_label' => 'title',
             ])
-            ->add('is_checked', CheckboxType::class)
+            ->add('is_checked', CheckboxType::class, [
+                'required' => false,
+            ])
         ;
     }
 
