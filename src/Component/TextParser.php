@@ -15,6 +15,12 @@ class TextParser
         self::DELIMITER_NEXT_ROW => '%e',
         self::DELIMITER_SPACE => '%s',
     ];
+    private $replacements = [
+        '—' => '-',
+        '’' => '\'',
+        '“' => '"',
+        '”' => '"',
+    ];
     
     public function __construct(string $originalText = null)
     {
@@ -65,6 +71,11 @@ class TextParser
         $text = $this->originalText;
         $text = trim($text);
         $text = strip_tags($text);
+
+        foreach ($this->replacements as $replace => $replacement) {
+            $text = str_replace($replace, $replacement, $text);
+        }
+
         $this->originalText = $text;
     }
 
