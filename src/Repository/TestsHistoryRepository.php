@@ -96,7 +96,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @param Texts $text
      * @param int $testDuration
      * @param int $wpm
@@ -104,7 +104,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
      * @param int $accuracy
      * @return array
      */
-    public function save(User $user, Texts $text, int $testDuration, int $wpm, int $cpm, int $accuracy): array
+    public function save(?User $user, Texts $text, int $testDuration, int $wpm, int $cpm, int $accuracy): array
     {
         try {
             $testHistory = new TestsHistory();

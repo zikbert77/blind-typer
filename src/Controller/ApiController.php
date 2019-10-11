@@ -50,16 +50,8 @@ class ApiController extends AbstractController
             ]);
         }
 
-        if (is_string($user)) {
-            return new JsonResponse([
-                'status' => 'failed',
-                'error' => 'User is anon',
-            ]);
-        }
-
-        /** @var TestsHistory $text */
         $result = $this->getDoctrine()->getRepository(TestsHistory::class)->save(
-            $user,
+            is_string($user) ? null : $user,
             $text,
             $testDuration,
             $wpm,
