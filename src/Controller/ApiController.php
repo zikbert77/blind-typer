@@ -50,6 +50,11 @@ class ApiController extends AbstractController
             ]);
         }
 
+        $previousPassedTests = $request->getSession()->get('previousPassedTests') ?? [];
+        $previousPassedTests[] = $text->getId();
+
+        $request->getSession()->set('previousPassedTests', $previousPassedTests);
+
         $result = $this->getDoctrine()->getRepository(TestsHistory::class)->save(
             is_string($user) ? null : $user,
             $text,
@@ -73,10 +78,10 @@ class ApiController extends AbstractController
         ));
     }
 
-    public function getText($duration = 1)
+    public function getText(Request $request, $duration = 1)
     {
         /** @var Texts $text */
-        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($duration);
+        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($request, $duration);
 
         return new JsonResponse([
             'textId' => $text->getId(),
