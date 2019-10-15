@@ -24,7 +24,7 @@ class MainController extends AbstractController
         /** @var User $user */
         $user = $tokenStorage->getToken()->getUser();
         return $this->render('main/test.html.twig', [
-            'keyboard' => Keyboard::loadKeyboard(is_string($user) ? Keyboard::KEYBOARD_ANSI : $user->getDefaultKeyboard())
+            'keyboard' => Keyboard::loadKeyboard(is_string($user) ? Keyboard::KEYBOARD_ANSI : $user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
         ]);
     }
 }

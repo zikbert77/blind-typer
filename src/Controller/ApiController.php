@@ -50,16 +50,13 @@ class ApiController extends AbstractController
             ]);
         }
 
-        if (is_string($user)) {
-            return new JsonResponse([
-                'status' => 'failed',
-                'error' => 'User is anon',
-            ]);
-        }
+        $previousPassedTests = $request->getSession()->get('previousPassedTests') ?? [];
+        $previousPassedTests[] = $text->getId();
 
-        /** @var TestsHistory $text */
+        $request->getSession()->set('previousPassedTests', $previousPassedTests);
+
         $result = $this->getDoctrine()->getRepository(TestsHistory::class)->save(
-            $user,
+            is_string($user) ? null : $user,
             $text,
             $testDuration,
             $wpm,
@@ -81,10 +78,10 @@ class ApiController extends AbstractController
         ));
     }
 
-    public function getText($duration = 1)
+    public function getText(Request $request, $duration = 1)
     {
         /** @var Texts $text */
-        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($duration);
+        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($request, $duration);
 
         return new JsonResponse([
             'textId' => $text->getId(),

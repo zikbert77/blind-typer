@@ -18,9 +18,16 @@ class AdminController extends AbstractController
             new \DateTime('now - 7 days'),
             new \DateTime('now + 1 day')
         );
-        
+
+        $anonymousTestsPassed = $this->getDoctrine()->getRepository(TestsHistory::class)->getForPeriod(
+            new \DateTime('now - 7 days'),
+            new \DateTime('now + 1 day'),
+            false
+        );
+
         return $this->render('admin/overview.html.twig', [
-            'userTestsPassed' => $userTestsPassed
+            'userTestsPassed' => $userTestsPassed,
+            'anonymousTestsPassed' => $anonymousTestsPassed,
         ]);
     }
 }

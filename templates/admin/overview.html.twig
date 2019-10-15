@@ -16,13 +16,14 @@
         <script src="{{ asset('chartjs/Chart.js') }}"></script>
         <h1>Overview</h1>
         <canvas id="userTestsPasses" height="100"></canvas>
+        <canvas id="anonymousTestsPassed" height="100"></canvas>
     </div>
 
 
     <script>
         var ctx = document.getElementById('userTestsPasses').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: [
                     {% for datetime in userTestsPassed['date'] %}
@@ -30,14 +31,53 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Tests was passed',
+                    label: 'Tests was passed by users',
                     data: [
                         {% for twp in userTestsPassed['count'] %}
                         '{{ twp }}',
                         {% endfor %}
                     ],
-                    backgroundColor: 'rgba(61, 163, 232, 1)',
                     borderColor: 'rgba(61, 163, 242, 1)',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'x-axis',
+                    intercept: true
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctxAnon = document.getElementById('anonymousTestsPassed').getContext('2d');
+        var myChartAnon = new Chart(ctxAnon, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for datetime in anonymousTestsPassed['date'] %}
+                    '{{ datetime }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Tests was passed anonymously',
+                    data: [
+                        {% for twp in anonymousTestsPassed['count'] %}
+                        '{{ twp }}',
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgb(255, 162, 0, 1)',
+                    borderColor: 'rgba(255, 162, 0, 1)',
                     borderWidth: 3
                 }]
             },

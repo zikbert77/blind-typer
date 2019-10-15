@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Texts;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Texts|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,12 +20,10 @@ class TextsRepository extends ServiceEntityRepository
         parent::__construct($registry, Texts::class);
     }
 
-    public function selectRandomText($duration = 1): Texts
+    public function selectRandomText(Request $request, int $duration = 1): Texts
     {
         $minWordsLimit = 120;
-        $maxWordsLimit = 360;
-
-        $qb = $this->createQueryBuilder('t');
+        $maxWordsLimit = 600;
         switch ($duration) {
             case 3:
                 $minWordsLimit = 360;
@@ -34,6 +33,25 @@ class TextsRepository extends ServiceEntityRepository
                 $minWordsLimit = 600;
                 $maxWordsLimit = 2400;
                 break;
+        }
+
+        $previousPassedTests = $request->getSession()->get('previousPassedTests');
+        $response = $this->selectText($minWordsLimit, $maxWordsLimit, $previousPassedTests ?? []);
+        if (is_null($response)) {
+            $request->getSession()->set('previousPassedTests', []);
+            $previousPassedTests = $request->getSession()->get('previousPassedTests');
+            $response = $this->selectText($minWordsLimit, $maxWordsLimit, $previousPassedTests ?? []);
+        }
+
+        return $response;
+    }
+
+    private function selectText(int $minWordsLimit, int $maxWordsLimit, array $exceptOf)
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if (!empty($exceptOf)) {
+            $qb->where($qb->expr()->notIn('t.id', $exceptOf));
         }
 
         $qb->andWhere('t.wordsCount > :min_words_limit');

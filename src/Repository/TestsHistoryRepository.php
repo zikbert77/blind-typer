@@ -53,7 +53,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
         return $response;
     }
 
-    public function getForPeriod(\DateTime $startDate, \DateTime $endDate)
+    public function getForPeriod(\DateTime $startDate, \DateTime $endDate, $forUser = true)
     {
         $periodStatistic = $this->createQueryBuilder('th')
             ->select('count(th.id) as count, DATE(th.createdAt) as date')
@@ -63,7 +63,13 @@ class TestsHistoryRepository extends ServiceEntityRepository
                 'startDate' => $startDate->format('Y-m-d'),
                 'endDate' => $endDate->format('Y-m-d'),
             ])
-            ->groupBy('date')
+            ->groupBy('date');
+
+        if (!$forUser) {
+            $periodStatistic = $periodStatistic->andWhere('th.user is NULL');
+        }
+
+        $periodStatistic = $periodStatistic
             ->getQuery()
             ->getResult();
         
@@ -96,7 +102,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $user
+     * @param User|null $user
      * @param Texts $text
      * @param int $testDuration
      * @param int $wpm
@@ -104,7 +110,7 @@ class TestsHistoryRepository extends ServiceEntityRepository
      * @param int $accuracy
      * @return array
      */
-    public function save(User $user, Texts $text, int $testDuration, int $wpm, int $cpm, int $accuracy): array
+    public function save(?User $user, Texts $text, int $testDuration, int $wpm, int $cpm, int $accuracy): array
     {
         try {
             $testHistory = new TestsHistory();
