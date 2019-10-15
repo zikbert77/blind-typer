@@ -50,7 +50,9 @@ class TextsRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('t');
 
-        $qb->where($qb->expr()->notIn('t.id', $exceptOf));
+        if (!empty($exceptOf)) {
+            $qb->where($qb->expr()->notIn('t.id', $exceptOf));
+        }
 
         $qb->andWhere('t.wordsCount > :min_words_limit');
         $qb->setParameter('min_words_limit', $minWordsLimit);
