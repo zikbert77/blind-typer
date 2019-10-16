@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Texts;
+use App\Entity\Languages;
 use App\Entity\TestsHistory;
 use App\Component\TextParser;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,10 +79,17 @@ class ApiController extends AbstractController
         ));
     }
 
-    public function getText(Request $request, $duration = 1)
+    public function getText(Request $request, TokenStorageInterface $tokenStorage, $duration = 1)
     {
+        $user = $tokenStorage->getToken()->getUser();
+        $language = is_string($user) ? Languages::DEFAULT_LANGUAGE : $user->getDefaultLanguage()->getId();
+
         /** @var Texts $text */
-        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($request, $duration);
+        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText(
+            $request,
+            $language,
+            $duration
+        );
 
         return new JsonResponse([
             'textId' => $text->getId(),

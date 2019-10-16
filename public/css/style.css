@@ -20,15 +20,11 @@ a {
     transition: all .2s;
 }
 
-a:hover {
-    color: #576268;
-}
-
 .link {
     color: #35b0ee;
 }
 
-button, a.btn {
+button, .btn {
     font-size: 14px;
     font-weight: 100;
     padding: 10px 40px;
@@ -42,7 +38,7 @@ button, a.btn {
     outline: none;
 }
 
-a.btn {
+.btn {
     font-weight: 400;
 }
 
@@ -106,6 +102,10 @@ button.btn-block, a.btn-block {
 .top-menu-box {
     margin-top: 20px;
     background-color: #ddf3ff;
+}
+
+.top-menu-box a:hover {
+    color: #576268;
 }
 
 .top-menu-item {
