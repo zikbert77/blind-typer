@@ -51,11 +51,6 @@ class ApiController extends AbstractController
             ]);
         }
 
-        $previousPassedTests = $request->getSession()->get('previousPassedTests') ?? [];
-        $previousPassedTests[] = $text->getId();
-
-        $request->getSession()->set('previousPassedTests', $previousPassedTests);
-
         $result = $this->getDoctrine()->getRepository(TestsHistory::class)->save(
             is_string($user) ? null : $user,
             $text,
@@ -90,6 +85,11 @@ class ApiController extends AbstractController
             $language,
             $duration
         );
+
+        $previousText = $request->getSession()->get('previousText') ?? [];
+        $previousText[] = $text->getId();
+
+        $request->getSession()->set('previousText', $previousText);
 
         return new JsonResponse([
             'textId' => $text->getId(),

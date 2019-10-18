@@ -35,12 +35,12 @@ class TextsRepository extends ServiceEntityRepository
                 break;
         }
 
-        $previousPassedTests = $request->getSession()->get('previousPassedTests');
-        $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousPassedTests ?? []);
+        $previousText = $request->getSession()->get('previousText');
+        $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousText ?? []);
         if (is_null($response)) {
-            $request->getSession()->set('previousPassedTests', []);
-            $previousPassedTests = $request->getSession()->get('previousPassedTests');
-            $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousPassedTests ?? []);
+            $request->getSession()->set('previousText', []);
+            $previousText = $request->getSession()->get('previousText');
+            $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousText ?? []);
         }
 
         return $response;
