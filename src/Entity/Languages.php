@@ -4,6 +4,8 @@ namespace App\Entity;
 
 class Languages
 {
+    const DEFAULT_LANGUAGE = 1;
+
     private $id;
 
     private $title;
