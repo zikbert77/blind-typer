@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Texts
 {
+    const IS_NOT_CHECKED = 0;
+    const IS_CHECKED = 1;
+
     private $id;
 
     private $textBody;

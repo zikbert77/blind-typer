@@ -54,6 +54,8 @@ class TextsRepository extends ServiceEntityRepository
             $qb->where($qb->expr()->notIn('t.id', $exceptOf));
         }
 
+        $qb->andWhere('t.isChecked = :isChecked');
+        $qb->setParameter('isChecked', Texts::IS_CHECKED);
         $qb->andWhere('t.language = :language');
         $qb->setParameter('language', $language);
         $qb->andWhere('t.wordsCount > :min_words_limit');

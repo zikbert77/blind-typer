@@ -36,8 +36,8 @@
     <div class="form-group">
         <h2>Formatted text preview: </h2>
         <div class="text-info">
-            <b>Words:</b> <span id="text-words-count"></span>;
-            <b>Letters:</b> <span id="text-letters-count"></span>
+            <b>Words:</b> <span id="text-words-count">{{ text.wordsCount }}</span>;
+            <b>Letters:</b> <span id="text-letters-count">{{ text.letterCounts }}</span>
         </div>
         <div class="test-text-display" id="test-text-display-preview" style="width: 1050px; height: auto;">
             <span id="original-text">{{ text.parsedText|raw }}</span>
