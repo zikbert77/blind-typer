@@ -7,6 +7,8 @@ class Keyboard
     const KEYBOARD_ANSI = 1;
     const KEYBOARD_ISO = 2;
 
+    const DEFAULT = self::KEYBOARD_ANSI;
+
     const KEYBOARD_TITLES = [
         self::KEYBOARD_ANSI => 'ansi',
         self::KEYBOARD_ISO => 'iso',
