@@ -251,7 +251,7 @@ img.keyboard {
 
 .hand-box {
     float: left;
-    margin-right: 20px;
+    margin-right: 40px;
 }
 
 .hand-border {
@@ -262,7 +262,7 @@ img.keyboard {
     border: 5px solid black;
     border-top: none;
     border-radius: 0 0 60px 60px;
-    background-color: white;
+    background-color: #ffffff;
     z-index: 100;
 }
 
@@ -276,6 +276,7 @@ img.keyboard {
     border-bottom: none;
     float: left;
     margin-right: -5px;
+    background-color: #ffffff;
 }
 
 .finger.current {
@@ -309,14 +310,6 @@ img.keyboard {
 .finger.pinky {
     margin-top: 60px;
     height: 60px;
-}
-
-.left-hand .finger.pinky {
-    border-right: none;
-}
-
-.right-hand .finger.pinky {
-    border-left: none;
 }
 
 /* Keyboard */
