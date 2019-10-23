@@ -104,6 +104,10 @@ button.btn-block, a.btn-block {
     background-color: #ddf3ff;
 }
 
+.top-menu-box, .top-menu-box a {
+    transition: all .0s;
+}
+
 .top-menu-box a:hover {
     color: #576268;
 }
@@ -111,7 +115,6 @@ button.btn-block, a.btn-block {
 .top-menu-item {
     font-weight: 200;
     padding: 20px 20px;
-    transition: all .2s;
     cursor: pointer;
 }
 
