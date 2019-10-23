@@ -61,6 +61,28 @@ button.btn-block, a.btn-block {
     background-color: rgba(255, 0, 0, 0.9);
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+table th {
+    background-color: #ebebeb;
+}
+
+table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+table tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
 .wrapper {
     min-height: 78vh;
 }
@@ -104,6 +126,10 @@ button.btn-block, a.btn-block {
     background-color: #ddf3ff;
 }
 
+.top-menu-box, .top-menu-box a {
+    transition: all .0s;
+}
+
 .top-menu-box a:hover {
     color: #576268;
 }
@@ -111,7 +137,6 @@ button.btn-block, a.btn-block {
 .top-menu-item {
     font-weight: 200;
     padding: 20px 20px;
-    transition: all .2s;
     cursor: pointer;
 }
 
