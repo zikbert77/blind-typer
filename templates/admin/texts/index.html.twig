@@ -15,7 +15,8 @@
             <tr>
                 <th>Id</th>
                 <th>Text_body</th>
-                <th>Parsed text</th>
+                <th>Language</th>
+                <th>Checked</th>
                 <th>Words_count</th>
                 <th>Letter_counts</th>
                 <th>Created_at</th>
@@ -26,14 +27,15 @@
             {% for text in texts %}
                 <tr>
                     <td>{{ text.id }}</td>
-                    <td>{{ text.textBody|slice(0, 50) }}...</td>
-                    <td>{{ text.parsedText|slice(0, 50) }}...</td>
+                    <td style="text-align: left">{{ text.textBody|slice(0, 60) }}...</td>
+                    <td>{{ text.language.title }}</td>
+                    <td>{{ text.isChecked ? '<i class="fal fa-check-circle" style="color: green;"></i>' : '<i class="fal fa-ban" style="color: red;"></i>' }}</td>
                     <td>{{ text.wordsCount }}</td>
                     <td>{{ text.letterCounts ?? 0 }}</td>
                     <td>{{ text.createdAt ? text.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>
-                        <a href="{{ path('texts_show', {'id': text.id}) }}">show</a>
-                        <a href="{{ path('texts_edit', {'id': text.id}) }}">edit</a>
+                        <a href="{{ path('texts_show', {'id': text.id}) }}" class="link">show</a>
+                        <a href="{{ path('texts_edit', {'id': text.id}) }}" class="link">edit</a>
                     </td>
                 </tr>
             {% else %}
