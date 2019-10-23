@@ -249,6 +249,76 @@ img.keyboard {
     max-width: 100%;
 }
 
+.hand-box {
+    float: left;
+    margin-right: 20px;
+}
+
+.hand-border {
+    position: absolute;
+    height: 105px;
+    width: 130px;
+    margin-top: 120px;
+    border: 5px solid black;
+    border-top: none;
+    border-radius: 0 0 60px 60px;
+    background-color: white;
+    z-index: 100;
+}
+
+.finger {
+    position: relative;
+    width: 30px;
+    height: 120px;
+    border: 5px solid black;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom: none;
+    float: left;
+    margin-right: -5px;
+}
+
+.finger.current {
+    background-color: #9fcdff;
+}
+
+.finger.thumb {
+    margin-top: 80px;
+    height: 70px;
+    z-index: 101;
+}
+
+.finger.index {
+    margin-top: 30px;
+    height: 90px;
+}
+
+.left-hand .finger.index {
+    z-index: 102;
+}
+
+.finger.middle {
+}
+
+.finger.ring {
+    margin-top: 15px;
+    height: 105px;
+    z-index: 102;
+}
+
+.finger.pinky {
+    margin-top: 60px;
+    height: 60px;
+}
+
+.left-hand .finger.pinky {
+    border-right: none;
+}
+
+.right-hand .finger.pinky {
+    border-left: none;
+}
+
 /* Keyboard */
 .keyboardRow {
     text-align: center

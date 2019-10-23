@@ -38,8 +38,32 @@
             </div>
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
-            <div class="test-keyboard-box">
-                {{ keyboard|raw }}
+            <div class="test-utils-container">
+                <div class="test-fingers-box" style="float: left">
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand left-hand">
+                            <div class="finger pinky"></div>
+                            <div class="finger ring"></div>
+                            <div class="finger middle"></div>
+                            <div class="finger index"></div>
+                            <div class="finger thumb"></div>
+                        </div>
+                    </div>
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand right-hand">
+                            <div class="finger thumb"></div>
+                            <div class="finger index"></div>
+                            <div class="finger middle"></div>
+                            <div class="finger ring"></div>
+                            <div class="finger pinky"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-keyboard-box" style="float: right">
+                    {{ keyboard|raw }}
+                </div>
             </div>
         </div>
     </div>
