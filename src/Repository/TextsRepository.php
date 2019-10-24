@@ -20,7 +20,7 @@ class TextsRepository extends ServiceEntityRepository
         parent::__construct($registry, Texts::class);
     }
 
-    public function selectRandomText(Request $request, int $duration = 1): Texts
+    public function selectRandomText(Request $request, int $language, int $duration = 1): Texts
     {
         $minWordsLimit = 120;
         $maxWordsLimit = 600;
@@ -35,18 +35,18 @@ class TextsRepository extends ServiceEntityRepository
                 break;
         }
 
-        $previousPassedTests = $request->getSession()->get('previousPassedTests');
-        $response = $this->selectText($minWordsLimit, $maxWordsLimit, $previousPassedTests ?? []);
+        $previousText = $request->getSession()->get('previousText');
+        $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousText ?? []);
         if (is_null($response)) {
-            $request->getSession()->set('previousPassedTests', []);
-            $previousPassedTests = $request->getSession()->get('previousPassedTests');
-            $response = $this->selectText($minWordsLimit, $maxWordsLimit, $previousPassedTests ?? []);
+            $request->getSession()->set('previousText', []);
+            $previousText = $request->getSession()->get('previousText');
+            $response = $this->selectText($minWordsLimit, $maxWordsLimit, $language, $previousText ?? []);
         }
 
         return $response;
     }
 
-    private function selectText(int $minWordsLimit, int $maxWordsLimit, array $exceptOf)
+    private function selectText(int $minWordsLimit, int $maxWordsLimit, int $language, array $exceptOf)
     {
         $qb = $this->createQueryBuilder('t');
 
@@ -54,6 +54,10 @@ class TextsRepository extends ServiceEntityRepository
             $qb->where($qb->expr()->notIn('t.id', $exceptOf));
         }
 
+        $qb->andWhere('t.isChecked = :isChecked');
+        $qb->setParameter('isChecked', Texts::IS_CHECKED);
+        $qb->andWhere('t.language = :language');
+        $qb->setParameter('language', $language);
         $qb->andWhere('t.wordsCount > :min_words_limit');
         $qb->setParameter('min_words_limit', $minWordsLimit);
         $qb->andWhere('t.wordsCount <= :max_words_limit');

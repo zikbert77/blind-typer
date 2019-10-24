@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Texts;
+use App\Entity\Languages;
 use App\Entity\TestsHistory;
 use App\Component\TextParser;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,11 +51,6 @@ class ApiController extends AbstractController
             ]);
         }
 
-        $previousPassedTests = $request->getSession()->get('previousPassedTests') ?? [];
-        $previousPassedTests[] = $text->getId();
-
-        $request->getSession()->set('previousPassedTests', $previousPassedTests);
-
         $result = $this->getDoctrine()->getRepository(TestsHistory::class)->save(
             is_string($user) ? null : $user,
             $text,
@@ -78,10 +74,22 @@ class ApiController extends AbstractController
         ));
     }
 
-    public function getText(Request $request, $duration = 1)
+    public function getText(Request $request, TokenStorageInterface $tokenStorage, $duration = 1)
     {
+        $user = $tokenStorage->getToken()->getUser();
+        $language = (is_string($user) ? null : $user->getDefaultLanguage()->getId()) ?? Languages::DEFAULT_LANGUAGE;
+
         /** @var Texts $text */
-        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText($request, $duration);
+        $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText(
+            $request,
+            $language,
+            $duration
+        );
+
+        $previousText = $request->getSession()->get('previousText') ?? [];
+        $previousText[] = $text->getId();
+
+        $request->getSession()->set('previousText', $previousText);
 
         return new JsonResponse([
             'textId' => $text->getId(),

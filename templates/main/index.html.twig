@@ -1,45 +1,56 @@
 {% extends 'layouts/base.html.twig' %}
 
 {% block two_rows_content_1 %}
-<div class="content" style="text-align: center">
-    {% if app.user %}
-        <h1>Welcome</h1>
-        {{ app.user.email }}
-        <br><br>
-        <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
-    {% else %}
-        <h1>Sign in</h1>
-        <form class="login-form" method="post" action="{{ path('app_login') }}">
-            <div class="form-group">
-                <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="Password" required>
-            </div>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            <div class="form-group">
-                <button class="btn-block">
-                    Sign in
-                </button>
-            </div>
-            <div class="form-group">
-                <a href="{{ path('register') }}">Create new account</a>
-            </div>
-        </form>
-    {% endif %}
+<div class="rounded-block left-main-block">
+    <div class="content" style="text-align: center">
+        {% if app.user %}
+            <h1>Welcome</h1>
+            {{ app.user.email }}
+            <br><br>
+            <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
+        {% else %}
+            <h1>Sign in</h1>
+            <form class="login-form" method="post" action="{{ path('app_login') }}">
+                <div class="form-group">
+                    <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="Password" required>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form-group">
+                    <button class="btn btn-block">
+                        Sign in
+                    </button>
+                </div>
+                <div class="form-group">
+                    <a href="{{ path('register') }}">Create new account</a>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>
+<div class="rounded-block left-main-block" style="margin-top: 25px">
+    <div class="content" style="text-align: center">
+        <h1>Warning!</h1>
+        <p>
+            This website is under construction, some bugs are possible. If you'll meet them, please <a
+                    href="https://t.me/zikbert77" target="_blank" class="link">contact us</a> immediately.
+        </p>
+    </div>
 </div>
 {% endblock %}
 {% block two_rows_content_2 %}
 
 <div class="content">
-    <h1>Increase your typing skill right now</h1>
+    <h1>Blind typer</h1>
     <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id semper risus in hendrerit gravida.
-        Vel pretium lectus quam id leo in vitae turpis. Lectus nulla at volutpat diam ut. Bibendum ut tristique et egestas. Ipsum a arcu cursus vitae congue mauris rhoncus aenean.
-        Auctor augue mauris augue neque. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Neque convallis a cras semper auctor neque vitae tempus quam. A diam maecenas sed enim ut.
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blind typer is a service that allows you to improve your typing skill, increase speed and accuracy.
+        Take <a href="{{ path('test') }}" class="link">the tests</a> and <a href="" class="link">courses</a> to become an advanced in typing.
+        Warm up your fingers before start working. Be more productive!
     </p>
     <a href="{{ path('test') }}">
-        <button>
+        <button class="btn">
             Start typing <i class="fad fa-keyboard"></i>
         </button>
     </a>

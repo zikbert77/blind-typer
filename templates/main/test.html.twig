@@ -1,5 +1,10 @@
 {% extends 'layouts/base.html.twig' %}
 
+{% block meta %}
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+{% endblock %}
+
 {% block one_row_content %}
     <div class="test-wrapper">
 {#        <button id="myBtn">Open</button>#}
@@ -33,8 +38,32 @@
             </div>
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
-            <div class="test-keyboard-box">
-                {{ keyboard|raw }}
+            <div class="test-utils-container">
+                <div class="test-fingers-box" style="float: left">
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand left-hand">
+                            <div class="finger pinky" data-finger="1"></div>
+                            <div class="finger ring" data-finger="2"></div>
+                            <div class="finger middle" data-finger="3"></div>
+                            <div class="finger index" data-finger="4"></div>
+                            <div class="finger thumb" data-finger="5"></div>
+                        </div>
+                    </div>
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand right-hand">
+                            <div class="finger thumb" data-finger="5"></div>
+                            <div class="finger index" data-finger="6"></div>
+                            <div class="finger middle" data-finger="7"></div>
+                            <div class="finger ring" data-finger="8"></div>
+                            <div class="finger pinky" data-finger="9"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-keyboard-box" style="float: right">
+                    {{ keyboard|raw }}
+                </div>
             </div>
         </div>
     </div>
@@ -72,7 +101,7 @@
             </div>
             <hr>
             <div class="modal-footer">
-                <button class="close right">Ok</button>
+                <button class="btn close right">Ok</button>
             </div>
         </div>
     </div>
@@ -203,14 +232,16 @@
                 let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
 
+                highlightFinger(key.data('finger'));
+
                 let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                 if (shiftKey.data('shift-key') !== undefined) {
                     shiftKey.addClass('key-current');
-                    highlightShift();
+                    highlightShift(shiftKey.data('shift'));
                 }
 
                 if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
-                    highlightShift()
+                    highlightShift(key.data('shift'))
                 }
             }
 
@@ -224,9 +255,20 @@
                 return true;
             }
 
-            function highlightShift() {
-                let shift = $(".test-keyboard-box").find(`[data-key='shift']`);
+            function highlightShift(shiftId) {
+                let shift = $(".test-keyboard-box").find(`[id='${shiftId}']`);
                 shift.addClass('key-current');
+
+                highlightFinger(shift.data('finger'), true);
+            }
+
+            function highlightFinger(index, isShift = false) {
+                if (!isShift) {
+                    $('.finger').removeClass('current');
+                }
+
+                let finger = $(".test-fingers-box").find(`[data-finger='${index}']`);
+                finger.addClass('current');
             }
 
             function backspaceAction(input) {
