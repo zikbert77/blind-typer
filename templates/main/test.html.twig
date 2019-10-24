@@ -43,21 +43,21 @@
                     <div class="hand-box">
                         <div class="hand-border"></div>
                         <div class="hand left-hand">
-                            <div class="finger pinky"></div>
-                            <div class="finger ring"></div>
-                            <div class="finger middle"></div>
-                            <div class="finger index"></div>
-                            <div class="finger thumb"></div>
+                            <div class="finger pinky" data-finger="1"></div>
+                            <div class="finger ring" data-finger="2"></div>
+                            <div class="finger middle" data-finger="3"></div>
+                            <div class="finger index" data-finger="4"></div>
+                            <div class="finger thumb" data-finger="5"></div>
                         </div>
                     </div>
                     <div class="hand-box">
                         <div class="hand-border"></div>
                         <div class="hand right-hand">
-                            <div class="finger thumb"></div>
-                            <div class="finger index"></div>
-                            <div class="finger middle"></div>
-                            <div class="finger ring"></div>
-                            <div class="finger pinky"></div>
+                            <div class="finger thumb" data-finger="5"></div>
+                            <div class="finger index" data-finger="6"></div>
+                            <div class="finger middle" data-finger="7"></div>
+                            <div class="finger ring" data-finger="8"></div>
+                            <div class="finger pinky" data-finger="9"></div>
                         </div>
                     </div>
                 </div>
@@ -235,12 +235,14 @@
                 let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                 if (shiftKey.data('shift-key') !== undefined) {
                     shiftKey.addClass('key-current');
-                    highlightShift();
+                    highlightShift(shiftKey.data('shift'));
                 }
 
                 if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
-                    highlightShift()
+                    highlightShift(key.data('shift'))
                 }
+
+                highlightFinger(key.data('finger'));
             }
 
             function isShiftKeyShouldBeHighlighted(letter) {
@@ -253,9 +255,15 @@
                 return true;
             }
 
-            function highlightShift() {
-                let shift = $(".test-keyboard-box").find(`[data-key='shift']`);
+            function highlightShift(shiftId) {
+                let shift = $(".test-keyboard-box").find(`[id='${shiftId}']`);
                 shift.addClass('key-current');
+            }
+
+            function highlightFinger(index) {
+                $('.finger').removeClass('current');
+                let finger = $(".test-fingers-box").find(`[data-finger='${index}']`);
+                finger.addClass('current');
             }
 
             function backspaceAction(input) {
