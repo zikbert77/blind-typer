@@ -232,6 +232,8 @@
                 let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
 
+                highlightFinger(key.data('finger'));
+
                 let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                 if (shiftKey.data('shift-key') !== undefined) {
                     shiftKey.addClass('key-current');
@@ -241,8 +243,6 @@
                 if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
                     highlightShift(key.data('shift'))
                 }
-
-                highlightFinger(key.data('finger'));
             }
 
             function isShiftKeyShouldBeHighlighted(letter) {
@@ -258,10 +258,15 @@
             function highlightShift(shiftId) {
                 let shift = $(".test-keyboard-box").find(`[id='${shiftId}']`);
                 shift.addClass('key-current');
+
+                highlightFinger(shift.data('finger'), true);
             }
 
-            function highlightFinger(index) {
-                $('.finger').removeClass('current');
+            function highlightFinger(index, isShift = false) {
+                if (!isShift) {
+                    $('.finger').removeClass('current');
+                }
+
                 let finger = $(".test-fingers-box").find(`[data-finger='${index}']`);
                 finger.addClass('current');
             }
