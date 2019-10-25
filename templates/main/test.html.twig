@@ -228,6 +228,7 @@
 
             function highlightKeyOnKeyboard(letter) {
                 $(".key-current").removeClass('key-current');
+                $(".shift").removeClass('shift');
 
                 let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
                 key.addClass('key-current');
@@ -257,18 +258,21 @@
 
             function highlightShift(shiftId) {
                 let shift = $(".test-keyboard-box").find(`[id='${shiftId}']`);
-                shift.addClass('key-current');
+                shift.addClass('shift');
 
                 highlightFinger(shift.data('finger'), true);
             }
 
             function highlightFinger(index, isShift = false) {
-                if (!isShift) {
-                    $('.finger').removeClass('current');
-                }
+                $('.finger').removeClass('shift');
 
                 let finger = $(".test-fingers-box").find(`[data-finger='${index}']`);
-                finger.addClass('current');
+                if (!isShift) {
+                    $('.finger').removeClass('current');
+                    finger.addClass('current');
+                } else {
+                    finger.addClass('shift');
+                }
             }
 
             function backspaceAction(input) {

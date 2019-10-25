@@ -283,6 +283,10 @@ img.keyboard {
     background-color: #9fcdff;
 }
 
+.finger.shift, .key.shift {
+    background-color: #75ffa8;
+}
+
 .finger.thumb {
     margin-top: 80px;
     height: 70px;
