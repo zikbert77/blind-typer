@@ -227,28 +227,31 @@
             }
 
             function highlightKeyOnKeyboard(letter) {
+                letter = letter.replace(/'/g, "\\'");
                 $(".key-current").removeClass('key-current');
                 $(".shift").removeClass('shift');
 
                 let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
-                key.addClass('key-current');
+                if (key.length === 0) {
+                    let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
+                    if (shiftKey.length !== 0) {
+                        shiftKey.addClass('key-current');
+                        highlightFinger(shiftKey.data('finger'));
+                        highlightShift(shiftKey.data('shift'));
+                    }
+                } else {
+                    highlightFinger(key.data('finger'));
+                    key.addClass('key-current');
 
-                highlightFinger(key.data('finger'));
-
-                let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
-                if (shiftKey.data('shift-key') !== undefined) {
-                    shiftKey.addClass('key-current');
-                    highlightShift(shiftKey.data('shift'));
-                }
-
-                if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
-                    highlightShift(key.data('shift'))
+                    if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                        highlightShift(key.data('shift'));
+                        highlightShift(key.data('shift'));
+                    }
                 }
             }
 
             function isShiftKeyShouldBeHighlighted(letter) {
-                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ','];
-
+                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ',', '[', ']', ';', "\\'"];
                 if (forbiddenShiftHighlight.includes(letter)) {
                     return false;
                 }

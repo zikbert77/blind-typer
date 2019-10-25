@@ -61,9 +61,9 @@ class Keyboard
                         <span class="key" data-key="i" data-finger="7" data-shift="lshift">I</span>
                         <span class="key" data-key="o" data-finger="8" data-shift="lshift">O</span>
                         <span class="key" data-key="p" data-finger="9" data-shift="lshift">P</span>
-                        <span class="key" data-key="[" data-shift="lshift" data-shift-key="{">{<sub>[</sub></span>
-                        <span class="key" data-key="]" data-shift="lshift" data-shift-key="}">}<sub>]</sub></span>
-                        <span class="key" data-key="\" data-shift="lshift" data-shift-key="|">|<sub>\</sub></span>
+                        <span class="key" data-key="[" data-shift="lshift" data-finger="9" data-shift-key="{">{<sub>[</sub></span>
+                        <span class="key" data-key="]" data-shift="lshift" data-finger="9" data-shift-key="}">}<sub>]</sub></span>
+                        <span class="key" data-key="\" data-shift="lshift" data-finger="9" data-shift-key="|">|<sub>\</sub></span>
                 
                     </div>
                     
@@ -80,7 +80,7 @@ class Keyboard
                         <span class="key" data-key="k" data-finger="7" data-shift="lshift">K</span>
                         <span class="key" data-key="l" data-finger="8" data-shift="lshift">L</span>
                         <span class="key" data-key=";" data-finger="9" data-shift="lshift" data-shift-key=":">:<sub>;</sub></span>
-                        <span class="key" data-key="\'" data-finger="9" data-shift="lshift" data-shift-key="&quot;">&quot;<sub>&#39;</sub></span>
+                        <span class="key" data-key="&apos;" data-finger="9" data-shift="lshift" data-shift-key="&quot;">&quot;<sub>&#39;</sub></span>
                         <span class="key key-length-1" data-finger="9" data-key="&#10;">enter</span>
                 
                     </div>
@@ -152,8 +152,8 @@ class Keyboard
                         <span class="key" data-key="i" data-finger="7" data-shift="lshift" >I</span>
                         <span class="key" data-key="o" data-finger="8" data-shift="lshift" >O</span>
                         <span class="key" data-key="p" data-finger="9" data-shift="lshift" >P</span>
-                        <span class="key" data-key="[" data-finger="9" data-shift="lshift"  data-shift-key="{">{<sub>[</sub></span>
-                        <span class="key" data-key="]" data-finger="9" data-shift="lshift"  data-shift-key="}">}<sub>]</sub></span>
+                        <span class="key" data-key="[" data-finger="9" data-shift="lshift" data-shift-key="{">{<sub>[</sub></span>
+                        <span class="key" data-key="]" data-finger="9" data-shift="lshift" data-shift-key="}">}<sub>]</sub></span>
                                         
                     </div>
                     
@@ -170,7 +170,7 @@ class Keyboard
                         <span class="key" data-key="k" data-finger="7" data-shift="lshift">K</span>
                         <span class="key" data-key="l" data-finger="8" data-shift="lshift">L</span>
                         <span class="key" data-key=";" data-finger="9" data-shift="lshift" data-shift-key=":">:<sub>;</sub></span>
-                        <span class="key" data-key="\'" data-finger="9" data-shift="lshift" data-shift-key="&#34;">&#34;<sub>&#39;</sub></span>
+                        <span class="key" data-key="&apos;" data-finger="9" data-shift="lshift" data-shift-key="&quot;">&quot;<sub>&#39;</sub></span>
                         <span class="key" data-key="\" data-finger="9" data-shift="lshift" data-shift-key="|">|<sub>\</sub></span>
                         <span class="key iso-enter" data-finger="9" data-key="&#10;">enter</span>
                 
