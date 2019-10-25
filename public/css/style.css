@@ -283,6 +283,10 @@ img.keyboard {
     background-color: #9fcdff;
 }
 
+.finger.shift, .key.shift {
+    background-color: #75ffa8;
+}
+
 .finger.thumb {
     margin-top: 80px;
     height: 70px;
@@ -433,7 +437,7 @@ footer {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
