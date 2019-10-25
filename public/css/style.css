@@ -244,9 +244,8 @@ span.wrong {
     text-decoration: underline;
 }
 
-img.keyboard {
-    margin-top: 10px;
-    max-width: 100%;
+.test-utils-container {
+    min-height: 250px
 }
 
 .hand-box {
