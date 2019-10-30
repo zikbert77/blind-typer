@@ -146,6 +146,12 @@ class TextParser
             }
         }
 
+        $lastSpace = '<span class="letter letter-'. ($this->lettersCount - 1) .' space" data-letter=" ">&nbsp; </span>';
+        $lastSpacePosition = strpos($response, $lastSpace);
+        if ($lastSpacePosition !== false) {
+            $response = str_replace($lastSpace, '<span class="letter letter-'. ($this->lettersCount - 1) .' end"></span>', $response);
+        }
+
         return $response;
     }
 

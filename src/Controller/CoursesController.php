@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Component\TextParser;
 use App\Entity\Courses;
 use App\Form\CoursesType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,11 @@ class CoursesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $parser = new TextParser($course->getTextBody());
+            $course->setParsedText($parser->parseForJs());
+            $course->setWordsCount($parser->calculateWords());
+            $course->setLetterCount($parser->calculateLetters());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($course);
             $entityManager->flush();
