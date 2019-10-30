@@ -1,4 +1,82 @@
+<style>
+    textarea {
+        border: 5px solid black;
+        width: 900px;
+        overflow-x: hidden;
+        text-align: center;
+        background-color: white;
+        padding: 25px;
+        font-size: 44px;
+        font-weight: 700;
+        resize: vertical;
+    }
+
+    .space {
+        text-decoration: underline;
+        color: #9fcdff;
+    }
+</style>
+
+
+{#{{ form_start(form) }}#}
+{#    {{ form_widget(form) }}#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#{{ form_end(form) }}#}
+
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="form-group">
+    {{ form_label(form.title) }}:
+    {{ form_widget(form.title) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.language) }}:
+    {{ form_widget(form.language) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.groupId) }}:
+    {{ form_widget(form.groupId) }}
+</div>
+<div class="form-group">
+    {{ form_widget(form.textBody, {'attr': {'style': 'width: 1050px; margin: 0 auto;'}}) }}
+</div>
+<div class="form-group">
+    <button type="button" id="update-preview">Update preview</button>
+</div>
+<hr>
+<div class="form-group">
+    <h2>Formatted text preview: </h2>
+    <div class="text-info">
+        <b>Words:</b> <span id="text-words-count">{{ course.wordsCount }}</span>;
+        <b>Letters:</b> <span id="text-letters-count">{{ course.letterCount }}</span>
+    </div>
+    <div class="test-text-display" id="test-text-display-preview" style="width: 1050px; height: auto;">
+        <span id="original-text">{{ course.parsedText|raw }}</span>
+    </div>
+</div>
+<div class="form-group">
     <button class="btn">{{ button_label|default('Save') }}</button>
+</div>
 {{ form_end(form) }}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#update-preview").click(function () {
+            updatePreview();
+        });
+
+        function updatePreview() {
+            $.get('{{ path('prepareText') }}', $('form[name="courses"]').serialize(), function (data, status) {
+                if (status === 'success') {
+                    $("#test-text-display-preview").html(data['parsedText']);
+                    $("#text-words-count").html(data['words']);
+                    $("#text-letters-count").html(data['chars']);
+                }
+            })
+        }
+    });
+</script>

@@ -4,6 +4,19 @@ namespace App\Entity;
 
 class Courses
 {
+    const BASIC_COURSE_GROUP = 1;
+    const ADVANCED_COURSE_GROUP = 2;
+
+    public static $groups = [
+        self::BASIC_COURSE_GROUP => 'Basic course',
+        self::ADVANCED_COURSE_GROUP => 'Advanced course'
+    ];
+
+    public static $subGroups = [
+        self::BASIC_COURSE_GROUP => [],
+        self::ADVANCED_COURSE_GROUP => [],
+    ];
+
     private $id;
 
     private $groupId;
@@ -19,6 +32,10 @@ class Courses
     private $updatedAt;
 
     private $language;
+
+    private $wordsCount;
+
+    private $letterCount;
 
     public function __construct()
     {
@@ -114,6 +131,30 @@ class Courses
     public function setLanguage(?Languages $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getWordsCount(): ?int
+    {
+        return $this->wordsCount;
+    }
+
+    public function setWordsCount(?int $wordsCount): self
+    {
+        $this->wordsCount = $wordsCount;
+
+        return $this;
+    }
+
+    public function getLetterCount(): ?int
+    {
+        return $this->letterCount;
+    }
+
+    public function setLetterCount(?int $letterCount): self
+    {
+        $this->letterCount = $letterCount;
 
         return $this;
     }

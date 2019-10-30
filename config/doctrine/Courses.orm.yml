@@ -29,6 +29,20 @@ App\Entity\Courses:
             options:
                 fixed: false
                 default: 'NULL'
+        wordsCount:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+            column: words_count
+        letterCount:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+            column: letter_count
         textBody:
             type: text
             nullable: true
