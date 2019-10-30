@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block one_row_content %}
-    <div class="test-wrapper">
+    <div class="test-wrapper" id="test-wrapper">
 {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
             <label for="test-duration">Test duration: </label>
@@ -132,6 +132,8 @@
 
             let testStatModal = $("#testStatModal");
             let testStatModalCloseSpan = $(".close");
+
+            scrollToElement($("#test-wrapper"));
 
             let btn = $("#myBtn");
             btn.click(function () {
