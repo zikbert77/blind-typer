@@ -1,0 +1,71 @@
+App\Entity\Courses:
+    type: entity
+    table: courses
+    indexes:
+        language_id:
+            columns:
+                - language_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        groupId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                default: '0'
+            column: group_id
+        title:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+                default: 'NULL'
+        textBody:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+                default: 'NULL'
+            column: text_body
+        parsedText:
+            type: text
+            nullable: true
+            length: 0
+            options:
+                fixed: false
+                default: 'NULL'
+            column: parsed_text
+        createdAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: updated_at
+    manyToOne:
+        language:
+            targetEntity: Languages
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                language_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

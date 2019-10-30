@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Edit Courses{% endblock %}
+
+{% block one_row_content %}
+    <div class="content">
+        <div class="breadcrumbs">
+            <a href="{{ path('adminIndex') }}" class="link">Admin</a> /
+            <a href="{{ path('courses_index') }}" class="link">Courses</a> /
+            <span>Edit</span>
+        </div>
+
+        <h1>Edit Courses</h1>
+
+        {{ include('admin/courses/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('courses_index') }}">back to list</a>
+
+        {{ include('admin/courses/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

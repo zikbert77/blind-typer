@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Courses index{% endblock %}
+
+{% block one_row_content %}
+
+    <div class="content">
+        <div class="breadcrumbs">
+            <a href="{{ path('adminIndex') }}" class="link">Admin</a> /
+            <span>Courses</span>
+        </div>
+
+        <h1>Courses index</h1>
+        <a href="{{ path('courses_new') }}" class="btn">Create new</a>
+        <br>
+        <br>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>GroupId</th>
+                    <th>Title</th>
+                    <th>TextBody</th>
+                    <th>ParsedText</th>
+                    <th>CreatedAt</th>
+                    <th>UpdatedAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.groupId }}</td>
+                    <td>{{ course.title }}</td>
+                    <td>{{ course.textBody }}</td>
+                    <td>{{ course.parsedText }}</td>
+                    <td>{{ course.createdAt ? course.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ course.updatedAt ? course.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('courses_show', {'id': course.id}) }}">show</a>
+                        <a href="{{ path('courses_edit', {'id': course.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}
