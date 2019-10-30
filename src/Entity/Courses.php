@@ -37,6 +37,8 @@ class Courses
 
     private $letterCount;
 
+    private $position;
+
     public function __construct()
     {
         if (!$this->getCreatedAt()) {
@@ -51,9 +53,9 @@ class Courses
         return $this->id;
     }
 
-    public function getGroupId(): ?int
+    public function getGroupId()
     {
-        return $this->groupId;
+        return self::$groups[$this->groupId] ?? $this->groupId;
     }
 
     public function setGroupId(?int $groupId): self
@@ -155,6 +157,18 @@ class Courses
     public function setLetterCount(?int $letterCount): self
     {
         $this->letterCount = $letterCount;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

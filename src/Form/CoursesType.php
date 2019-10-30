@@ -31,6 +31,7 @@ class CoursesType extends AbstractType
                 'class' => Languages::class,
                 'choice_label' => 'title',
             ])
+            ->add('position')
             ->add('textBody', TextareaType::class, [
                 'attr' => [
                     'class' => 'test-text-display'
