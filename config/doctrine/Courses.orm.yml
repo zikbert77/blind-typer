@@ -1,6 +1,7 @@
 App\Entity\Courses:
     type: entity
     table: courses
+    repositoryClass: App\Repository\CoursesRepository
     indexes:
         language_id:
             columns:

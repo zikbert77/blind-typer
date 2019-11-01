@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block meta %}
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+{% endblock %}
+
+{% block two_rows_content_1 %}
+    <div class="rounded-block left-main-block">
+        <div class="content" style="text-align: center">
+            {% if app.user %}
+                <h1>Welcome</h1>
+                {{ app.user.email }}
+                <br><br>
+                <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
+            {% else %}
+                <h1>Sign in</h1>
+                <form class="login-form" method="post" action="{{ path('app_login') }}">
+                    <div class="form-group">
+                        <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="Password" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="form-group">
+                        <button class="btn btn-block">
+                            Sign in
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <a href="{{ path('register') }}">Create new account</a>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <div class="rounded-block left-main-block" style="margin-top: 25px">
+        <div class="content" style="text-align: center">
+            <h1>Warning!</h1>
+            <p>
+                This website is under construction, some bugs are possible. If you'll meet them, please <a
+                        href="https://t.me/zikbert77" target="_blank" class="link">contact us</a> immediately.
+            </p>
+        </div>
+    </div>
+{% endblock %}
+{% block two_rows_content_2 %}
+    <div class="content">
+        <h1>Typing courses</h1>
+        <div id="accordion">
+            {% for title, subcourses in courses %}
+                <h3 class="accordion-header">{{ title }}</h3>
+                <div class="accordion-body">
+                    {% for course in subcourses %}
+                        <a href="{{ path('course', {'id': course.id}) }}" class="link course-link">{{ course.title ?? 'Typing course ' ~ course.position }}</a>
+                        <br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <h3 class="accordion-header">Section 4</h3>
+            <div class="accordion-body">
+                Typing test 2
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $("#accordion").accordion();
+        } );
+    </script>
+{% endblock %}

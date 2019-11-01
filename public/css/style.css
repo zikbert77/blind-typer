@@ -496,3 +496,26 @@ span.close {
     text-decoration: none;
     cursor: pointer;
 }
+
+/* Accordion */
+.accordion-header {
+    background-color: #ddf3ff;
+    padding: 10px 20px;
+    margin: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.accordion-header:nth-child(1) {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.accordion-body {
+    background-color: white;
+    padding: 10px 20px;
+}
+
+.course-link {
+    line-height: 24px;
+}

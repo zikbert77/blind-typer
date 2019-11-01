@@ -6,6 +6,14 @@ test:
     path: /test
     controller: App\Controller\MainController::test
 
+courses:
+    path: /courses
+    controller: App\Controller\MainController::courses
+
+course:
+    path: /course/{id}
+    controller: App\Controller\MainController::course
+
 #------------------profile------------------
 profileIndex:
     path: /profile
