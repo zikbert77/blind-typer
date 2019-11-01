@@ -45,8 +45,20 @@ class MainController extends AbstractController
 
     public function course($id)
     {
-        return $this->render('main/course.html.twig', [
-            'course' => $this->getDoctrine()->getRepository(Courses::class)->find($id)
-        ]);
+        $course = $this->getDoctrine()->getRepository(Courses::class)->find($id);
+        if (!empty($course)) {
+            $nextCourse = $this->getDoctrine()->getRepository(Courses::class)->findOneBy([
+                'position' => $course->getPosition() + 1,
+                'groupId' => $course->getGroupId(true)
+            ]);
+
+            return $this->render('main/course.html.twig', [
+                'course' => $course,
+                'nextCourse' => $nextCourse,
+                'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+            ]);
+        }
+
+        return $this->redirectToRoute('courses');
     }
 }

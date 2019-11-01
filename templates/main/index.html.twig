@@ -5,6 +5,9 @@
     <div class="content" style="text-align: center">
         {% if app.user %}
             <h1>Welcome</h1>
+            {% if app.user.isPremium %}
+                <img src="{{ asset('img/reward.png') }}" width="30" align="center" alt="Premium member reward" title="Premium member reward">
+            {% endif %}
             {{ app.user.email }}
             <br><br>
             <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>

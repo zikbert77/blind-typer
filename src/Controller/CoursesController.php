@@ -76,6 +76,11 @@ class CoursesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $parser = new TextParser($course->getTextBody());
+            $course->setParsedText($parser->parseForJs());
+            $course->setWordsCount($parser->calculateWords());
+            $course->setLetterCount($parser->calculateLetters());
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('courses_index');

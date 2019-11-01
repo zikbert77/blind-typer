@@ -10,6 +10,9 @@
         <div class="content" style="text-align: center">
             {% if app.user %}
                 <h1>Welcome</h1>
+                {% if app.user.isPremium %}
+                    <img src="{{ asset('img/reward.png') }}" width="30" align="center" alt="Premium member reward" title="Premium member reward">
+                {% endif %}
                 {{ app.user.email }}
                 <br><br>
                 <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
@@ -53,7 +56,10 @@
                 <h3 class="accordion-header">{{ title }}</h3>
                 <div class="accordion-body">
                     {% for course in subcourses %}
-                        <a href="{{ path('course', {'id': course.id}) }}" class="link course-link">{{ course.title ?? 'Typing course ' ~ course.position }}</a>
+                        <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
+                            <span class="link">{{ 'Typing course ' ~ course.position }}</span> -
+                            <span>{{ course.title }}</span>
+                        </a>
                         <br>
                     {% endfor %}
                 </div>

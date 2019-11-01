@@ -1,0 +1,394 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Typing courses{% endblock %}
+
+{% block meta %}
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+{% endblock %}
+
+{% block one_row_content %}
+    <div class="test-wrapper" id="test-wrapper">
+        {#        <button id="myBtn">Open</button>#}
+        <div class="test-settings-container" id="test-settings-container">
+            <div style="text-align: center">
+                <span id="words-per-minute">
+                    <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
+                </span> |
+                <span id="chars-per-minute">
+                    <b>Chars per minute:</b> <span id="count-chars-per-minute">0</span>
+                </span> |
+                <span id="typing-accuracy">
+                    <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
+                </span> |
+                <span id="timer">
+                    <b>Time:</b> <span id="timer-left">0</span>s
+                </span>
+            </div>
+            <hr>
+        </div>
+        <div class="test-container">
+            <input type="hidden" name="text-id" id="text-id" value="undefined">
+            <div class="test-text-display" id="test-text-display">
+                <span id="original-text">{{ course.parsedText|raw }}</span>
+            </div>
+            <p class="tesxxxx"></p>
+            <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
+            <div class="test-utils-container">
+                <div class="test-fingers-box" style="float: left">
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand left-hand">
+                            <div class="finger pinky" data-finger="1"></div>
+                            <div class="finger ring" data-finger="2"></div>
+                            <div class="finger middle" data-finger="3"></div>
+                            <div class="finger index" data-finger="4"></div>
+                            <div class="finger thumb" data-finger="5"></div>
+                        </div>
+                    </div>
+                    <div class="hand-box">
+                        <div class="hand-border"></div>
+                        <div class="hand right-hand">
+                            <div class="finger thumb" data-finger="5"></div>
+                            <div class="finger index" data-finger="6"></div>
+                            <div class="finger middle" data-finger="7"></div>
+                            <div class="finger ring" data-finger="8"></div>
+                            <div class="finger pinky" data-finger="9"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-keyboard-box" style="float: right">
+                    {{ keyboard|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="testStatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Your test result</h2>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <b>Words per minute (WPM):</b> <span id="modal-test-result-wpm">0</span>
+                </p>
+                <p>
+                    <b>Chars per minute (CPM):</b> <span id="modal-test-result-cpm">0</span>
+                </p>
+                <p>
+                    <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
+                </p>
+                {% if app.user %}
+
+                {% else %}
+                    <p>
+                        If you want to view your typing statistic, please
+                        <a href="{{ path('app_login') }}" class="link">log in</a> or
+                        <a href="{{ path('register') }}" class="link">register</a>
+                        .
+                    </p>
+                {% endif %}
+            </div>
+            <hr>
+            <div class="modal-footer">
+                {% if nextCourse %}
+                    <a href="{{ path('course', {'id' : nextCourse.id}) }}" class="btn right">Next</a>
+                {% endif %}
+                <button class="btn close right">Ok</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}
+
+{%block scripts %}
+    <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
+    <script src="{{ asset('chartjs/Chart.js') }}"></script>
+    <script src="{{ asset('js/test.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            let lettersCount = 0;
+            let passedWords = 0;
+            let mistakes = 0;
+            let isTimerStarted = false;
+            let positionToScrollDown = 195;
+            let positionToScrollUp = 130;
+            let scrollPx = 64;
+            let $testTextDisplayBox = $("#test-text-display");
+            let $countWordsPerMinuteBox = $("span#count-words-per-minute");
+            let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
+            let $countAccuracyBox = $("span#count-typing-accuracy");
+            let $timerLeftBox = $('#timer-left');
+            let $testDurationBox = $("select#test-duration");
+            let $originalTextBox = $("#original-text");
+
+            let testStatModal = $("#testStatModal");
+            let testStatModalCloseSpan = $(".close");
+
+            scrollToElement($("#test-wrapper"));
+
+            let btn = $("#myBtn");
+            btn.click(function () {
+                showTestStatModal()
+            });
+
+            testStatModalCloseSpan.click(function () {
+                hideTestStatModal();
+            });
+
+            $testDurationBox.change(function () {
+                insertParam('duration', $(this).val());
+                window.location.href;
+            });
+
+            $(window).on('click', function(event){
+                if (event.target.id === 'testStatModal') {
+                    hideTestStatModal();
+                }
+            });
+
+            initText();
+            focusOnTextarea();
+
+            $(".test-text-display").click(function () {
+                focusOnTextarea();
+            });
+
+            $("textarea#test-input").on('input', function () {
+                if (!isTimerStarted) {
+                    startTimer();
+                }
+                compareInputWithText($(this).val());
+            });
+
+            $("textarea#test-input").keydown(function(e) {
+                switch (e.keyCode) {
+                    case 8:  // Backspace
+                        backspaceAction($(this).val());
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            function compareInputWithText(input) {
+                $originalTextBox.find('span.letter').removeClass('current');
+                let inputIndex = input.length - 1;
+                let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                let originalChar = $originalLetter.data('letter').toString();
+                let inputChar = input.charAt(inputIndex).toString();
+
+                if (originalChar === inputChar) {
+                    //set letter style pass
+                    $originalLetter.removeClass('current');
+                    $originalLetter.addClass('pass');
+                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
+                } else {
+                    //set letter style wrong
+                    if (!$originalLetter.hasClass('wrong')) {
+                        mistakes++;
+                    }
+                    $originalLetter.removeClass('current');
+                    $originalLetter.addClass('wrong');
+                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
+                }
+
+                if ($originalLetter.hasClass('end-word')) {
+                    updatePassedWords('+');
+                }
+
+                calculateCPM(inputIndex);
+                calculateAccuracy(inputIndex);
+
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
+                if ($nextLetter.hasClass('end')) {
+                    stopTimer();
+                }
+
+                $nextLetter.addClass('current');
+
+                scrollTestDisplayBox($nextLetter.position().top);
+                highlightKeyOnKeyboard($nextLetter.data('letter'));
+            }
+
+            function scrollTestDisplayBox(letterPosition) {
+                if (letterPosition > positionToScrollDown) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() + scrollPx)
+                } else if (letterPosition < positionToScrollUp) {
+                    $testTextDisplayBox.scrollTop($testTextDisplayBox.scrollTop() - scrollPx)
+                }
+            }
+
+            function highlightKeyOnKeyboard(letter) {
+                letter = letter.replace(/'/g, "\\'");
+                $(".key-current").removeClass('key-current');
+                $(".shift").removeClass('shift');
+
+                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
+                if (key.length === 0) {
+                    let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
+                    if (shiftKey.length !== 0) {
+                        shiftKey.addClass('key-current');
+                        highlightFinger(shiftKey.data('finger'));
+                        highlightShift(shiftKey.data('shift'));
+                    }
+                } else {
+                    highlightFinger(key.data('finger'));
+                    key.addClass('key-current');
+
+                    if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                        highlightShift(key.data('shift'));
+                        highlightShift(key.data('shift'));
+                    }
+                }
+            }
+
+            function isShiftKeyShouldBeHighlighted(letter) {
+                let forbiddenShiftHighlight = [' ', "\n", "\r", '/', '.', ',', '[', ']', ';', "\\'"];
+                if (forbiddenShiftHighlight.includes(letter)) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function highlightShift(shiftId) {
+                let shift = $(".test-keyboard-box").find(`[id='${shiftId}']`);
+                shift.addClass('shift');
+
+                highlightFinger(shift.data('finger'), true);
+            }
+
+            function highlightFinger(index, isShift = false) {
+                $('.finger').removeClass('shift');
+
+                let finger = $(".test-fingers-box").find(`[data-finger='${index}']`);
+                if (!isShift) {
+                    $('.finger').removeClass('current');
+                    finger.addClass('current');
+                } else {
+                    finger.addClass('shift');
+                }
+            }
+
+            function backspaceAction(input) {
+                let inputIndex = input.length - 1;
+                let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
+
+                if ($currentLetter.hasClass('end-word')) {
+                    updatePassedWords('-');
+                }
+
+                //Remove all current letter classes
+                if ($currentLetter.hasClass('pass')) {
+                    $currentLetter.removeClass('pass');
+                }
+
+                if ($currentLetter.hasClass('current')) {
+                    $currentLetter.removeClass('current');
+                }
+
+                if ($currentLetter.hasClass('wrong')) {
+                    mistakes--;
+                    $currentLetter.removeClass('wrong');
+                }
+
+                //Remove all next letter classes
+                if ($nextLetter.hasClass('current')) {
+                    $nextLetter.removeClass('current');
+                }
+
+                if ($nextLetter.hasClass('wrong')) {
+                    $nextLetter.removeClass('wrong');
+                }
+
+                //Set previous letter as current
+                $currentLetter.addClass('current');
+            }
+
+            function startTimer() {
+                isTimerStarted = true;
+
+                let _Seconds = 0;
+                interval = setInterval(function() {
+                        _Seconds++;
+                        $timerLeftBox.text(_Seconds);
+                        calculateWPM();
+                }, 1000);
+
+                setTimeout(stopTimer, 100000);
+            }
+
+            function stopTimer(interval) {
+                clearInterval(interval);
+                $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
+                $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
+                $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
+                showTestStatModal();
+            }
+
+            function showTestStatModal() {
+                testStatModal.css("display", "block");
+            }
+
+            function hideTestStatModal() {
+                testStatModal.css("display", "none");
+                window.location.reload();
+            }
+
+            function getPassedTime() {
+                return $timerLeftBox.text();
+            }
+
+            function updatePassedWords(action = '+') {
+                switch (action) {
+                    case "+":
+                        passedWords++;
+                        break;
+                    case "-":
+                        passedWords--;
+                        if (passedWords < 0) {
+                            passedWords = 0;
+                        }
+                        break;
+                }
+            }
+
+            function calculateWPM() {
+                let passedTime = getPassedTime();
+                let wpm = Math.ceil((passedWords * 60) / passedTime);
+
+                $countWordsPerMinuteBox.text(wpm);
+            }
+
+            function calculateCPM(inputIndex) {
+                let passedTime = getPassedTime();
+                let cpm = Math.ceil((inputIndex * 60) / passedTime);
+                if (cpm < 0 || cpm > 10000) {
+                    cpm = 0;
+                }
+
+                $countCharsPerMinuteBox.text(cpm);
+            }
+
+            function calculateAccuracy(inputIndex) {
+                let accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
+                $countAccuracyBox.text(accuracy);
+            }
+
+            function focusOnTextarea() {
+                $("textarea#test-input").focus();
+            }
+
+            function initText() {
+                let $firstLetter = $originalTextBox.find('span.letter-0');
+                $firstLetter.addClass('current');
+                highlightKeyOnKeyboard($firstLetter.data('letter'));
+            }
+        })
+    </script>
+{% endblock %}

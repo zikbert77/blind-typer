@@ -53,9 +53,9 @@ class Courses
         return $this->id;
     }
 
-    public function getGroupId()
+    public function getGroupId($onlyId = false)
     {
-        return self::$groups[$this->groupId] ?? $this->groupId;
+        return $onlyId ? $this->groupId : self::$groups[$this->groupId] ?? $this->groupId;
     }
 
     public function setGroupId(?int $groupId): self
