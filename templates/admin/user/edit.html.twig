@@ -3,14 +3,7 @@
 {% block title %}Edit User{% endblock %}
 
 {% block two_rows_content_1 %}
-    <div class="rounded-block left-main-block">
-        <br>
-        <div class="content">
-            <a href="{{ path('adminIndex') }}" class="btn btn-block">Index</a>
-            <a href="{{ path('adminOverview') }}" class="btn btn-block">Overview</a>
-            <a href="{{ path('user_index') }}" class="btn btn-block">User</a>
-        </div>
-    </div>
+    {% include 'admin/menu.html.twig' %}
 {% endblock %}
 
 {% block two_rows_content_2 %}

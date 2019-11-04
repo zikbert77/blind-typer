@@ -1,5 +1,7 @@
 {% extends 'layouts/base.html.twig' %}
 
+{% block title %}Typing courses{% endblock %}
+
 {% block meta %}
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache">
@@ -7,26 +9,20 @@
 
 {% block one_row_content %}
     <div class="test-wrapper" id="test-wrapper">
-{#        <button id="myBtn">Open</button>#}
+        {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
-            <label for="test-duration">Test duration: </label>
-            <select name="test-duration" id="test-duration">
-                <option value="1" {% if app.request.get('duration') == 1 %} selected {% endif %}>1 minute</option>
-                <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
-                <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
-            </select>
-            <div class="right">
+            <div style="text-align: center">
                 <span id="words-per-minute">
                     <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
                 </span> |
-                    <span id="chars-per-minute">
+                <span id="chars-per-minute">
                     <b>Chars per minute:</b> <span id="count-chars-per-minute">0</span>
                 </span> |
-                    <span id="typing-accuracy">
+                <span id="typing-accuracy">
                     <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
                 </span> |
-                    <span id="timer">
-                    <b>Time left:</b> <span id="timer-left"></span>s
+                <span id="timer">
+                    <b>Time:</b> <span id="timer-left">0</span>s
                 </span>
             </div>
             <hr>
@@ -34,7 +30,7 @@
         <div class="test-container">
             <input type="hidden" name="text-id" id="text-id" value="undefined">
             <div class="test-text-display" id="test-text-display">
-                <span id="original-text"></span>
+                <span id="original-text">{{ course.parsedText|raw }}</span>
             </div>
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
@@ -82,14 +78,10 @@
                     <b>Chars per minute (CPM):</b> <span id="modal-test-result-cpm">0</span>
                 </p>
                 <p>
-                   <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
+                    <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
                 {% if app.user %}
-                    <canvas id="lastStatChart" height="100"></canvas>
 
-                    <span style="font-size: 14px;">
-                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
-                    </span>
                 {% else %}
                     <p>
                         If you want to view your typing statistic, please
@@ -101,6 +93,9 @@
             </div>
             <hr>
             <div class="modal-footer">
+                {% if nextCourse %}
+                    <a href="{{ path('course', {'id' : nextCourse.id}) }}" class="btn right">Next</a>
+                {% endif %}
                 <button class="btn close right">Ok</button>
             </div>
         </div>
@@ -157,11 +152,6 @@
 
             initText();
             focusOnTextarea();
-            $timerLeftBox.text($testDurationBox.val() * 60);
-
-            $testDurationBox.on('change', function () {
-                $timerLeftBox.text($(this).val() * 60);
-            });
 
             $(".test-text-display").click(function () {
                 focusOnTextarea();
@@ -214,6 +204,10 @@
                 calculateAccuracy(inputIndex);
 
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
+                if ($nextLetter.hasClass('end')) {
+                    stopTimer();
+                }
+
                 $nextLetter.addClass('current');
 
                 scrollTestDisplayBox($nextLetter.position().top);
@@ -319,31 +313,25 @@
             function startTimer() {
                 isTimerStarted = true;
 
-                let _Seconds = parseInt($timerLeftBox.text());
+                let _Seconds = 0;
                 interval = setInterval(function() {
-                    if (_Seconds > 0) {
-                        _Seconds--;
+                        _Seconds++;
                         $timerLeftBox.text(_Seconds);
                         calculateWPM();
-                    } else {
-                        stopTimer(interval);
-                        $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
-                        $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
-                        $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
-                        showTestStatModal();
-                    }
                 }, 1000);
 
-                setTimeout(stopTimer, 10000);
+                setTimeout(stopTimer, 100000);
             }
 
             function stopTimer(interval) {
                 clearInterval(interval);
+                $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
+                $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
+                $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
+                showTestStatModal();
             }
 
             function showTestStatModal() {
-                saveResult();
-                getTestHistoryForUser();
                 testStatModal.css("display", "block");
             }
 
@@ -353,11 +341,7 @@
             }
 
             function getPassedTime() {
-                let leftTime = $timerLeftBox.text();
-                let totalTime = $testDurationBox.val() * 60;
-                let passedTime = totalTime - leftTime;
-
-                return passedTime;
+                return $timerLeftBox.text();
             }
 
             function updatePassedWords(action = '+') {
@@ -392,11 +376,7 @@
             }
 
             function calculateAccuracy(inputIndex) {
-                let accuracy = 0;
-                if (lettersCount > 0) {
-                    accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
-                }
-
+                let accuracy = Math.ceil(100 - ((mistakes * 100) / (inputIndex + 1)));
                 $countAccuracyBox.text(accuracy);
             }
 
@@ -404,95 +384,10 @@
                 $("textarea#test-input").focus();
             }
 
-            function buildLastUserTestHistoryChart(data) {
-                let ctx = document.getElementById('lastStatChart').getContext('2d');
-                let myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: data.datetime,
-                        datasets: [{
-                            label: 'Words per minute (WPM)',
-                            data: data.wpm,
-                            backgroundColor: [
-                                'rgba(61, 163, 232, 0.1)',
-                            ],
-                            borderColor: [
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                            ],
-                            borderWidth: 3
-                        }]
-                    },
-                    options: {
-                        tooltips: {
-                            mode: 'x-axis',
-                            intercept: true
-                        },
-                        hover: {
-                            mode: 'nearest',
-                            intersect: true
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-                    }
-                });
-            }
-
-            function saveResult() {
-                $.post('{{ path('saveTestResult') }}', {
-                    textId: $("input#text-id").val(),
-                    testDuration: $testDurationBox.val(),
-                    wpm: $countWordsPerMinuteBox.text(),
-                    cpm: $countCharsPerMinuteBox.text(),
-                    accuracy: $countAccuracyBox.text(),
-                }, function (data, status) {
-                    if (status === 'success') {
-                        console.log('saved');
-                    } else {
-                        console.log(data.error);
-                    }
-                });
-            }
-
-            function getTestHistoryForUser() {
-                $.get('{{ path('getTestHistoryForUser') }}', {
-                    limit: 3
-                }, function (data, status) {
-                    if (status === 'success') {
-                        buildLastUserTestHistoryChart(data);
-                    }
-                });
-            }
-
             function initText() {
-                let duration = $testDurationBox.val();
-                $.get('/api/text/get/' + duration, {}, function (data, status) {
-                    if (status === 'success') {
-                        let textId = data.textId;
-                        let text = data.parsedText;
-                        let wordsCount = data.wordsCount;
-                        lettersCount = data.lettersCount;
-
-                        $("input#text-id").val(textId);
-                        $originalTextBox.append(text);
-                        let $firstLetter = $originalTextBox.find('span.letter-0');
-                        $firstLetter.addClass('current');
-                        highlightKeyOnKeyboard($firstLetter.data('letter'));
-                    }
-                });
+                let $firstLetter = $originalTextBox.find('span.letter-0');
+                $firstLetter.addClass('current');
+                highlightKeyOnKeyboard($firstLetter.data('letter'));
             }
         })
     </script>
