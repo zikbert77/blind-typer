@@ -50,25 +50,22 @@
 {% endblock %}
 {% block two_rows_content_2 %}
     <div class="content">
-        <h1>Typing courses</h1>
-        <div id="accordion">
-            {% for title, subcourses in courses %}
-                <h3 class="accordion-header">{{ title }}</h3>
-                <div class="accordion-body">
-                    {% for course in subcourses %}
+        {% for title, categories in courses %}
+            <h1>{{ title }}:</h1>
+            <div id="accordion">
+                {% for subtitle, subcourses in categories %}
+                    <h3 class="accordion-header">{{ subtitle }}</h3>
+                    <div class="accordion-body">
+                        {% for course in subcourses %}
                         <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                            <span class="link">{{ 'Typing course ' ~ course.position }}</span> -
-                            <span>{{ course.title }}</span>
+                            <span class="link">{{ 'Typing course ' ~ course.position }}</span>
                         </a>
                         <br>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-            <h3 class="accordion-header">Section 4</h3>
-            <div class="accordion-body">
-                Typing test 2
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
 

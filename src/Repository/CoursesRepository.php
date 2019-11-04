@@ -27,7 +27,7 @@ class CoursesRepository extends ServiceEntityRepository
         $response = [];
         /** @var Courses $course */
         foreach ($courses as $course) {
-            $response[$course->getGroupId()][] = $course;
+            $response[$course->getGroupId()][$course->getTitle()][] = $course;
         }
 
         return $response;
