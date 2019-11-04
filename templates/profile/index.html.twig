@@ -9,7 +9,7 @@
         <div class="settings">
             <h1>
                 {% if app.user.isPremium %}
-                    <img src="{{ asset('img/reward.png') }}" width="40" align="center" alt="Premium member reward" title="Premium member reward">
+                    <img src="{{ asset('img/reward.png') }}" width="40" align="center" alt="Premium member reward" title="Premium member award">
                 {% endif %}
                 {{ app.user.email }}
                 <a href="{{ path('profileSettings') }}">
