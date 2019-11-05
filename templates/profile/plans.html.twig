@@ -1,0 +1,92 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block one_row_content %}
+    <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
+    <script src="{{ asset('chartjs/Chart.js') }}"></script>
+    <div class="content">
+        <div class="settings">
+            <h1>
+                {% if app.user.isPremium %}
+                    <img src="{{ asset('img/reward.png') }}" width="40" align="center" alt="Premium member reward" title="Premium member award">
+                {% endif %}
+                {{ app.user.email }}
+                <a href="{{ path('profileSettings') }}">
+                    <span class="user-settings-button" title="settings">
+                       <i class="fal fa-user-edit"></i>
+                    </span>
+                </a>
+            </h1>
+            <hr>
+            <h1>Select your premium plan</h1>
+            <div class="premium-plans-wrapper">
+                <div class="premium-plans">
+                    <div class="plan">
+                        <div class="title">
+                            <h3>Free</h3>
+                        </div>
+                        <div class="conditions">
+                            <ul>
+                                <li>Access to typing test</li>
+                                <li>Access to basic course</li>
+                            </ul>
+                        </div>
+                        <div class="price-footer">
+                            <div class="price">
+                                $0 <span class="small">/month</span>
+                            </div>
+                            <div class="select">
+                                <button class="btn selected" disabled>Selected <i class="fal fa-check"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plan">
+                        <div class="title">
+                            <h3>Ads free</h3>
+                        </div>
+                        <div class="conditions">
+                            <ul>
+                                <li>Access to typing test</li>
+                                <li>Access to basic course</li>
+                                <li>No advertisements</li>
+                            </ul>
+                        </div>
+                        <div class="price-footer">
+                            <div class="price">
+                                $0<span class="small-price">.99</span> <span class="small">/month</span>
+                            </div>
+                            <div class="select">
+                                <button class="btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plan">
+                        <div class="title">
+                            <h3>Advanced</h3>
+                        </div>
+                        <div class="conditions">
+                            <ul>
+                                <li>Access to typing test</li>
+                                <li>Access to basic course</li>
+                                <li>Access to advanced courses</li>
+                                <li>Access to premium features</li>
+                                <li>No advertisements</li>
+                            </ul>
+                        </div>
+                        <div class="price-footer">
+                            <div class="price">
+                                $3<span class="small-price">.99</span> <span class="small">/month</span>
+                            </div>
+                            <div class="select">
+                                <button class="btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

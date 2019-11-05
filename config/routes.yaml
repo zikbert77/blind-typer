@@ -23,6 +23,9 @@ profileSettings:
     path: /profile/settings
     controller: App\Controller\ProfileController::settings
 
+profilePlans:
+    path: /profile/plans
+    controller: App\Controller\ProfileController::plans
 #--------------------api--------------------
 prepareText:
     path: /api/text/prepare
