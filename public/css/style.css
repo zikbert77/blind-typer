@@ -497,6 +497,12 @@ span.close {
     cursor: pointer;
 }
 
+.retry-btn {
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
 /* Accordion */
 .accordion-header {
     background-color: #ddf3ff;

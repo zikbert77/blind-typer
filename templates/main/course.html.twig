@@ -9,7 +9,6 @@
 
 {% block one_row_content %}
     <div class="test-wrapper" id="test-wrapper">
-        {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
             <div style="text-align: center">
                 <span id="words-per-minute">
@@ -35,7 +34,7 @@
             <p class="tesxxxx"></p>
             <textarea name="test-input" id="test-input" cols="146" rows="10" style="opacity: 0; width: 0px; height: 0px;"></textarea>
             <div class="test-utils-container">
-                <div class="test-fingers-box" style="float: left">
+                <div class="test-fingers-box left">
                     <div class="hand-box">
                         <div class="hand-border"></div>
                         <div class="hand left-hand">
@@ -57,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="test-keyboard-box" style="float: right">
+                <div class="test-keyboard-box right">
                     {{ keyboard|raw }}
                 </div>
             </div>
@@ -95,8 +94,10 @@
             <div class="modal-footer">
                 {% if nextCourse %}
                     <a href="{{ path('course', {'id' : nextCourse.id}) }}" class="btn right">Next</a>
+                    {% else %}
+                    <a href="{{ path('courses') }}" class="btn right">Courses</a>
                 {% endif %}
-                <button class="btn close right">Ok</button>
+                <a class="close right link retry-btn">Retry</a>
             </div>
         </div>
     </div>
