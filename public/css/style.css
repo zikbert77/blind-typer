@@ -205,13 +205,13 @@ span.small {
 .test-text-display {
     border: 5px solid black;
     height: 300px;
-    overflow-x: hidden;
     text-align: center;
     background-color: white;
     padding: 25px;
     font-size: 44px;
     line-height: 64px;
     font-weight: 700;
+    overflow: hidden;
 }
 
 .letter.space {
