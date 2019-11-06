@@ -64,6 +64,7 @@ button.btn-block, a.btn-block {
 .btn.selected {
     background-color: #009900;
     color: #ffffff;
+    cursor: default;
 }
 
 table {
@@ -426,6 +427,7 @@ form.login-form a {
 
 .premium-plans-wrapper {
     text-align: center;
+    margin-bottom: 25px;
 }
 
 .premium-plans {
@@ -440,7 +442,7 @@ form.login-form a {
     border-radius: 20px;
     background-color: white;
     min-width: 270px;
-    height: 350px;
+    height: 400px;
     text-align: left;
 }
 
@@ -467,6 +469,29 @@ form.login-form a {
     width: 100%;
     position: absolute;
     bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .select {
+    margin-bottom: 20px;
+}
+
+.premium-plans .plan .price-footer .select.current {
+    margin-bottom: 0;
+}
+
+.premium-plans .plan .price-footer .select.current .selected {
+    margin-bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .cancel-subscription {
+    display: inline-block;
+    font-size: 11px;
+    color: lightgray;
+    margin-bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .cancel-subscription:hover {
+    color: darkgray;
 }
 
 /* Footer */
