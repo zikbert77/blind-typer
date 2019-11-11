@@ -7,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-    public function index()
+    public function utils()
     {
-        return $this->render('admin/index.html.twig');
+        return $this->render('admin/utils.html.twig');
     }
 
     public function overview()
