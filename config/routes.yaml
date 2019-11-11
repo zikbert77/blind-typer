@@ -48,9 +48,9 @@ register:
     controller: App\Controller\RegistrationController::register
 
 #-------------------admin-------------------
-adminIndex:
+admin_utils:
     path: /admin
-    controller: App\Controller\AdminController::index
+    controller: App\Controller\AdminController::utils
 
 adminOverview:
     path: /admin/overview

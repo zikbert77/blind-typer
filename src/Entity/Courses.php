@@ -17,6 +17,10 @@ class Courses
         self::ADVANCED_COURSE_GROUP => [],
     ];
 
+    public static $premiumGroups = [
+        self::ADVANCED_COURSE_GROUP
+    ];
+
     private $id;
 
     private $groupId;
