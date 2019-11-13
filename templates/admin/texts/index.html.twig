@@ -4,6 +4,11 @@
 
 {% block one_row_content %}
     <div class="content">
+        <div class="breadcrumbs">
+            <a href="{{ path('adminOverview') }}" class="link">Admin</a> /
+            <span>Texts</span>
+        </div>
+
         <h1>Texts index</h1>
 
         <a href="{{ path('texts_new') }}" class="btn">Create new</a>
