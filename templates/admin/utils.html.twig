@@ -1,0 +1,16 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Admin - utils{% endblock %}
+
+{% block two_rows_content_1 %}
+{% include 'admin/menu.html.twig' %}
+{% endblock %}
+
+{% block two_rows_content_2 %}
+    <div class="content">
+        <br>
+        <a class="btn" href="{{ path('clearCache') }}">Clear cache</a>
+        <br>
+        <br>
+    </div>
+{% endblock %}

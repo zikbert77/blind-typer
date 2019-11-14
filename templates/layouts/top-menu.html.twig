@@ -4,6 +4,11 @@
             <div class="top-menu-item unhoverable left">
                 <a href="{{ path('index') }}"><b>Best SNG blind typer</b></a>
             </div>
+            <a href="{{ path('courses') }}">
+                <div class="top-menu-item left">
+                    Typing courses
+                </div>
+            </a>
             <a href="{{ path('test') }}">
                 <div class="top-menu-item left">
                     Typing test
@@ -32,7 +37,7 @@
                     </div>
                 </a>
                 {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('adminIndex') }}">
+                <a href="{{ path('adminOverview') }}">
                     <div class="top-menu-item right">
                         Admin
                     </div>

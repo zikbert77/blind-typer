@@ -43,4 +43,11 @@ class ProfileController extends AbstractController
             'userProfileForm' => $userProfileForm->createView()
         ]);
     }
+
+    public function plans(TokenStorageInterface $tokenStorage)
+    {
+        return $this->render('profile/plans.html.twig', [
+            'user' => $tokenStorage->getToken()->getUser()
+        ]);
+    }
 }

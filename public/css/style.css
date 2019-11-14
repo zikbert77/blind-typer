@@ -61,6 +61,12 @@ button.btn-block, a.btn-block {
     background-color: rgba(255, 0, 0, 0.9);
 }
 
+.btn.selected {
+    background-color: #009900;
+    color: #ffffff;
+    cursor: default;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -205,13 +211,13 @@ span.small {
 .test-text-display {
     border: 5px solid black;
     height: 300px;
-    overflow-x: hidden;
     text-align: center;
     background-color: white;
     padding: 25px;
     font-size: 44px;
     line-height: 64px;
     font-weight: 700;
+    overflow: hidden;
 }
 
 .letter.space {
@@ -244,9 +250,8 @@ span.wrong {
     text-decoration: underline;
 }
 
-img.keyboard {
-    margin-top: 10px;
-    max-width: 100%;
+.test-utils-container {
+    min-height: 250px
 }
 
 .hand-box {
@@ -281,6 +286,10 @@ img.keyboard {
 
 .finger.current {
     background-color: #9fcdff;
+}
+
+.finger.shift, .key.shift {
+    background-color: #75ffa8;
 }
 
 .finger.thumb {
@@ -416,6 +425,75 @@ form.login-form a {
     opacity: .8;
 }
 
+.premium-plans-wrapper {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.premium-plans {
+    display: inline-block;
+}
+
+.premium-plans .plan {
+    position:relative;
+    float: left;
+    margin-right: 25px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    background-color: white;
+    min-width: 270px;
+    height: 400px;
+    text-align: left;
+}
+
+.premium-plans .plan .title, .price, .select {
+    text-align: center;
+}
+
+.premium-plans .plan .conditions {
+    margin-top: 25px;
+    line-height: 28px;
+}
+
+.premium-plans .plan .price {
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.premium-plans .plan .price .small-price {
+    font-size: 12px;
+}
+
+.premium-plans .plan .price-footer {
+    width: 100%;
+    position: absolute;
+    bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .select {
+    margin-bottom: 20px;
+}
+
+.premium-plans .plan .price-footer .select.current {
+    margin-bottom: 0;
+}
+
+.premium-plans .plan .price-footer .select.current .selected {
+    margin-bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .cancel-subscription {
+    display: inline-block;
+    font-size: 11px;
+    color: lightgray;
+    margin-bottom: 5px;
+}
+
+.premium-plans .plan .price-footer .cancel-subscription:hover {
+    color: darkgray;
+}
+
 /* Footer */
 footer {
     padding: 0;
@@ -492,4 +570,33 @@ span.close {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.retry-btn {
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Accordion */
+.accordion-header {
+    background-color: #ddf3ff;
+    padding: 10px 20px;
+    margin: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.accordion-header:nth-child(1) {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.accordion-body {
+    background-color: white;
+    padding: 10px 20px;
+}
+
+.course-link {
+    line-height: 24px;
 }

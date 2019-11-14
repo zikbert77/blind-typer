@@ -31,7 +31,13 @@ class ApiController extends AbstractController
 
     public function prepareText(Request $request)
     {
-        return new JsonResponse(self::getParsedText($request->query->get('texts')['text_body'] ?? 'No get'));
+        return new JsonResponse(
+            self::getParsedText(
+                $request->query->get('texts')['text_body'] ??
+                $request->query->get('courses')['textBody'] ??
+                'No get'
+            )
+        );
     }
 
     public function saveTestResult(Request $request, TokenStorageInterface $tokenStorage)

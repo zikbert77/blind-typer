@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Courses;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,21 +10,55 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class MainController extends AbstractController
 {
-    public function index(TokenStorageInterface $tokenStorage)
+    private $user = null;
+    
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->user = $tokenStorage->getToken()->getUser();
+    }
+
+    public function index()
     {
         return $this->render('main/index.html.twig', [
             'lastResult' => $this->getDoctrine()->getRepository(TestsHistory::class)->getLast(
-                $tokenStorage->getToken()->getUser()
+                $this->user
             )
         ]);
     }
 
-    public function test(TokenStorageInterface $tokenStorage)
+    public function test()
     {
-        /** @var User $user */
-        $user = $tokenStorage->getToken()->getUser();
         return $this->render('main/test.html.twig', [
-            'keyboard' => Keyboard::loadKeyboard(is_string($user) ? Keyboard::KEYBOARD_ANSI : $user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+            'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
         ]);
+    }
+    
+    public function courses()
+    {
+        return $this->render('main/courses.html.twig', [
+            'lastResult' => $this->getDoctrine()->getRepository(TestsHistory::class)->getLast(
+                $this->user
+            ),
+            'courses' => $this->getDoctrine()->getRepository(Courses::class)->getFormatted()
+        ]);
+    }
+
+    public function course($id)
+    {
+        $course = $this->getDoctrine()->getRepository(Courses::class)->find($id);
+        if (!empty($course)) {
+            $nextCourse = $this->getDoctrine()->getRepository(Courses::class)->findOneBy([
+                'position' => $course->getPosition() + 1,
+                'groupId' => $course->getGroupId(true)
+            ]);
+
+            return $this->render('main/course.html.twig', [
+                'course' => $course,
+                'nextCourse' => $nextCourse,
+                'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+            ]);
+        }
+
+        return $this->redirectToRoute('courses');
     }
 }
