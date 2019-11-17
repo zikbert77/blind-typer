@@ -4,6 +4,11 @@ namespace App\Entity;
 
 class ResetPasswordRequests
 {
+    const STATUS_UNUSED = 0;
+    const STATUS_USED = 1;
+
+    const HOURS_AVAILABLE = 2;
+
     private $id;
 
     private $hash;
@@ -83,12 +88,12 @@ class ResetPasswordRequests
         return $this;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

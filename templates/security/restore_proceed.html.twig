@@ -5,21 +5,17 @@
 {% block one_row_content %}
     <div class="registration-form">
 
-        {% for error in errors %}
-            {{ error }}
-        {% endfor %}
-
         <form method="post">
 
-            <h1 class="h3 mb-3 font-weight-normal">Enter your email</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Enter your new password</h1>
             <div class="form-control">
-                <label for="inputEmail" class="sr-only">Email</label>
+                <label for="inputEmail" class="sr-only">Password</label>
                 <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required autofocus autocomplete="off">
             </div>
 
             <div class="form-control">
                 <button class="btn btn-lg btn-primary" type="submit" name="reset">
-                    Reset
+                    Set up new password
                 </button>
             </div>
 

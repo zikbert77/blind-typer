@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use App\Component\Email;
+use App\Entity\ResetPasswordRequests;
+use App\Entity\User;
+use App\Repository\ResetPasswordRequestRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+
 
 class SecurityController extends AbstractController
 {
@@ -29,32 +34,66 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/restore", name="restorePassword")
+     * @Route("/reset", name="resetPassword")
      * @param Request $request
      * @return Response
      */
-    public function restorePassword(Request $request)
+    public function resetPassword(Request $request)
     {
         $errors = [];
         if ($request->getMethod() == 'POST') {
-            //restoring
             $email = $request->get('email', null);
             if (empty($email)) {
                 $errors[] = 'Email address is empty';
             }
-            
-            if (empty($errors)) {
-                $errors = Email::send($email, 'Password reset', Email::buildResetPasswordMessage($email));
-            }
 
-            echo '<pre>';
-            var_dump($errors);
-            echo '</pre>';
-            exit;
+            /** @var User $user */
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
+                'email' => $email
+            ]);
+            if (empty($user)) {
+                $errors[] = "Couldn't find user by passed email";
+            } else {
+                /** @var ResetPasswordRequests $resetLink */
+                $resetLink = $this->getDoctrine()->getRepository(ResetPasswordRequests::class)->createForUser($user);
+                if (empty($resetLink)) {
+                    $errors[] = "Couldn't build reset link for user";
+                }
+
+                if (empty($errors)) {
+                    $link = $this->generateUrl('proceedPasswordReset', [
+                        'hash' => $resetLink->getHash()
+                    ], UrlGenerator::ABSOLUTE_URL);
+
+                    $errors = Email::send($email, 'Password reset', Email::buildResetPasswordMessage($email, $link));
+                }
+            }
         }
         
         return $this->render('security/restore.html.twig', [
             'errors' => $errors
+        ]);
+    }
+
+    /**
+     * @Route("/reset/proceed/{hash}", name="proceedPasswordReset")
+     * @param $hash
+     * @return Response
+     */
+    public function proceedPasswordReset($hash)
+    {
+        $errors = [];
+        /** @var ResetPasswordRequests $resetRequest */
+        $resetRequest = $this->getDoctrine()->getRepository(ResetPasswordRequests::class)->findValidRequestByHash($hash);
+        if (empty($resetRequest)) {
+            $errors[] = 'Your request is invalid, or your password reset link expired.';
+        } else {
+            $user = $resetRequest->getUser();
+        }
+
+        return $this->render('security/restore_proceed.html.twig', [
+            'errors' => $errors,
+            'user' => $user ?? null
         ]);
     }
 

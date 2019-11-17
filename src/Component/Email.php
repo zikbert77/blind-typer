@@ -2,6 +2,8 @@
 
 namespace App\Component;
 
+use App\Entity\ResetPasswordRequests;
+
 class Email
 {
     const DEFAULT_EMAIL = 'service.blindtyper@gmail.com';
@@ -30,6 +32,7 @@ class Email
         <span style='font-size: 16px'>Hi, $to<br>
         We received a request to reset your password, just click on the button below to set a new password:<br>
         <a href='$link' style='padding: 10px 40px; line-height: 58px; text-decoration: none; background-color: #ffbb00; color: black; border-radius: 15px'>Set a new password</a><br>
+        This link will be available for ". ResetPasswordRequests::HOURS_AVAILABLE ." hours.<br>
         If you didn't ask to change your password, don't worry! Your password is still safe and you can delete this email.<br><br>
         Best regards,<br> BlindTyper</span>
         ";
