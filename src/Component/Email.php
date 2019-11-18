@@ -7,12 +7,13 @@ use App\Entity\ResetPasswordRequests;
 class Email
 {
     const DEFAULT_EMAIL = 'service.blindtyper@gmail.com';
+    const NO_REPLY_EMAIL = 'noreply@gmail.com';
 
-    public static function send(string $to, string $subject, string $message)
+    public static function send(string $to, string $subject, string $message, bool $noReply = false)
     {
         $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
         $headers .= "From: BlindTyper <". self::DEFAULT_EMAIL .">\r\n";
-        $headers .= "Reply-To: ". self::DEFAULT_EMAIL ."\r\n";
+        $headers .= "Reply-To: ". ($noReply == false ? self::DEFAULT_EMAIL : self::NO_REPLY_EMAIL) ."\r\n";
 
         $errors = [];
         $result = mail($to, $subject, $message, $headers);

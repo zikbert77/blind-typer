@@ -6,7 +6,7 @@
     <div class="registration-form">
 
         {% for error in errors %}
-            {{ error }}
+            <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
 
         <form method="post">
@@ -23,7 +23,7 @@
                 </button>
             </div>
 
-            <div class="form-control">
+            <div class="form-control" style="padding-top: 0">
                 <a href="{{ path('register') }}">Create new account</a>
             </div>
         </form>
