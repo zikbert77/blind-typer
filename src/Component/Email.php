@@ -9,7 +9,7 @@ class Email
     const DEFAULT_EMAIL = 'service.blindtyper@gmail.com';
     const NO_REPLY_EMAIL = 'noreply@gmail.com';
 
-    public static function send(string $to, string $subject, string $message, bool $noReply = false)
+    public static function send(string $to, string $subject, string $message, bool $noReply = false): array
     {
         $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
         $headers .= "From: BlindTyper <". self::DEFAULT_EMAIL .">\r\n";

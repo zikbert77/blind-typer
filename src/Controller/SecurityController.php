@@ -65,7 +65,12 @@ class SecurityController extends AbstractController
                         'hash' => $resetLink->getHash()
                     ], UrlGenerator::ABSOLUTE_URL);
 
-                    $errors = Email::send($email, 'Password reset', Email::buildResetPasswordMessage($email, $link), true);
+                    $result = Email::send($email, 'Password reset', Email::buildResetPasswordMessage($email, $link));
+                    if (!isset($result['status']) || !$result['status']) {
+                        $errors[] = $result['error'];
+                    } else {
+                        return $this->redirectToRoute('proceedPasswordResetSuccess');
+                    }
                 }
             }
         }
@@ -73,6 +78,15 @@ class SecurityController extends AbstractController
         return $this->render('security/reset.html.twig', [
             'errors' => $errors
         ]);
+    }
+
+    /**
+     * @Route("/reset/success", name="proceedPasswordResetSuccess")
+     * @return Response
+     */
+    public function resetSuccess()
+    {
+        return $this->render('security/reset_success.html.twig');
     }
 
     /**

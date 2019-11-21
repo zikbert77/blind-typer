@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block one_row_content %}
+    <div class="registration-form">
+
+        <form method="post">
+            <h1 class="h3 mb-3 font-weight-normal">Reset password request has been sent</h1>
+            <p>Please check your email inbox, and follow the steps.</p><br>
+            <a href="{{ path('index') }}" class="link">Back to home page</a>
+            <br>
+            <br>
+        </form>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}
