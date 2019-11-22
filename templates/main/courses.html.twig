@@ -32,7 +32,8 @@
                         </button>
                     </div>
                     <div class="form-group">
-                        <a href="{{ path('register') }}">Create new account</a>
+                        <a href="{{ path('register') }}">Create new account</a><br>
+                        <a href="{{ path('resetPassword') }}" class="link">Forgot your password?</a>
                     </div>
                 </form>
             {% endif %}
@@ -51,19 +52,32 @@
 {% block two_rows_content_2 %}
     <div class="content">
         {% for title, categories in courses %}
-            <h1>{{ title }}:</h1>
-            <div id="accordion">
-                {% for subtitle, subcourses in categories %}
-                    <h3 class="accordion-header">{{ subtitle }}</h3>
-                    <div class="accordion-body">
-                        {% for course in subcourses %}
-                        <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                            <span class="link">{{ 'Typing course ' ~ course.position }}</span>
-                        </a>
-                        <br>
-                        {% endfor %}
+            <div class="course-item{% if title in premiumCourses %} premium{% endif %}">
+                {% if title in premiumCourses and (app.user.isPremium ?? false) == false %}
+                    <div class="mask">
+                        <div class="message">
+                            Get access to premium courses by <a href="{{ path('profilePlans') }}" class="link">change</a> your premium plan
+                        </div>
                     </div>
-                {% endfor %}
+                {% endif %}
+                <h1>{{ title }}:</h1>
+                <div id="accordion">
+                    {% for subtitle, subcourses in categories %}
+                        <h3 class="accordion-header">{{ subtitle }}</h3>
+                        <div class="accordion-body">
+                            {% for course in subcourses %}
+                                {% if (app.user.isPremium ?? false) != false %}
+                                    <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
+                                        <span class="link">{{ 'Typing course ' ~ course.position }}</span>
+                                    </a>
+                                {% else %}
+                                    <span class="link">{{ 'Typing course ' ~ course.position }}</span>
+                                {% endif %}
+                                <br>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         {% endfor %}
     </div>

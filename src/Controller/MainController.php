@@ -39,7 +39,8 @@ class MainController extends AbstractController
             'lastResult' => $this->getDoctrine()->getRepository(TestsHistory::class)->getLast(
                 $this->user
             ),
-            'courses' => $this->getDoctrine()->getRepository(Courses::class)->getFormatted()
+            'courses' => $this->getDoctrine()->getRepository(Courses::class)->getFormatted(),
+            'premiumCourses' => Courses::PREMIUM_GROUPS_TITLES,
         ]);
     }
 

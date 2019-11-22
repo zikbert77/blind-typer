@@ -6,6 +6,24 @@
 {% endblock %}
 
 {% block one_row_content %}
+    <div class="preloader">
+        <section>
+            <div class='sk-fading-circle'>
+                <div class='sk-circle sk-circle-1'></div>
+                <div class='sk-circle sk-circle-2'></div>
+                <div class='sk-circle sk-circle-3'></div>
+                <div class='sk-circle sk-circle-4'></div>
+                <div class='sk-circle sk-circle-5'></div>
+                <div class='sk-circle sk-circle-6'></div>
+                <div class='sk-circle sk-circle-7'></div>
+                <div class='sk-circle sk-circle-8'></div>
+                <div class='sk-circle sk-circle-9'></div>
+                <div class='sk-circle sk-circle-10'></div>
+                <div class='sk-circle sk-circle-11'></div>
+                <div class='sk-circle sk-circle-12'></div>
+            </div>
+        </section>
+    </div>
     <div class="test-wrapper" id="test-wrapper">
 {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
@@ -132,8 +150,6 @@
 
             let testStatModal = $("#testStatModal");
             let testStatModalCloseSpan = $(".close");
-
-            scrollToElement($("#test-wrapper"));
 
             let btn = $("#myBtn");
             btn.click(function () {
@@ -494,6 +510,13 @@
                     }
                 });
             }
-        })
+        });
+
+        $(window).on('load', function () {
+            setTimeout(function() {
+                $(".preloader").hide();
+                scrollToElement($("#test-wrapper"));
+            }, 600);
+        });
     </script>
 {% endblock %}
