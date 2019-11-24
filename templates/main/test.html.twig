@@ -400,7 +400,7 @@
             function calculateCPM(inputIndex) {
                 let passedTime = getPassedTime();
                 let cpm = Math.ceil((inputIndex * 60) / passedTime);
-                if (cpm < 0 || cpm > 10000) {
+                if (cpm < 0 || cpm > 10000 || isNaN(cpm)) {
                     cpm = 0;
                 }
 
