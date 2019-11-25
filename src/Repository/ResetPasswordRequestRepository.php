@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\ResetPasswordRequests;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\ORMException;
+use App\Entity\ResetPasswordRequests;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class ResetPasswordRequestRepository extends ServiceEntityRepository
 {
@@ -50,19 +50,23 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository
     }
     
     
-    public function findValidRequestByUser(User $user, \DateTime $validTo)
+    public function findValidRequestByUser(User $user, \DateTime $validTo): ?ResetPasswordRequests
     {
-        return $this->createQueryBuilder('r')
-            ->where('r.user = :userId')
-            ->setParameter('userId', $user)
-            ->andWhere('DATE(r.validTo) < :validTo')
-            ->setParameter('validTo', $validTo->format('Y-m-d H:i:s'))
-            ->andWhere('r.status = :status')
-            ->setParameter('status', ResetPasswordRequests::STATUS_UNUSED)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT * FROM reset_password_requests WHERE user_id = ? AND status = ? AND valid_to > ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $user->getId());
+        $stmt->bindValue(2, ResetPasswordRequests::STATUS_UNUSED);
+        $stmt->bindValue(3, $validTo->format('Y-m-d H:i:s'));
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+        if (!empty($result)) {
+            return $this->find($result['id']);
+        }
+
+        return null;
     }
 
     public function findValidRequestByHash($hash)
