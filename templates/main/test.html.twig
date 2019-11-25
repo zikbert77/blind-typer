@@ -358,6 +358,7 @@
             }
 
             function showTestStatModal() {
+                $("textarea#test-input").blur();
                 saveResult();
                 getTestHistoryForUser();
                 testStatModal.css("display", "block");
