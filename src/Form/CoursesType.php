@@ -18,7 +18,7 @@ class CoursesType extends AbstractType
     {
         $builder
             ->add('groupId', ChoiceType::class, [
-                'choices' => array_flip(Courses::$groups)
+                'choices' => array_flip(Courses::GROUPS_TITLES)
             ])
             ->add('title', TextType::class, [
                 'required' => false,

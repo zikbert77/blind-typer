@@ -1,11 +1,31 @@
 {% extends 'layouts/base.html.twig' %}
 
+{% block title %} - Test{% endblock %}
+
 {% block meta %}
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache">
 {% endblock %}
 
 {% block one_row_content %}
+    <div class="preloader">
+        <section>
+            <div class='sk-fading-circle'>
+                <div class='sk-circle sk-circle-1'></div>
+                <div class='sk-circle sk-circle-2'></div>
+                <div class='sk-circle sk-circle-3'></div>
+                <div class='sk-circle sk-circle-4'></div>
+                <div class='sk-circle sk-circle-5'></div>
+                <div class='sk-circle sk-circle-6'></div>
+                <div class='sk-circle sk-circle-7'></div>
+                <div class='sk-circle sk-circle-8'></div>
+                <div class='sk-circle sk-circle-9'></div>
+                <div class='sk-circle sk-circle-10'></div>
+                <div class='sk-circle sk-circle-11'></div>
+                <div class='sk-circle sk-circle-12'></div>
+            </div>
+        </section>
+    </div>
     <div class="test-wrapper" id="test-wrapper">
 {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
@@ -133,8 +153,6 @@
             let testStatModal = $("#testStatModal");
             let testStatModalCloseSpan = $(".close");
 
-            scrollToElement($("#test-wrapper"));
-
             let btn = $("#myBtn");
             btn.click(function () {
                 showTestStatModal()
@@ -187,37 +205,43 @@
             function compareInputWithText(input) {
                 $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
-                let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
-                let originalChar = $originalLetter.data('letter').toString();
-                let inputChar = input.charAt(inputIndex).toString();
-
-                if (originalChar === inputChar) {
-                    //set letter style pass
-                    $originalLetter.removeClass('current');
-                    $originalLetter.addClass('pass');
-                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
+                if (inputIndex < 0) {
+                    inputIndex = 0;
+                    let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                    $originalLetter.addClass('current');
                 } else {
-                    //set letter style wrong
-                    if (!$originalLetter.hasClass('wrong')) {
-                        mistakes++;
+                    let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                    let originalChar = $originalLetter.data('letter').toString();
+                    let inputChar = input.charAt(inputIndex).toString();
+
+                    if (originalChar === inputChar) {
+                        //set letter style pass
+                        $originalLetter.removeClass('current');
+                        $originalLetter.addClass('pass');
+                        $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
+                    } else {
+                        //set letter style wrong
+                        if (!$originalLetter.hasClass('wrong')) {
+                            mistakes++;
+                        }
+                        $originalLetter.removeClass('current');
+                        $originalLetter.addClass('wrong');
+                        $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
                     }
-                    $originalLetter.removeClass('current');
-                    $originalLetter.addClass('wrong');
-                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
+
+                    if ($originalLetter.hasClass('end-word')) {
+                        updatePassedWords('+');
+                    }
+
+                    calculateCPM(inputIndex);
+                    calculateAccuracy(inputIndex);
+
+                    let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
+                    $nextLetter.addClass('current');
+
+                    scrollTestDisplayBox($nextLetter.position().top);
+                    highlightKeyOnKeyboard($nextLetter.data('letter'));
                 }
-
-                if ($originalLetter.hasClass('end-word')) {
-                    updatePassedWords('+');
-                }
-
-                calculateCPM(inputIndex);
-                calculateAccuracy(inputIndex);
-
-                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
-                $nextLetter.addClass('current');
-
-                scrollTestDisplayBox($nextLetter.position().top);
-                highlightKeyOnKeyboard($nextLetter.data('letter'));
             }
 
             function scrollTestDisplayBox(letterPosition) {
@@ -282,6 +306,7 @@
 
             function backspaceAction(input) {
                 let inputIndex = input.length - 1;
+                inputIndex = inputIndex < 0 ? 0 : inputIndex;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
 
@@ -342,6 +367,7 @@
             }
 
             function showTestStatModal() {
+                $("textarea#test-input").blur();
                 saveResult();
                 getTestHistoryForUser();
                 testStatModal.css("display", "block");
@@ -355,9 +381,8 @@
             function getPassedTime() {
                 let leftTime = $timerLeftBox.text();
                 let totalTime = $testDurationBox.val() * 60;
-                let passedTime = totalTime - leftTime;
 
-                return passedTime;
+                return totalTime - leftTime;
             }
 
             function updatePassedWords(action = '+') {
@@ -384,7 +409,7 @@
             function calculateCPM(inputIndex) {
                 let passedTime = getPassedTime();
                 let cpm = Math.ceil((inputIndex * 60) / passedTime);
-                if (cpm < 0 || cpm > 10000) {
+                if (cpm < 0 || cpm > 10000 || isNaN(cpm)) {
                     cpm = 0;
                 }
 
@@ -494,6 +519,13 @@
                     }
                 });
             }
-        })
+        });
+
+        $(window).on('load', function () {
+            setTimeout(function() {
+                $(".preloader").hide();
+                scrollToElement($("#test-wrapper"));
+            }, 600);
+        });
     </script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block one_row_content %}
+    <div class="registration-form">
+
+        {% for error in errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+
+        {% if form is defined %}
+            <h1 class="h3 mb-3 font-weight-normal">Enter your new password</h1>
+
+            {{ form_start(form) }}
+
+            {% for passwordField in form.plainPassword %}
+                <div class="form-control" style="text-align: left">
+                    {{ form_widget(passwordField) }}
+                </div>
+            {% endfor %}
+
+            <div class="form-control">
+                <button class="btn">Set up new password</button>
+            </div>
+            {{ form_end(form) }}
+
+            <div class="form-control" style="padding-top: 0">
+                <a href="{{ path('register') }}">Create new account</a>
+            </div>
+
+        {% endif %}
+
+
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

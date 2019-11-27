@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block one_row_content %}
+    <div class="registration-form">
+
+        {% for error in errors %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+
+        <form method="post">
+
+            <h1 class="h3 mb-3 font-weight-normal">Enter your email</h1>
+            <div class="form-control">
+                <label for="inputEmail" class="sr-only">Email</label>
+                <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required autofocus autocomplete="off">
+            </div>
+
+            <div class="form-control">
+                <button class="btn btn-lg btn-primary" type="submit" name="reset">
+                    Reset
+                </button>
+            </div>
+
+            <div class="form-control" style="padding-top: 0">
+                <a href="{{ path('register') }}">Create new account</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}

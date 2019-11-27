@@ -7,9 +7,13 @@ class Courses
     const BASIC_COURSE_GROUP = 1;
     const ADVANCED_COURSE_GROUP = 2;
 
-    public static $groups = [
+    const GROUPS_TITLES = [
         self::BASIC_COURSE_GROUP => 'Basic course',
         self::ADVANCED_COURSE_GROUP => 'Advanced course'
+    ];
+
+    const PREMIUM_GROUPS_TITLES = [
+        self::GROUPS_TITLES[self::ADVANCED_COURSE_GROUP]
     ];
 
     public static $subGroups = [
@@ -17,9 +21,6 @@ class Courses
         self::ADVANCED_COURSE_GROUP => [],
     ];
 
-    public static $premiumGroups = [
-        self::ADVANCED_COURSE_GROUP
-    ];
 
     private $id;
 
@@ -59,7 +60,7 @@ class Courses
 
     public function getGroupId($onlyId = false)
     {
-        return $onlyId ? $this->groupId : self::$groups[$this->groupId] ?? $this->groupId;
+        return $onlyId ? $this->groupId : self::GROUPS_TITLES[$this->groupId] ?? $this->groupId;
     }
 
     public function setGroupId(?int $groupId): self
