@@ -205,37 +205,44 @@
             function compareInputWithText(input) {
                 $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
-                let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
-                let originalChar = $originalLetter.data('letter').toString();
-                let inputChar = input.charAt(inputIndex).toString();
 
-                if (originalChar === inputChar) {
-                    //set letter style pass
-                    $originalLetter.removeClass('current');
-                    $originalLetter.addClass('pass');
-                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
+                if (inputIndex < 0) {
+                    inputIndex = 0;
+                    let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                    $originalLetter.addClass('current');
                 } else {
-                    //set letter style wrong
-                    if (!$originalLetter.hasClass('wrong')) {
-                        mistakes++;
+                    let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
+                    let originalChar = $originalLetter.data('letter').toString();
+                    let inputChar = input.charAt(inputIndex).toString();
+
+                    if (originalChar === inputChar) {
+                        //set letter style pass
+                        $originalLetter.removeClass('current');
+                        $originalLetter.addClass('pass');
+                        $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '+');
+                    } else {
+                        //set letter style wrong
+                        if (!$originalLetter.hasClass('wrong')) {
+                            mistakes++;
+                        }
+                        $originalLetter.removeClass('current');
+                        $originalLetter.addClass('wrong');
+                        $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
                     }
-                    $originalLetter.removeClass('current');
-                    $originalLetter.addClass('wrong');
-                    $("p.tesxxxx").text(originalChar + ' : ' + inputChar + '-');
+
+                    if ($originalLetter.hasClass('end-word')) {
+                        updatePassedWords('+');
+                    }
+
+                    calculateCPM(inputIndex);
+                    calculateAccuracy(inputIndex);
+
+                    let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
+                    $nextLetter.addClass('current');
+
+                    scrollTestDisplayBox($nextLetter.position().top);
+                    highlightKeyOnKeyboard($nextLetter.data('letter'));
                 }
-
-                if ($originalLetter.hasClass('end-word')) {
-                    updatePassedWords('+');
-                }
-
-                calculateCPM(inputIndex);
-                calculateAccuracy(inputIndex);
-
-                let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
-                $nextLetter.addClass('current');
-
-                scrollTestDisplayBox($nextLetter.position().top);
-                highlightKeyOnKeyboard($nextLetter.data('letter'));
             }
 
             function scrollTestDisplayBox(letterPosition) {
@@ -300,6 +307,7 @@
 
             function backspaceAction(input) {
                 let inputIndex = input.length - 1;
+                inputIndex = inputIndex < 0 ? 0 : inputIndex;
                 let $currentLetter = $originalTextBox.find('span.letter-' + inputIndex);
                 let $nextLetter = $originalTextBox.find('span.letter-' + (inputIndex + 1));
 
