@@ -205,7 +205,6 @@
             function compareInputWithText(input) {
                 $originalTextBox.find('span.letter').removeClass('current');
                 let inputIndex = input.length - 1;
-
                 if (inputIndex < 0) {
                     inputIndex = 0;
                     let $originalLetter = $originalTextBox.find('span.letter-' + inputIndex);
@@ -382,9 +381,8 @@
             function getPassedTime() {
                 let leftTime = $timerLeftBox.text();
                 let totalTime = $testDurationBox.val() * 60;
-                let passedTime = totalTime - leftTime;
 
-                return passedTime;
+                return totalTime - leftTime;
             }
 
             function updatePassedWords(action = '+') {
