@@ -142,6 +142,7 @@
             let positionToScrollDown = 195;
             let positionToScrollUp = 130;
             let scrollPx = 64;
+            let blockCompare = false;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
@@ -185,13 +186,6 @@
                 focusOnTextarea();
             });
 
-            $("textarea#test-input").on('input', function () {
-                if (!isTimerStarted) {
-                    startTimer();
-                }
-                compareInputWithText($(this).val());
-            });
-
             $("textarea#test-input").keydown(function(e) {
                 switch (e.keyCode) {
                     case 8:  // Backspace
@@ -200,6 +194,24 @@
                     default:
                         break;
                 }
+            });
+
+            $("textarea#test-input").on('input', function () {
+                if (!isTimerStarted) {
+                    startTimer();
+                }
+
+                $("textarea#test-input").keydown(function(e) {
+                    switch (e.keyCode) {
+                        case 8:  // Backspace
+                            blockCompare = true;
+                            break;
+                        default:
+                            blockCompare = false;
+                            break;
+                    }
+                });
+                compareInputWithText($(this).val());
             });
 
             function compareInputWithText(input) {
@@ -230,7 +242,11 @@
                     }
 
                     if ($originalLetter.hasClass('end-word')) {
-                        updatePassedWords('+');
+                        if (blockCompare) {
+                            blockCompare = false;
+                        } else {
+                            updatePassedWords('+');
+                        }
                     }
 
                     calculateCPM(inputIndex);
@@ -312,6 +328,7 @@
 
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
+                    blockCompare = true;
                 }
 
                 //Remove all current letter classes
