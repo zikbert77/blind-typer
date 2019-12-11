@@ -2,6 +2,8 @@
 
 namespace App\Component;
 
+use App\Entity\Languages;
+
 class Keyboard
 {
     const KEYBOARD_ANSI = 1;
@@ -14,10 +16,10 @@ class Keyboard
         self::KEYBOARD_ISO => 'iso',
     ];
 
-    public static function loadKeyboard(string $type)
+    public static function loadKeyboard(string $type, int $language = Languages::DEFAULT_LANGUAGE)
     {
         $keyboard = new self();
-        $methodName = 'load' . ucfirst(self::KEYBOARD_TITLES[$type]) . 'Keyboard';
+        $methodName = 'load' . ucfirst(self::KEYBOARD_TITLES[$type] ?? '') . (Languages::LANGUAGES_TITLES[$language] ?? '') . 'Keyboard';
         if (method_exists($keyboard, $methodName)) {
             return $keyboard::$methodName();
         }
@@ -25,7 +27,7 @@ class Keyboard
         return null;
     }
 
-    private static function loadAnsiKeyboard()
+    private static function loadAnsiUsKeyboard()
     {
         return '<div class="keyboard">
 
@@ -116,7 +118,7 @@ class Keyboard
             ;
     }
 
-    private static function loadIsoKeyboard()
+    private static function loadIsoUsKeyboard()
     {
         return '<div class="keyboard">
 
@@ -200,6 +202,97 @@ class Keyboard
                         <span class="key" data-key="lalt">alt</span>
                         <span class="key" data-key="lmeta">meta</span>
                         <span class="key key-length-3 space" data-finger="5" data-key=" ">space</span>
+                        <span class="key" data-key="rmeta">meta</span>
+                        <span class="key" data-key="ralt">alt</span>
+
+                    </div>
+                </div>'
+            ;
+    }
+
+    private static function loadAnsiRuKeyboard()
+    {
+        return '<div class="keyboard">
+
+                    <div class="keyboardRow">   
+                    
+                        <span class="key" data-key="~">~</span>
+                        <span class="key" data-key="1" data-shift-key="!">1<sub>!</sub></span>
+                        <span class="key" data-key="2" data-shift-key="&quot;">2<sub>&quot;</sub></span>
+                        <span class="key" data-key="3" data-shift-key="№">3<sub>№</sub></span>
+                        <span class="key" data-key="4" data-shift-key="%">4<sub>%</sub></span>
+                        <span class="key" data-key="5" data-shift-key=":">5<sub>:</sub></span>
+                        <span class="key" data-key="6" data-shift-key=",">6<sub>,</sub></span>
+                        <span class="key" data-key="7" data-shift-key=".">7<sub>.</sub></span>
+                        <span class="key" data-key="8" data-shift-key=";">8 <sub>;</sub></span>
+                        <span class="key" data-key="9" data-shift-key="(">9<sub>(</sub></span>
+                        <span class="key" data-key="0" data-shift-key=")">0<sub>)</sub></span>
+                        <span class="key" data-key="-">-</span>
+                        <span class="key" data-key="=">=</span>
+                        <span class="key key-length-1" data-key="del">delete</span>
+                
+                    </div>
+
+                    <div class="keyboardRow">   
+                    
+                        <span class="key key-length-1" data-key="tab">tab</span>
+                        <span class="key" data-key="й" data-finger="1" data-shift="rshift">Й</span>
+                        <span class="key" data-key="ц" data-finger="2" data-shift="rshift">Ц</span>
+                        <span class="key" data-key="у" data-finger="3" data-shift="rshift">У</span>
+                        <span class="key" data-key="к" data-finger="4" data-shift="rshift">К</span>
+                        <span class="key" data-key="е" data-finger="4" data-shift="rshift">Е</span>
+                        <span class="key" data-key="н" data-finger="6" data-shift="lshift">Н</span>
+                        <span class="key" data-key="г" data-finger="6" data-shift="lshift">Г</span>
+                        <span class="key" data-key="ш" data-finger="7" data-shift="lshift">Ш</span>
+                        <span class="key" data-key="щ" data-finger="8" data-shift="lshift">Щ</span>
+                        <span class="key" data-key="з" data-finger="9" data-shift="lshift">З</span>
+                        <span class="key" data-key="х" data-shift="lshift" data-finger="9" data-shift-key="Х">Х<sub>х</sub></span>
+                        <span class="key" data-key="ъ" data-shift="lshift" data-finger="9" data-shift-key="Ъ">Ъ<sub>ъ</sub></span>
+                        <span class="key" data-key="\" data-shift="lshift" data-finger="9" data-shift-key="|">|<sub>\</sub></span>
+                
+                    </div>
+                    
+                    <div class="keyboardRow">   
+                    
+                        <span class="key" data-key="caps">caps lock</span>
+                        <span class="key" data-key="ф" data-finger="1" data-shift="rshift">Ф</span>
+                        <span class="key" data-key="ы" data-finger="2" data-shift="rshift">Ы</span>
+                        <span class="key" data-key="в" data-finger="3" data-shift="rshift">В</span>
+                        <span class="key" data-key="а" data-finger="4" data-shift="rshift">А</span>
+                        <span class="key" data-key="п" data-finger="4" data-shift="rshift">П</span>
+                        <span class="key" data-key="р" data-finger="6" data-shift="lshift">Р</span>
+                        <span class="key" data-key="о" data-finger="6" data-shift="lshift">О</span>
+                        <span class="key" data-key="л" data-finger="7" data-shift="lshift">Л</span>
+                        <span class="key" data-key="д" data-finger="8" data-shift="lshift">Д</span>
+                        <span class="key" data-key="ж" data-finger="9" data-shift="lshift" data-shift-key="Ж">Ж<sub>ж</sub></span>
+                        <span class="key" data-key="э" data-finger="9" data-shift="lshift" data-shift-key="Э">Э<sub>э</sub></span>
+                        <span class="key key-length-1" data-finger="9" data-key="&#10;">enter</span>
+                
+                    </div>
+                    <div class="keyboardRow">   
+                    
+                        <span class="key key-length-3" id="lshift" data-key="shift" data-finger="1">shift</span>
+                        <span class="key" data-key="я" data-finger="1" data-shift="rshift">Я</span>
+                        <span class="key" data-key="ч" data-finger="2" data-shift="rshift">Ч</span>
+                        <span class="key" data-key="с" data-finger="3" data-shift="rshift">С</span>
+                        <span class="key" data-key="м" data-finger="4" data-shift="rshift">М</span>
+                        <span class="key" data-key="и" data-finger="4" data-shift="rshift">И</span>
+                        <span class="key" data-key="т" data-finger="6" data-shift="lshift">Т</span>
+                        <span class="key" data-key="ь" data-finger="6" data-shift="lshift">Ь</span>
+                        <span class="key" data-key="б" data-finger="7" data-shift="lshift" data-shift-key="Б">Б<sub>б</sub></span>
+                        <span class="key" data-key="ю" data-finger="8" data-shift="lshift" data-shift-key="Ю">Ю<sub>ю</sub></span>
+                        <span class="key" data-key="/" data-finger="9" data-shift="lshift" data-shift-key="?">?<sub>/</sub></span>
+                        <span class="key key-length-3" id="rshift" data-key="shift" data-finger="9">shift</span>
+
+                    </div>
+                    
+                        <div class="keyboardRow">   
+                    
+                        <span class="key" data-key="dn">fn</span>
+                        <span class="key" data-key="ctrl">ctrl</span>
+                        <span class="key" data-key="lalt">alt</span>
+                        <span class="key" data-key="lmeta">meta</span>
+                        <span class="key key-length-3 space" data-key=" " data-finger="5">space</span>
                         <span class="key" data-key="rmeta">meta</span>
                         <span class="key" data-key="ralt">alt</span>
 
