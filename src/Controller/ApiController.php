@@ -83,7 +83,7 @@ class ApiController extends AbstractController
     public function getText(Request $request, TokenStorageInterface $tokenStorage, $duration = 1)
     {
         $user = $tokenStorage->getToken()->getUser();
-        $language = (is_string($user) ? null : $user->getDefaultLanguage()->getId()) ?? Languages::DEFAULT_LANGUAGE;
+        $language = $request->get('language') ?? (is_string($user) ? null : $user->getDefaultLanguage()->getId()) ?? Languages::DEFAULT_LANGUAGE;
 
         /** @var Texts $text */
         $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText(

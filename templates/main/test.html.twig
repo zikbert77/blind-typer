@@ -35,6 +35,18 @@
                 <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
                 <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
             </select>
+            <label for="test-language">Language</label>
+            <select name="test-language" id="test-language">
+                {% for language in languages %}
+                    <option value="{{ language.id }}"
+                            {% if app.request.query.get('language') == language.id %}
+                                selected
+                            {% elseif app.request.query.get('language') is null and app.user.defaultLanguage.id == language.id %}
+                                selected
+                            {% endif %}
+                    >{{ language.title }}</option>
+                {% endfor %}
+            </select>
             <div class="right">
                 <span id="words-per-minute">
                     <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
@@ -149,6 +161,7 @@
             let $countAccuracyBox = $("span#count-typing-accuracy");
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
+            let $testLanguageBox = $("select#test-language");
             let $originalTextBox = $("#original-text");
 
             let testStatModal = $("#testStatModal");
@@ -165,6 +178,11 @@
 
             $testDurationBox.change(function () {
                 insertParam('duration', $(this).val());
+                window.location.href;
+            });
+
+            $testLanguageBox.change(function () {
+                insertParam('language', $(this).val());
                 window.location.href;
             });
 
@@ -521,7 +539,10 @@
 
             function initText() {
                 let duration = $testDurationBox.val();
-                $.get('/api/text/get/' + duration, {}, function (data, status) {
+                let language = $testLanguageBox.val();
+                $.get('/api/text/get/' + duration, {
+                    language: language
+                }, function (data, status) {
                     if (status === 'success') {
                         let textId = data.textId;
                         let text = data.parsedText;

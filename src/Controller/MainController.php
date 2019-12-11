@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Courses;
+use App\Entity\Languages;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +30,8 @@ class MainController extends AbstractController
     public function test()
     {
         return $this->render('main/test.html.twig', [
-            'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+            'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI),
+            'languages' => $this->getDoctrine()->getRepository(Languages::class)->findAll()
         ]);
     }
     
