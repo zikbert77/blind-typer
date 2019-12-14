@@ -70,7 +70,7 @@
                             {% for course in subcourses %}
                                 {% if (app.user.isPremium ?? false) != false %}
                                     <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                                        <span class="link">{{ 'Typing course ' ~ course.position }}</span>
+                                        <span class="link">{{ 'Typing course ' ~ course.position }} - {{ course.description|raw }}</span>
                                     </a>
                                 {% else %}
                                     <span class="link">{{ 'Typing course ' ~ course.position }}</span>

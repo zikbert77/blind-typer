@@ -126,6 +126,15 @@ table tr:nth-child(even) {
     font-weight: 200;
 }
 
+.bag {
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: black;
+    min-width: 20px !important;
+    font-size: 14px;
+}
+
 .left {
     float: left;
 }
