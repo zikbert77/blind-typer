@@ -24,7 +24,7 @@ class Keyboard
             return $keyboard::$methodName();
         }
 
-        return null;
+        return self::loadAnsiUsKeyboard();
     }
 
     private static function loadAnsiUsKeyboard()

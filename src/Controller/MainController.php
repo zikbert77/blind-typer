@@ -33,7 +33,10 @@ class MainController extends AbstractController
         $selectedLanguage = Languages::DEFAULT_LANGUAGE;
         if (!empty($request->get('language'))) {
             $selectedLanguage = $request->get('language');
+        } elseif (!is_string($this->user)) {
+            $selectedLanguage = $this->user->getDefaultLanguage()->getId();
         }
+
         return $this->render('main/test.html.twig', [
             'keyboard' => Keyboard::loadKeyboard(
                 is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI,

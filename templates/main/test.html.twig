@@ -41,7 +41,7 @@
                     <option value="{{ language.id }}"
                             {% if app.request.query.get('language') == language.id %}
                                 selected
-                            {% elseif app.request.query.get('language') is null and app.user.defaultLanguage.id == language.id %}
+                            {% elseif app.request.query.get('language') is null and app.user.defaultLanguage.id ?? -1 == language.id %}
                                 selected
                             {% endif %}
                     >{{ language.title }}</option>
