@@ -33,8 +33,8 @@ class ApiController extends AbstractController
     {
         return new JsonResponse(
             self::getParsedText(
-                $request->query->get('texts')['text_body'] ??
-                $request->query->get('courses')['textBody'] ??
+                $request->request->get('texts')['text_body'] ??
+                $request->request->get('courses')['textBody'] ??
                 'No get'
             )
         );
