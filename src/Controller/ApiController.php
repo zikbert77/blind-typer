@@ -92,6 +92,12 @@ class ApiController extends AbstractController
             $duration
         );
 
+        if (empty($text)) {
+            return new JsonResponse([
+                'error' => true
+            ]);
+        }
+
         $previousText = $request->getSession()->get('previousText') ?? [];
         $previousText[] = $text->getId();
 

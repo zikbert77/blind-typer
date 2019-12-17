@@ -98,6 +98,10 @@
                 </div>
             </div>
         </div>
+        <div class="test-container-error text-center">
+            <h1>Text not found, please try again later</h1>
+            <a href="https://t.me/zikbert77" target="_blank" class="link">Report a problem</a>
+        </div>
     </div>
 
     <div id="testStatModal" class="modal">
@@ -544,20 +548,32 @@
                     language: language
                 }, function (data, status) {
                     if (status === 'success') {
-                        let textId = data.textId;
-                        let text = data.parsedText;
-                        let wordsCount = data.wordsCount;
-                        lettersCount = data.lettersCount;
+                        if (data.error !== undefined && data.error !== false) {
+                            showTextLoadError();
+                        } else {
+                            let textId = data.textId;
+                            let text = data.parsedText;
+                            let wordsCount = data.wordsCount;
+                            lettersCount = data.lettersCount;
 
-                        $("input#text-id").val(textId);
-                        $originalTextBox.append(text);
-                        let $firstLetter = $originalTextBox.find('span.letter-0');
-                        $firstLetter.addClass('current');
-                        highlightKeyOnKeyboard($firstLetter.data('letter'));
+                            $("input#text-id").val(textId);
+                            $originalTextBox.append(text);
+                            let $firstLetter = $originalTextBox.find('span.letter-0');
+                            $firstLetter.addClass('current');
+                            highlightKeyOnKeyboard($firstLetter.data('letter'));
+                        }
+                    } else {
+                        showTextLoadError();
                     }
                 });
             }
         });
+
+
+        function showTextLoadError() {
+            $(".test-container").hide();
+            $(".test-container-error").show();
+        }
 
         $(window).on('load', function () {
             setTimeout(function() {
