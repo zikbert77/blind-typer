@@ -27,7 +27,7 @@
             <hr>
         </div>
         <div class="test-container">
-            <input type="hidden" name="text-id" id="text-id" value="undefined">
+            <input type="hidden" name="text-id" id="text-id" value="{{ course.id }}">
             <div class="test-text-display" id="test-text-display">
                 <span id="original-text">{{ course.parsedText|raw }}</span>
             </div>
@@ -79,8 +79,13 @@
                 <p>
                     <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
+                <div class="loader"></div>
                 {% if app.user %}
+                    <canvas id="lastCourseChart" height="100"></canvas>
 
+                    <span style="font-size: 14px;">
+                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
+                    </span>
                 {% else %}
                     <p>
                         If you want to view your typing statistic, please
@@ -118,6 +123,7 @@
             let positionToScrollDown = 195;
             let positionToScrollUp = 130;
             let scrollPx = 64;
+            let globalTimerInterval;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
@@ -315,7 +321,7 @@
                 isTimerStarted = true;
 
                 let _Seconds = 0;
-                interval = setInterval(function() {
+                globalTimerInterval = setInterval(function() {
                         _Seconds++;
                         $timerLeftBox.text(_Seconds);
                         calculateWPM();
@@ -324,8 +330,8 @@
                 setTimeout(stopTimer, 100000);
             }
 
-            function stopTimer(interval) {
-                clearInterval(interval);
+            function stopTimer() {
+                clearInterval(globalTimerInterval);
                 $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
                 $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
                 $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
@@ -333,12 +339,81 @@
             }
 
             function showTestStatModal() {
+                $("textarea#test-input").blur();
+                saveResult();
+                getCourseHistoryForUser();
                 testStatModal.css("display", "block");
             }
 
             function hideTestStatModal() {
                 testStatModal.css("display", "none");
                 window.location.reload();
+            }
+
+            function buildLastUserCourseHistoryChart(data) {
+                let ctx = document.getElementById('lastCourseChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.datetime,
+                        datasets: [{
+                            label: 'Words per minute (WPM)',
+                            data: data.wpm,
+                            backgroundColor: [
+                                'rgba(61, 163, 232, 0.1)',
+                            ],
+                            borderColor: [
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label: 'Chars per minute (CPM)',
+                            data: data.cpm,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.1)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                            ],
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        tooltips: {
+                            mode: 'x-axis',
+                            intercept: true
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
             }
 
             function getPassedTime() {
@@ -385,10 +460,38 @@
                 $("textarea#test-input").focus();
             }
 
+            function getCourseHistoryForUser() {
+                $(".loader").show()
+                $.get('{{ path('getCourseHistoryForUser') }}', {
+                    limit: 6
+                }, function (data, status) {
+                    if (status === 'success') {
+                        buildLastUserCourseHistoryChart(data);
+                        $(".loader").hide()
+                    }
+                });
+            }
+
             function initText() {
                 let $firstLetter = $originalTextBox.find('span.letter-0');
                 $firstLetter.addClass('current');
                 highlightKeyOnKeyboard($firstLetter.data('letter'));
+            }
+
+            function saveResult() {
+                $.post('{{ path('saveCourseResult') }}', {
+                    courseId: $("input#text-id").val(),
+                    testDuration: $testDurationBox.val(),
+                    wpm: $countWordsPerMinuteBox.text(),
+                    cpm: $countCharsPerMinuteBox.text(),
+                    accuracy: $countAccuracyBox.text(),
+                }, function (data, status) {
+                    if (status === 'success') {
+                        console.log('saved');
+                    } else {
+                        console.log(data.error);
+                    }
+                });
             }
         })
     </script>

@@ -126,6 +126,15 @@ table tr:nth-child(even) {
     font-weight: 200;
 }
 
+.bag {
+    padding: 3px 8px;
+    background-color: lightgray;
+    border-radius: 5px;
+    color: black;
+    min-width: 20px !important;
+    font-size: 14px;
+}
+
 .left {
     float: left;
 }
@@ -217,6 +226,12 @@ span.small {
 .test-container {
     width: 1050px;
     margin: 0 auto;
+}
+
+.test-container-error {
+    text-align: center;
+    display: none;
+    padding: 50px 0;
 }
 
 .test-text-display {
@@ -780,4 +795,20 @@ span.close {
     40% {
         opacity: 1;
     }
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 30px auto -50px;
+    display: none;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

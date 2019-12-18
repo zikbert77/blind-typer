@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Courses;
+use App\Entity\Languages;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MainController extends AbstractController
@@ -26,10 +28,21 @@ class MainController extends AbstractController
         ]);
     }
 
-    public function test()
+    public function test(Request $request)
     {
+        $selectedLanguage = Languages::DEFAULT_LANGUAGE;
+        if (!empty($request->get('language'))) {
+            $selectedLanguage = $request->get('language');
+        } elseif (!is_string($this->user)) {
+            $selectedLanguage = $this->user->getDefaultLanguage()->getId();
+        }
+
         return $this->render('main/test.html.twig', [
-            'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+            'keyboard' => Keyboard::loadKeyboard(
+                is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI,
+                $selectedLanguage
+            ),
+            'languages' => $this->getDoctrine()->getRepository(Languages::class)->findAll()
         ]);
     }
     

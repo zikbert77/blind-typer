@@ -30,6 +30,13 @@ App\Entity\Courses:
             options:
                 fixed: false
                 default: 'NULL'
+        description:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+                default: 'NULL'
         position:
             type: smallint
             nullable: true

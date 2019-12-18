@@ -4,7 +4,18 @@ namespace App\Entity;
 
 class Languages
 {
-    const DEFAULT_LANGUAGE = 1;
+    // @todo: If you changed language id please also change it in database
+    const US = 1;
+    const UA = 2;
+    const RU = 3;
+
+    const DEFAULT_LANGUAGE = self::US;
+
+    const LANGUAGES_TITLES = [
+        self::US => 'Us',
+        self::UA => 'Ua',
+        self::RU => 'Ru'
+    ];
 
     private $id;
 

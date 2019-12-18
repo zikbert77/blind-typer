@@ -27,6 +27,13 @@ class CoursesType extends AbstractType
                     'Placeholder' => 'Course item title (let empty if it isn\'t necessary)'
                 ]
             ])
+            ->add('description', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control rounded-block',
+                    'Placeholder' => 'Course item description (let empty if it isn\'t necessary)'
+                ]
+            ])
             ->add('language', EntityType::class, [
                 'class' => Languages::class,
                 'choice_label' => 'title',

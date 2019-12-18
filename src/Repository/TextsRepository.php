@@ -20,7 +20,7 @@ class TextsRepository extends ServiceEntityRepository
         parent::__construct($registry, Texts::class);
     }
 
-    public function selectRandomText(Request $request, int $language, int $duration = 1): Texts
+    public function selectRandomText(Request $request, int $language, int $duration = 1): ?Texts
     {
         $minWordsLimit = 120;
         $maxWordsLimit = 600;

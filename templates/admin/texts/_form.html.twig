@@ -68,7 +68,7 @@
         });
 
         function updatePreview() {
-            $.get('{{ path('prepareText') }}', $('form[name="texts"]').serialize(), function (data, status) {
+            $.post('{{ path('prepareText') }}', $('form[name="texts"]').serialize(), function (data, status) {
                 if (status === 'success') {
                     $("#test-text-display-preview").html(data['parsedText']);
                     $("#text-words-count").html(data['words']);
