@@ -118,6 +118,7 @@
             let positionToScrollDown = 195;
             let positionToScrollUp = 130;
             let scrollPx = 64;
+            let globalTimerInterval;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
@@ -315,7 +316,7 @@
                 isTimerStarted = true;
 
                 let _Seconds = 0;
-                interval = setInterval(function() {
+                globalTimerInterval = setInterval(function() {
                         _Seconds++;
                         $timerLeftBox.text(_Seconds);
                         calculateWPM();
@@ -324,8 +325,8 @@
                 setTimeout(stopTimer, 100000);
             }
 
-            function stopTimer(interval) {
-                clearInterval(interval);
+            function stopTimer() {
+                clearInterval(globalTimerInterval);
                 $("span#modal-test-result-wpm").text($countWordsPerMinuteBox.text());
                 $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
                 $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
