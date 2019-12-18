@@ -27,7 +27,7 @@
             <hr>
         </div>
         <div class="test-container">
-            <input type="hidden" name="text-id" id="text-id" value="undefined">
+            <input type="hidden" name="text-id" id="text-id" value="{{ course.id }}">
             <div class="test-text-display" id="test-text-display">
                 <span id="original-text">{{ course.parsedText|raw }}</span>
             </div>
@@ -333,7 +333,9 @@
             }
 
             function showTestStatModal() {
+                $("textarea#test-input").blur();
                 testStatModal.css("display", "block");
+                saveResult();
             }
 
             function hideTestStatModal() {
@@ -389,6 +391,22 @@
                 let $firstLetter = $originalTextBox.find('span.letter-0');
                 $firstLetter.addClass('current');
                 highlightKeyOnKeyboard($firstLetter.data('letter'));
+            }
+
+            function saveResult() {
+                $.post('{{ path('saveCourseResult') }}', {
+                    courseId: $("input#text-id").val(),
+                    testDuration: $testDurationBox.val(),
+                    wpm: $countWordsPerMinuteBox.text(),
+                    cpm: $countCharsPerMinuteBox.text(),
+                    accuracy: $countAccuracyBox.text(),
+                }, function (data, status) {
+                    if (status === 'success') {
+                        console.log('saved');
+                    } else {
+                        console.log(data.error);
+                    }
+                });
             }
         })
     </script>

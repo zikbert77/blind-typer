@@ -35,6 +35,10 @@ getRandText:
     path: /api/text/get/{duration}
     controller: App\Controller\ApiController::getText
 
+saveCourseResult:
+    path: /api/courses/result/save
+    controller: App\Controller\ApiController::saveCourseResult
+
 saveTestResult:
     path: /api/tests/result/save
     controller: App\Controller\ApiController::saveTestResult

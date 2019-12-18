@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Courses;
+use App\Entity\CoursesHistory;
 use App\Entity\Texts;
 use App\Entity\Languages;
 use App\Entity\TestsHistory;
@@ -38,6 +40,36 @@ class ApiController extends AbstractController
                 'No get'
             )
         );
+    }
+
+    public function saveCourseResult(Request $request, TokenStorageInterface $tokenStorage)
+    {
+        $user = $tokenStorage->getToken()->getUser();
+        $courseId = $request->request->get('courseId');
+        $wpm = $request->request->get('wpm');
+        $cpm = $request->request->get('cpm');
+        $accuracy = $request->request->get('accuracy');
+
+        $course = $this->getDoctrine()->getRepository(Courses::class)->find($courseId);
+        if (empty($course)) {
+            return new JsonResponse([
+                'status' => 'failed',
+                'error' => 'Course not found',
+            ]);
+        }
+
+        $result = $this->getDoctrine()->getRepository(CoursesHistory::class)->save(
+            is_string($user) ? null : $user,
+            $course,
+            $wpm,
+            $cpm,
+            $accuracy
+        );
+
+        return new JsonResponse([
+            'status' => $result['status'],
+            'error' => $result['error'] ?? '',
+        ]);
     }
 
     public function saveTestResult(Request $request, TokenStorageInterface $tokenStorage)

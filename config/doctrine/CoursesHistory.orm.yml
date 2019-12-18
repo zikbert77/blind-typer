@@ -1,0 +1,69 @@
+App\Entity\CoursesHistory:
+    type: entity
+    table: courses_history
+    repositoryClass: App\Repository\CoursesHistoryRepository
+    indexes:
+        course_id:
+            columns:
+                - course_id
+        user_id:
+            columns:
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        wordsPerMinute:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+            column: words_per_minute
+        charsPerMinute:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+            column: chars_per_minute
+        accuracy:
+            type: smallint
+            nullable: true
+            options:
+                unsigned: true
+                default: '0'
+        createdAt:
+            type: datetime
+            nullable: true
+            options:
+                default: current_timestamp()
+            column: created_at
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        course:
+            targetEntity: Courses
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                course_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
