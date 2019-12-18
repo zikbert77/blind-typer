@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Courses;
+use App\Entity\CoursesHistory;
 use App\Entity\Texts;
 use App\Entity\Languages;
 use App\Entity\TestsHistory;
@@ -33,11 +35,41 @@ class ApiController extends AbstractController
     {
         return new JsonResponse(
             self::getParsedText(
-                $request->query->get('texts')['text_body'] ??
-                $request->query->get('courses')['textBody'] ??
+                $request->request->get('texts')['text_body'] ??
+                $request->request->get('courses')['textBody'] ??
                 'No get'
             )
         );
+    }
+
+    public function saveCourseResult(Request $request, TokenStorageInterface $tokenStorage)
+    {
+        $user = $tokenStorage->getToken()->getUser();
+        $courseId = $request->request->get('courseId');
+        $wpm = $request->request->get('wpm');
+        $cpm = $request->request->get('cpm');
+        $accuracy = $request->request->get('accuracy');
+
+        $course = $this->getDoctrine()->getRepository(Courses::class)->find($courseId);
+        if (empty($course)) {
+            return new JsonResponse([
+                'status' => 'failed',
+                'error' => 'Course not found',
+            ]);
+        }
+
+        $result = $this->getDoctrine()->getRepository(CoursesHistory::class)->save(
+            is_string($user) ? null : $user,
+            $course,
+            $wpm,
+            $cpm,
+            $accuracy
+        );
+
+        return new JsonResponse([
+            'status' => $result['status'],
+            'error' => $result['error'] ?? '',
+        ]);
     }
 
     public function saveTestResult(Request $request, TokenStorageInterface $tokenStorage)
@@ -72,6 +104,15 @@ class ApiController extends AbstractController
         ]);
     }
 
+    public function getCourseHistoryForUser(Request $request, TokenStorageInterface $tokenStorage)
+    {
+        return new JsonResponse($this->getDoctrine()->getRepository(CoursesHistory::class)->getDataForChart(
+            $tokenStorage->getToken()->getUser(),
+            $request->get('courseId'),
+            $request->get('limit')
+        ));
+    }
+
     public function getTestHistoryForUser(Request $request, TokenStorageInterface $tokenStorage)
     {
         return new JsonResponse($this->getDoctrine()->getRepository(TestsHistory::class)->getDataForChart(
@@ -83,7 +124,7 @@ class ApiController extends AbstractController
     public function getText(Request $request, TokenStorageInterface $tokenStorage, $duration = 1)
     {
         $user = $tokenStorage->getToken()->getUser();
-        $language = (is_string($user) ? null : $user->getDefaultLanguage()->getId()) ?? Languages::DEFAULT_LANGUAGE;
+        $language = $request->get('language') ?? (is_string($user) ? null : $user->getDefaultLanguage()->getId()) ?? Languages::DEFAULT_LANGUAGE;
 
         /** @var Texts $text */
         $text = $this->getDoctrine()->getRepository(Texts::class)->selectRandomText(
@@ -91,6 +132,12 @@ class ApiController extends AbstractController
             $language,
             $duration
         );
+
+        if (empty($text)) {
+            return new JsonResponse([
+                'error' => true
+            ]);
+        }
 
         $previousText = $request->getSession()->get('previousText') ?? [];
         $previousText[] = $text->getId();

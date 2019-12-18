@@ -7,6 +7,8 @@ class TextParser
     const DELIMITER_ENTER = "\r";
     const DELIMITER_NEXT_ROW = "\n";
     const DELIMITER_SPACE = ' ';
+    const DELIMITER_DASH = '-';
+    const DELIMITER_POINT = '.';
     const DELIMITER_UNIVERSAL = '%&%';
 
     private $originalText;
@@ -117,7 +119,15 @@ class TextParser
                     $newRow = '';
                     $letter = $wordArray[$letterIterator];
                     $letterClasses = 'letter letter-' . $this->lettersCount;
-                    if (isset($wordArray[$letterIterator + 1]) && $wordArray[$letterIterator + 1] == self::DELIMITER_SPACE && $wordLength > 2) {
+                    if (
+                        isset($wordArray[$letterIterator + 1]) &&
+                            (
+                                $wordArray[$letterIterator + 1] == self::DELIMITER_SPACE ||
+                                $wordArray[$letterIterator + 1] == self::DELIMITER_DASH ||
+                                $wordArray[$letterIterator + 1] == self::DELIMITER_POINT
+                            ) &&
+                        $wordLength > 2
+                    ) {
                         $letterClasses .= ' end-word';
                     }
 

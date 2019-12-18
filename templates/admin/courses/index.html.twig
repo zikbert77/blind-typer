@@ -23,6 +23,7 @@
                     <th>Language</th>
                     <th>Position</th>
                     <th>Title</th>
+                    <th>Description</th>
                     <th>TextBody</th>
                     <th>CreatedAt</th>
                     <th>UpdatedAt</th>
@@ -37,6 +38,7 @@
                     <td>{{ course.language.title }}</td>
                     <td>{{ course.position }}</td>
                     <td>{{ course.title }}</td>
+                    <td>{{ course.description|raw }}</td>
                     <td>{{ course.textBody|slice(0, 30) }}...</td>
                     <td>{{ course.createdAt ? course.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ course.updatedAt ? course.updatedAt|date('Y-m-d H:i:s') : '' }}</td>

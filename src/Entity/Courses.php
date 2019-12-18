@@ -28,6 +28,8 @@ class Courses
 
     private $title;
 
+    private $description;
+
     private $textBody;
 
     private $parsedText;
@@ -174,6 +176,18 @@ class Courses
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

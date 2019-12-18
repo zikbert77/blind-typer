@@ -35,6 +35,18 @@
                 <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
                 <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
             </select>
+            <label for="test-language">Language</label>
+            <select name="test-language" id="test-language">
+                {% for language in languages %}
+                    <option value="{{ language.id }}"
+                            {% if app.request.query.get('language') == language.id %}
+                                selected
+                            {% elseif app.request.query.get('language') is null and app.user.defaultLanguage.id ?? -1 == language.id %}
+                                selected
+                            {% endif %}
+                    >{{ language.title }}</option>
+                {% endfor %}
+            </select>
             <div class="right">
                 <span id="words-per-minute">
                     <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
@@ -85,6 +97,10 @@
                     {{ keyboard|raw }}
                 </div>
             </div>
+        </div>
+        <div class="test-container-error text-center">
+            <h1>Text not found, please try again later</h1>
+            <a href="https://t.me/zikbert77" target="_blank" class="link">Report a problem</a>
         </div>
     </div>
 
@@ -142,12 +158,14 @@
             let positionToScrollDown = 195;
             let positionToScrollUp = 130;
             let scrollPx = 64;
+            let blockCompare = false;
             let $testTextDisplayBox = $("#test-text-display");
             let $countWordsPerMinuteBox = $("span#count-words-per-minute");
             let $countCharsPerMinuteBox = $("span#count-chars-per-minute");
             let $countAccuracyBox = $("span#count-typing-accuracy");
             let $timerLeftBox = $('#timer-left');
             let $testDurationBox = $("select#test-duration");
+            let $testLanguageBox = $("select#test-language");
             let $originalTextBox = $("#original-text");
 
             let testStatModal = $("#testStatModal");
@@ -164,6 +182,11 @@
 
             $testDurationBox.change(function () {
                 insertParam('duration', $(this).val());
+                window.location.href;
+            });
+
+            $testLanguageBox.change(function () {
+                insertParam('language', $(this).val());
                 window.location.href;
             });
 
@@ -185,13 +208,6 @@
                 focusOnTextarea();
             });
 
-            $("textarea#test-input").on('input', function () {
-                if (!isTimerStarted) {
-                    startTimer();
-                }
-                compareInputWithText($(this).val());
-            });
-
             $("textarea#test-input").keydown(function(e) {
                 switch (e.keyCode) {
                     case 8:  // Backspace
@@ -200,6 +216,24 @@
                     default:
                         break;
                 }
+            });
+
+            $("textarea#test-input").on('input', function () {
+                if (!isTimerStarted) {
+                    startTimer();
+                }
+
+                $("textarea#test-input").keydown(function(e) {
+                    switch (e.keyCode) {
+                        case 8:  // Backspace
+                            blockCompare = true;
+                            break;
+                        default:
+                            blockCompare = false;
+                            break;
+                    }
+                });
+                compareInputWithText($(this).val());
             });
 
             function compareInputWithText(input) {
@@ -230,7 +264,11 @@
                     }
 
                     if ($originalLetter.hasClass('end-word')) {
-                        updatePassedWords('+');
+                        if (blockCompare) {
+                            blockCompare = false;
+                        } else {
+                            updatePassedWords('+');
+                        }
                     }
 
                     calculateCPM(inputIndex);
@@ -312,6 +350,7 @@
 
                 if ($currentLetter.hasClass('end-word')) {
                     updatePassedWords('-');
+                    blockCompare = true;
                 }
 
                 //Remove all current letter classes
@@ -504,22 +543,37 @@
 
             function initText() {
                 let duration = $testDurationBox.val();
-                $.get('/api/text/get/' + duration, {}, function (data, status) {
+                let language = $testLanguageBox.val();
+                $.get('/api/text/get/' + duration, {
+                    language: language
+                }, function (data, status) {
                     if (status === 'success') {
-                        let textId = data.textId;
-                        let text = data.parsedText;
-                        let wordsCount = data.wordsCount;
-                        lettersCount = data.lettersCount;
+                        if (data.error !== undefined && data.error !== false) {
+                            showTextLoadError();
+                        } else {
+                            let textId = data.textId;
+                            let text = data.parsedText;
+                            let wordsCount = data.wordsCount;
+                            lettersCount = data.lettersCount;
 
-                        $("input#text-id").val(textId);
-                        $originalTextBox.append(text);
-                        let $firstLetter = $originalTextBox.find('span.letter-0');
-                        $firstLetter.addClass('current');
-                        highlightKeyOnKeyboard($firstLetter.data('letter'));
+                            $("input#text-id").val(textId);
+                            $originalTextBox.append(text);
+                            let $firstLetter = $originalTextBox.find('span.letter-0');
+                            $firstLetter.addClass('current');
+                            highlightKeyOnKeyboard($firstLetter.data('letter'));
+                        }
+                    } else {
+                        showTextLoadError();
                     }
                 });
             }
         });
+
+
+        function showTextLoadError() {
+            $(".test-container").hide();
+            $(".test-container-error").show();
+        }
 
         $(window).on('load', function () {
             setTimeout(function() {
