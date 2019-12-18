@@ -25,13 +25,14 @@ class CoursesHistoryRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     * @param int $courseId
      * @param int $limit
      * @return array
      */
-    public function getDataForChart(User $user, $limit = 10): array
+    public function getDataForChart(User $user, int $courseId, $limit = 10): array
     {
         $history = $this->_em->getRepository(CoursesHistory::class)->findBy(
-            ['user' => $user],
+            ['course' => $courseId, 'user' => $user],
             ['createdAt' => 'DESC'],
             $limit
         );

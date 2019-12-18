@@ -461,13 +461,14 @@
             }
 
             function getCourseHistoryForUser() {
-                $(".loader").show()
+                $(".loader").show();
                 $.get('{{ path('getCourseHistoryForUser') }}', {
+                    courseId: {{ course.id }},
                     limit: 6
                 }, function (data, status) {
                     if (status === 'success') {
                         buildLastUserCourseHistoryChart(data);
-                        $(".loader").hide()
+                        $(".loader").hide();
                     }
                 });
             }

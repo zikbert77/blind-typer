@@ -108,6 +108,7 @@ class ApiController extends AbstractController
     {
         return new JsonResponse($this->getDoctrine()->getRepository(CoursesHistory::class)->getDataForChart(
             $tokenStorage->getToken()->getUser(),
+            $request->get('courseId'),
             $request->get('limit')
         ));
     }
