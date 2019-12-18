@@ -43,6 +43,10 @@ saveTestResult:
     path: /api/tests/result/save
     controller: App\Controller\ApiController::saveTestResult
 
+getCourseHistoryForUser:
+    path: /api/courses/history
+    controller: App\Controller\ApiController::getCourseHistoryForUser
+
 getTestHistoryForUser:
     path: /api/tests/history
     controller: App\Controller\ApiController::getTestHistoryForUser

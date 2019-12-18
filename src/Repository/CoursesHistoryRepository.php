@@ -24,6 +24,36 @@ class CoursesHistoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param User $user
+     * @param int $limit
+     * @return array
+     */
+    public function getDataForChart(User $user, $limit = 10): array
+    {
+        $history = $this->_em->getRepository(CoursesHistory::class)->findBy(
+            ['user' => $user],
+            ['createdAt' => 'DESC'],
+            $limit
+        );
+
+        $response = [];
+        /** @var CoursesHistory $testHistory */
+        foreach ($history as $courseHistory) {
+            $response['wpm'][] = $courseHistory->getWordsPerMinute();
+            $response['cpm'][] = $courseHistory->getCharsPerMinute();
+            $response['accuracy'][] = $courseHistory->getAccuracy();
+            $response['datetime'][] = $courseHistory->getCreatedAt()->format('Y-m-d');
+        }
+
+        $response['wpm'] = array_reverse($response['wpm']);
+        $response['cpm'] = array_reverse($response['cpm']);
+        $response['accuracy'] = array_reverse($response['accuracy']);
+        $response['datetime'] = array_reverse($response['datetime']);
+
+        return $response;
+    }
+
+    /**
      * @param User|null $user
      * @param Courses $course
      * @param int $wpm

@@ -79,8 +79,13 @@
                 <p>
                     <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
+                <div class="loader"></div>
                 {% if app.user %}
+                    <canvas id="lastCourseChart" height="100"></canvas>
 
+                    <span style="font-size: 14px;">
+                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
+                    </span>
                 {% else %}
                     <p>
                         If you want to view your typing statistic, please
@@ -335,13 +340,80 @@
 
             function showTestStatModal() {
                 $("textarea#test-input").blur();
-                testStatModal.css("display", "block");
                 saveResult();
+                getCourseHistoryForUser();
+                testStatModal.css("display", "block");
             }
 
             function hideTestStatModal() {
                 testStatModal.css("display", "none");
                 window.location.reload();
+            }
+
+            function buildLastUserCourseHistoryChart(data) {
+                let ctx = document.getElementById('lastCourseChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.datetime,
+                        datasets: [{
+                            label: 'Words per minute (WPM)',
+                            data: data.wpm,
+                            backgroundColor: [
+                                'rgba(61, 163, 232, 0.1)',
+                            ],
+                            borderColor: [
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                                'rgba(61, 163, 232, 1)',
+                            ],
+                            borderWidth: 3
+                        }, {
+                            label: 'Chars per minute (CPM)',
+                            data: data.cpm,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.1)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 99, 132, 1)',
+                            ],
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        tooltips: {
+                            mode: 'x-axis',
+                            intercept: true
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
             }
 
             function getPassedTime() {
@@ -386,6 +458,18 @@
 
             function focusOnTextarea() {
                 $("textarea#test-input").focus();
+            }
+
+            function getCourseHistoryForUser() {
+                $(".loader").show()
+                $.get('{{ path('getCourseHistoryForUser') }}', {
+                    limit: 6
+                }, function (data, status) {
+                    if (status === 'success') {
+                        buildLastUserCourseHistoryChart(data);
+                        $(".loader").hide()
+                    }
+                });
             }
 
             function initText() {

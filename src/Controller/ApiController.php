@@ -104,6 +104,14 @@ class ApiController extends AbstractController
         ]);
     }
 
+    public function getCourseHistoryForUser(Request $request, TokenStorageInterface $tokenStorage)
+    {
+        return new JsonResponse($this->getDoctrine()->getRepository(CoursesHistory::class)->getDataForChart(
+            $tokenStorage->getToken()->getUser(),
+            $request->get('limit')
+        ));
+    }
+
     public function getTestHistoryForUser(Request $request, TokenStorageInterface $tokenStorage)
     {
         return new JsonResponse($this->getDoctrine()->getRepository(TestsHistory::class)->getDataForChart(
