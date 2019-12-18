@@ -67,3 +67,7 @@ adminOverview:
 clearCache:
     path: /admin/cache/clear
     controller: App\Controller\UtilsController::clearCache
+
+migrationsMigrate:
+    path: /admin/migrations/migrate
+    controller: App\Controller\UtilsController::migrationsMigrate
