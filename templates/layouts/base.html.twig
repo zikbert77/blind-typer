@@ -19,6 +19,24 @@
 <body>
 {% include 'layouts/top-menu.html.twig' %}
 
+{% if app.user and app.user.isPremium %}
+    <style>
+        .ads-container {
+            display: none !important;
+        }
+    </style>
+{% endif %}
+
+<div class="container ads-container">
+    <div class="row main-row ads-row text-center">
+        <div class="rounded-block">
+            <div class="content">
+                advertisement block
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="wrapper">
     {% block one_row %}
         <div class="container">
@@ -34,6 +52,15 @@
             <div class="row main-row">
                 <div class="col-4">
                     {% block two_rows_content_1 %}{% endblock %}
+                    <div class="container ads-container">
+                        <div class="row main-row ads-row text-center">
+                            <div class="rounded-block">
+                                <div class="content">
+                                    advertisement block
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-8">
                     <div class="rounded-block right-main-block">

@@ -69,7 +69,8 @@ class MainController extends AbstractController
             return $this->render('main/course.html.twig', [
                 'course' => $course,
                 'nextCourse' => $nextCourse,
-                'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI)
+                'keyboard' => Keyboard::loadKeyboard(is_string($this->user) ? Keyboard::KEYBOARD_ANSI : $this->user->getDefaultKeyboard() ?? Keyboard::KEYBOARD_ANSI),
+                'isPremium' => in_array($course->getGroupId(), Courses::PREMIUM_GROUPS_TITLES)
             ]);
         }
 
