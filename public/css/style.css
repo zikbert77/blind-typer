@@ -104,6 +104,10 @@ table tr:nth-child(even) {
     min-height: 78vh;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .form-group {
     margin: 15px 0;
 }
@@ -206,6 +210,11 @@ table tr:nth-child(even) {
 span.small {
     font-size: 14px;
     color: darkgray;
+}
+
+/* Advertisement */
+.ads-row {
+    justify-content: center;
 }
 
 /* One row */

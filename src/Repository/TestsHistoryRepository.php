@@ -36,6 +36,10 @@ class TestsHistoryRepository extends ServiceEntityRepository
             $limit
         );
 
+        if (empty($history)) {
+            return [];
+        }
+
         $response = [];
         /** @var TestsHistory $testHistory */
         foreach ($history as $testHistory) {
