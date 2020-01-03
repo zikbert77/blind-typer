@@ -9,18 +9,19 @@
 
 {% block one_row_content %}
 
-    {% if isPremium and app.user and not app.user.isPremium %}
+    {% if isPremium and not app.user %}
+        <div class="text-center">
+            <h1>Access to course denied</h1>
+            <p>This course is premium, please <a href="{{ path('app_login') }}" class="link">log into</a> your account.</p>
+        </div>
+    {% elseif isPremium and not checkCourseAccess(app.user, course, isPremium) %}
         <div class="text-center">
             <h1>Access to course denied</h1>
             <p>This course is premium, please <a href="{{ path('profilePlans') }}" class="link">upgrade</a>
                 your account to get access.</p>
         </div>
-    {% elseif isPremium and not app.user %}
-        <div class="text-center">
-            <h1>Access to course denied</h1>
-            <p>This course is premium, please <a href="{{ path('app_login') }}" class="link">log into</a> your account.</p>
-        </div>
     {% else %}
+        
     <div class="test-wrapper" id="test-wrapper">
         <div class="test-settings-container" id="test-settings-container">
             <div style="text-align: center">

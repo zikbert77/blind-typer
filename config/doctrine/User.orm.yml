@@ -39,6 +39,11 @@ App\Entity\User:
             options:
                 default: '0'
             column: is_premium
+        subscriptionExpireDateTime:
+            type: datetime
+            nullable: true
+            options:
+                default: 'NULL'
         defaultKeyboard:
             type: integer
             nullable: true

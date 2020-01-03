@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Languages;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Component\Keyboard;
@@ -27,7 +28,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            $entityManager = $this->getDoctrine()->getManager();
             $user->setDefaultKeyboard(Keyboard::DEFAULT);
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -35,14 +36,15 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setCreatedAt(new \DateTime());
+            $user->setDefaultLanguage($entityManager->getRepository(Languages::class)->find(Languages::DEFAULT_LANGUAGE));
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
