@@ -9,7 +9,7 @@
         <div class="settings">
             <h1>
                 {% if app.user.isPremium %}
-                    <img src="{{ asset('img/reward.png') }}" width="40" align="center" alt="Premium member reward" title="Premium member award">
+                    <img src="{{ asset('img/reward.png') }}" width="40" align="center" alt="Premium member reward" title="Premium member">
                 {% endif %}
                 {{ app.user.email }}
             </h1>
@@ -24,50 +24,56 @@
                         <div class="conditions">
                             <ul>
                                 <li>Access to typing test</li>
-                                <li>Access to basic course</li>
+                                <li>Access to basic courses</li>
                             </ul>
                         </div>
                         <div class="price-footer">
                             <div class="price">
                                 $0 <span class="small">/month</span>
                             </div>
-                            <div class="select current">
-                                <button class="btn selected" disabled title="Your current premium plan">
-                                    Selected <i class="fal fa-check"></i>
-                                </button>
-                                <br>
-                                <a href="#" class="link cancel-subscription">cancel subscription</a>
+                            <div class="select {% if not app.user.isPremium %} current {% endif %}">
+                                {% if not app.user.isPremium %}
+                                    <button class="btn selected" disabled title="Your current premium plan">
+                                        Selected <i class="fal fa-check"></i>
+                                    </button>
+                                    <br>
+                                    <a href="#" class="link cancel-subscription">cancel subscription</a>
+                                {% else %}
+                                    <div class="select">
+                                        <button class="btn">Select</button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+{#                    <div class="plan">#}
+{#                        <div class="title">#}
+{#                            <h3>Ads free</h3>#}
+{#                        </div>#}
+{#                        <div class="conditions">#}
+{#                            <ul>#}
+{#                                <li>Access to typing test</li>#}
+{#                                <li>Access to basic course</li>#}
+{#                                <li>No advertisements</li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                        <div class="price-footer">#}
+{#                            <div class="price">#}
+{#                                $0<span class="small-price">.99</span> <span class="small">/month</span>#}
+{#                            </div>#}
+{#                            <div class="select">#}
+{#                                <button class="btn">Select</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                     <div class="plan">
                         <div class="title">
-                            <h3>Ads free</h3>
+                            <h3>Premium</h3>
                         </div>
                         <div class="conditions">
                             <ul>
                                 <li>Access to typing test</li>
-                                <li>Access to basic course</li>
-                                <li>No advertisements</li>
-                            </ul>
-                        </div>
-                        <div class="price-footer">
-                            <div class="price">
-                                $0<span class="small-price">.99</span> <span class="small">/month</span>
-                            </div>
-                            <div class="select">
-                                <button class="btn">Select</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="plan">
-                        <div class="title">
-                            <h3>Advanced</h3>
-                        </div>
-                        <div class="conditions">
-                            <ul>
-                                <li>Access to typing test</li>
-                                <li>Access to basic course</li>
+                                <li>Access to basic courses</li>
                                 <li>Access to advanced courses</li>
                                 <li>Access to premium features</li>
                                 <li>No advertisements</li>
@@ -77,8 +83,18 @@
                             <div class="price">
                                 $3<span class="small-price">.99</span> <span class="small">/month</span>
                             </div>
-                            <div class="select">
-                                <button class="btn">Select</button>
+                            <div class="select {% if app.user.isPremium %} current {% endif %}">
+                                {% if app.user.isPremium %}
+                                    <button class="btn selected" disabled title="Your current premium plan">
+                                        Selected <i class="fal fa-check"></i>
+                                    </button>
+                                    <br>
+                                    <a href="#" class="link cancel-subscription">cancel subscription</a>
+                                {% else %}
+                                    <div class="select">
+                                        <a class="btn" href="{{ path('liqpay_subscription') }}">Select</a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
