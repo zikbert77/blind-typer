@@ -25,6 +25,8 @@ class User implements UserInterface
 
     private $isPremium;
 
+    private $subscriptionExpireDateTime;
+
     private $defaultKeyboard;
 
     private $defaultLanguage;
@@ -186,5 +188,17 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getSubscriptionExpireDateTime(): ?\DateTimeInterface
+    {
+        return $this->subscriptionExpireDateTime;
+    }
+
+    public function setSubscriptionExpireDateTime(?\DateTimeInterface $subscriptionExpireDateTime): self
+    {
+        $this->subscriptionExpireDateTime = $subscriptionExpireDateTime;
+
+        return $this;
     }
 }
