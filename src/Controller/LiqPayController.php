@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Component\LiqPay\LiqPay;
+use App\Component\Logger;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,8 @@ class LiqPayController extends AbstractController
             echo "</pre>";
             exit;
         }
+
+        $orderId = md5(uniqid(null, true));
         
         $liqPay = new LiqPay('sandbox_i32542018887', 'sandbox_d2G649bGh32sQmY6tc2hcaeWzhgGQuzzXmGeeLXB');
         $data = [
@@ -38,13 +41,15 @@ class LiqPayController extends AbstractController
             'amount'                => '3.99',
             'currency'              => 'USD',
             'description'           => 'BlindTyper premium subscription',
-            'order_id'              => md5(uniqid(null, true)),
+            'order_id'              => $orderId,
             'version'               => '3',
             'language'              => 'en',
-            'result_url'            => $this->generateUrl('liqpay_subscription_result', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'server_url'            => $this->generateUrl('liqpay_subscription_server_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'result_url'            => $this->generateUrl('liqpay_subscription_result', ['orderId' => $orderId], UrlGeneratorInterface::ABSOLUTE_URL),
+            'server_url'            => $this->generateUrl('liqpay_subscription_server_url', ['orderId' => $orderId], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
         $html = $liqPay->cnb_form($data);
+
+        //todo: store record of subscription in the db
 
         return $this->render('liqpay/subscription.html.twig', [
             'html' => $html
@@ -66,6 +71,11 @@ class LiqPayController extends AbstractController
     public function result(Request $request)
     {
         //todo: log response for preventing loose
+        Logger::log('subscription_result', [
+            'get' => $request->query->all(),
+            'post' => $request->request->all(),
+        ]);
+
         echo "<pre>";
         var_dump($request->query->all());
         var_dump($request->request->all());
@@ -79,7 +89,10 @@ class LiqPayController extends AbstractController
     public function serverUrl(Request $request)
     {
         //todo: log response for preventing loose
-
+        Logger::log('subscription_server', [
+            'get' => $request->query->all(),
+            'post' => $request->request->all(),
+        ]);
         echo "<pre>";
         var_dump($request->query->all());
         var_dump($request->request->all());
