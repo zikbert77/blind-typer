@@ -17,7 +17,7 @@ const LIQ_PAY_SUCCESS_STATUSES = [
 ];
 
 const LIQ_PAY_STATUS_SUBSCRIBE = 'subscribed';
-const LIQ_PAY_STATUS_UNSUBSCRIBE = '';
+const LIQ_PAY_STATUS_UNSUBSCRIBE = 'unsubscribed';
 
 /**
  * @Route("/liqpay")
