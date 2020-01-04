@@ -7,7 +7,7 @@ class Logger
     public static function log(string $type, array $data)
     {
         try {
-            $logDir = '../var/log/app';
+            $logDir = '../var/log/app/' . date('Y-m-d');
             if (!file_exists($logDir)) {
                 mkdir($logDir);
             }
@@ -17,7 +17,7 @@ class Logger
                 'data' => $data
             ];
 
-            file_put_contents('../var/log/app/' . $type . '_' . date('Y-m-d') . '.log', json_encode($logData) . "\n", FILE_APPEND);
+            file_put_contents($logDir . '/' . $type . '_' . '.log', json_encode($logData) . "\n", FILE_APPEND);
         } catch (\Exception $exception) {
             //todo: add telegram errors notificator
             dump($exception->getMessage());
