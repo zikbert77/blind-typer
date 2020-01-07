@@ -1,10 +1,11 @@
-App\Entity\User:
+App\Entity\LiqpaySubscriptions:
     type: entity
-    table: users
-    uniqueConstraints:
-        email:
+    table: liqpay_subscriptions
+    repositoryClass: App\Repository\LiqPaySubscriptionRepository
+    indexes:
+        user_id:
             columns:
-                - email
+                - user_id
     id:
         id:
             type: integer
@@ -15,58 +16,40 @@ App\Entity\User:
             generator:
                 strategy: IDENTITY
     fields:
-        email:
-            type: string
-            nullable: false
-            length: 180
-            options:
-                fixed: false
-        password:
+        orderId:
             type: string
             nullable: true
-            length: 255
+            length: 40
             options:
                 fixed: false
                 default: 'NULL'
-        roles:
-            type: boolean
-            nullable: true
-            options:
-                default: '1'
-        isPremium:
-            type: boolean
-            nullable: true
-            options:
-                default: '0'
-            column: is_premium
-        defaultKeyboard:
+            column: order_id
+        status:
             type: integer
             nullable: true
             options:
-                unsigned: true
-                default: 'NULL'
-            column: default_keyboard
+                default: '0'
         createdAt:
             type: datetime
             nullable: true
             options:
                 default: current_timestamp()
             column: created_at
-        updatedAt:
+        expiredAt:
             type: datetime
             nullable: true
             options:
-                default: current_timestamp()
-            column: updated_at
+                default: 'NULL'
+            column: expired_at
     manyToOne:
-        defaultLanguage:
-            targetEntity: Languages
+        user:
+            targetEntity: User
             cascade: {  }
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
-                default_language:
+                user_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\LiqpaySubscriptions;
 use App\Entity\User;
 use App\Component\Logger;
 use App\Component\LiqPay\LiqPay;
@@ -35,11 +36,7 @@ class LiqPayController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if (empty($user) || is_string($user) || $user->getIsPremium()) {
-            //fail
-            echo "<pre>";
-            var_dump("fail");
-            echo "</pre>";
-            exit;
+            return $this->redirectToRoute('index');
         }
 
         $orderId = md5(uniqid(null, true));
@@ -60,7 +57,11 @@ class LiqPayController extends AbstractController
         ];
         $html = $liqPay->cnb_form($data);
 
-        //todo: store record of subscription in the db
+        if (!$this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->create(
+            $user, $orderId
+        )) {
+            throw new \Exception("Couldn't create new subscription");
+        }
 
         return $this->render('liqpay/subscription.html.twig', [
             'html' => $html
@@ -68,30 +69,34 @@ class LiqPayController extends AbstractController
     }
 
     /**
-     * @Route("/unsubscribe", name="liqpay_unsubscribe", methods={"GET"})
-     */
-    public function unsubscribe()
-    {
-        //todo: implement unsubscribe functionality
-    }
-
-
-    /**
      * @Route("/result", name="liqpay_subscription_result")
+     *
+     * @param Request $request
+     * @return Response
      */
     public function result(Request $request)
     {
-        //todo: log response for preventing loose
         Logger::log('subscription_result', [
             'get' => $request->query->all(),
             'post' => $request->request->all(),
         ]);
 
-        echo "<pre>";
-        var_dump($request->query->all());
-        var_dump($request->request->all());
-        echo "</pre>";
-        exit;
+        $status = 'waiting';
+        if (!empty($request->get('orderId'))) {
+            /** @var LiqpaySubscriptions $subscription */
+            $subscription = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->findOneByOrderId($request->get('orderId'));
+            if (!empty($subscription)) {
+                if ($subscription->getStatus() == LiqpaySubscriptions::STATUS_SUBSCRIBED) {
+                    $status = 'subscribed';
+                }
+            } else {
+                $status = 'undefined';
+            }
+        }
+
+        return $this->render('liqpay/result.html.twig', [
+            'status' => $status
+        ]);
     }
 
     /**
@@ -117,17 +122,21 @@ class LiqPayController extends AbstractController
             }
 
             if (in_array($parsedData['status'], LIQ_PAY_SUCCESS_STATUSES)) {
-                //make subscription
-                echo "<pre>";
-                var_dump('make sub');
-                echo "</pre>";
-                exit;
+                $result = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->subscribe(
+                    $parsedData
+                );
+
+                if (!$result['status']) {
+                    throw new \Exception($result['error']);
+                }
             } elseif ($parsedData['status'] == LIQ_PAY_STATUS_UNSUBSCRIBE) {
-                //unsubscribe
-                echo "<pre>";
-                var_dump('unsub');
-                echo "</pre>";
-                exit;
+                $result = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->unsubscribe(
+                    $parsedData
+                );
+
+                if (!$result['status']) {
+                    throw new \Exception($result['error']);
+                }
             } else {
                 throw new \Exception("Unknown status");
             }
@@ -148,7 +157,8 @@ class LiqPayController extends AbstractController
             ]);
 
             return new JsonResponse([
-                'status' => 'failed'
+                'status' => 'failed',
+                'error' => $exception->getMessage()
             ], 500);
         }
 
