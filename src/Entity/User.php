@@ -13,6 +13,9 @@ class User implements UserInterface
     const ROLE_ADMIN = 0;
     const ROLE_USER = 1;
 
+    const IS_NOT_PREMIUM = 0;
+    const IS_PREMIUM = 1;
+
     private $id;
 
     private $email;
@@ -24,6 +27,8 @@ class User implements UserInterface
     private $roles;
 
     private $isPremium;
+
+    private $subscriptionExpireDateTime;
 
     private $defaultKeyboard;
 
@@ -37,6 +42,8 @@ class User implements UserInterface
         self::ROLE_ADMIN => 'ROLE_ADMIN',
         self::ROLE_USER => 'ROLE_USER',
     ];
+
+    private $subscriptionStatus;
 
     public function __construct()
     {
@@ -186,5 +193,29 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getSubscriptionExpireDateTime(): ?\DateTimeInterface
+    {
+        return $this->subscriptionExpireDateTime;
+    }
+
+    public function setSubscriptionExpireDateTime(?\DateTimeInterface $subscriptionExpireDateTime): self
+    {
+        $this->subscriptionExpireDateTime = $subscriptionExpireDateTime;
+
+        return $this;
+    }
+
+    public function getSubscriptionStatus(): ?bool
+    {
+        return $this->subscriptionStatus;
+    }
+
+    public function setSubscriptionStatus(?bool $subscriptionStatus): self
+    {
+        $this->subscriptionStatus = $subscriptionStatus;
+
+        return $this;
     }
 }
