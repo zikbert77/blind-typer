@@ -73,11 +73,13 @@ class LiqPaySubscriptionRepository extends ServiceEntityRepository
         }
     }
 
-    public function unsubscribe(array $data): array
+    public function unsubscribe(array $data, LiqpaySubscriptions $liqPaySubscription = null): array
     {
         try {
             /** @var LiqpaySubscriptions $liqPaySubscription */
-            $liqPaySubscription = $this->getLiqPaySubscription($data['order_id']);
+            if (empty($liqPaySubscription)) {
+                $liqPaySubscription = $this->getLiqPaySubscription($data['order_id']);
+            }
 
             $liqPaySubscription->setStatus(LiqpaySubscriptions::STATUS_UNSUBSCRIBED);
             $liqPaySubscription->setExpiredAt(new \DateTime("yesterday"));
@@ -99,6 +101,20 @@ class LiqPaySubscriptionRepository extends ServiceEntityRepository
                 'error' => $exception->getMessage()
             ];
         }
+    }
+
+    public function findExpired(): array
+    {
+        $qb = $this->createQueryBuilder('ls')
+            ->where('ls.status != :status')
+            ->andWhere('ls.expiredAt < :expiredAt');
+
+        $result = $qb->getQuery()->execute([
+            'status' => LiqpaySubscriptions::STATUS_UNSUBSCRIBED,
+            'expiredAt' => (new \DateTime())->format('Y-m-d H:i:s')
+        ]);
+
+        return $result;
     }
 
     /**

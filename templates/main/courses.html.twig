@@ -58,7 +58,7 @@
                 {% if title in premiumCourses and (app.user.isPremium ?? false) == false %}
                     <div class="mask">
                         <div class="message">
-                            Get access to premium courses by <a href="{{ path('profilePlans') }}" class="link">change</a> your premium plan
+                            <a href="{{ path('profilePlans') }}" class="link">Change</a> your premium plan, and get access to premium courses
                         </div>
                     </div>
                 {% endif %}
