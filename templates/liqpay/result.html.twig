@@ -1,0 +1,46 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %} - Test{% endblock %}
+
+{% block meta %}
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+{% endblock %}
+
+{% block one_row_content %}
+    <div class="container content text-center">
+        Your subscription status is: <br>
+        {% if status == 'waiting' %}
+            <b>Waiting</b> - as soon as we receive subscription from payment system we'll give you a premium status.
+        {% elseif status == 'subscribed' %}
+            <b>
+                <span style="color: green;">Subscribed</span>
+            </b> - you are a premium member now, and you could use all features of BlindTyper.
+        {% else %}
+            <b>Undefined</b> - we couldn't find subscription with orderId: <b>{{ app.request.get('orderId') }}</b>.
+        {% endif %}
+
+        <br><br>
+        <p>
+            You will be redirected to <a href="{{ path('index') }}" class="link">homepage</a> in <span id="redirectCounter">15</span> seconds.
+        </p>
+    </div>
+{% endblock %}
+
+{% block two_rows %}{% endblock %}
+
+{%block scripts %}
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                window.location.href = '{{ path('index') }}';
+            }, 15500);
+
+            let secondsToRedirect = 15;
+            setInterval(function () {
+                secondsToRedirect--;
+                $("#redirectCounter").text(secondsToRedirect)
+            }, 1000)
+        });
+    </script>
+{% endblock %}

@@ -57,7 +57,6 @@ class LiqPayController extends AbstractController
         ];
         $html = $liqPay->cnb_form($data);
 
-        //todo: store record of subscription in the db
         if (!$this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->create(
             $user, $orderId
         )) {
@@ -70,16 +69,10 @@ class LiqPayController extends AbstractController
     }
 
     /**
-     * @Route("/unsubscribe", name="liqpay_unsubscribe", methods={"GET"})
-     */
-    public function unsubscribe()
-    {
-        //todo: implement unsubscribe functionality
-    }
-
-
-    /**
      * @Route("/result", name="liqpay_subscription_result")
+     *
+     * @param Request $request
+     * @return Response
      */
     public function result(Request $request)
     {
@@ -87,29 +80,23 @@ class LiqPayController extends AbstractController
             'get' => $request->query->all(),
             'post' => $request->request->all(),
         ]);
-        
-        // render page with status
+
+        $status = 'waiting';
         if (!empty($request->get('orderId'))) {
             /** @var LiqpaySubscriptions $subscription */
             $subscription = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->findOneByOrderId($request->get('orderId'));
-
             if (!empty($subscription)) {
-                switch ($subscription->getStatus()) {
-                    case LiqpaySubscriptions::STATUS_WAITING:
-                        $template = 'waiting';
-                        break;
-                    case LiqpaySubscriptions::STATUS_SUBSCRIBED:
-                        $template = 'subscribed';
-                        break;
-                    default:
-                        $template = 'waiting';
-                        break;
+                if ($subscription->getStatus() == LiqpaySubscriptions::STATUS_SUBSCRIBED) {
+                    $status = 'subscribed';
                 }
-
-                dump($template);
-                exit;
+            } else {
+                $status = 'undefined';
             }
         }
+
+        return $this->render('liqpay/result.html.twig', [
+            'status' => $status
+        ]);
     }
 
     /**
