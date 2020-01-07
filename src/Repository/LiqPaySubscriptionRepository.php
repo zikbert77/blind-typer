@@ -87,7 +87,7 @@ class LiqPaySubscriptionRepository extends ServiceEntityRepository
             //check here if user has another future subscription to prevent issue when unsubscribe request fall after
             //next mont subscription
             $user = $liqPaySubscription->getUser();
-            if (empty($this->findNextSubscriptionForUser($user))) {
+            if (empty($this->findNextSubscriptionForUser($user, $liqPaySubscription))) {
                 $user->setIsPremium(User::IS_NOT_PREMIUM);
                 $this->_em->persist($user);
             }
@@ -121,15 +121,17 @@ class LiqPaySubscriptionRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findNextSubscriptionForUser(User $user): array
+    public function findNextSubscriptionForUser(User $user, LiqpaySubscriptions $subscription): array
     {
         $qb = $this->createQueryBuilder('ls')
             ->where('ls.status = :status')
+            ->andWhere('ls.id != :id')
             ->andWhere('ls.expiredAt > :expiredAt')
             ->andWhere('ls.user = :user')
         ;
 
         $result = $qb->getQuery()->execute([
+            'id' => $subscription->getId(),
             'status' => LiqpaySubscriptions::STATUS_SUBSCRIBED,
             'expiredAt' => (new \DateTime())->format('Y-m-d H:i:s'),
             'user' => $user
