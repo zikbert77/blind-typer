@@ -85,11 +85,17 @@ class LiqPayController extends AbstractController
         }
         
         $liqPay = new LiqPay($this->public_key, $this->private_key);
-        $res = $liqPay->api("request", array(
+        $data = [
             'action'        => 'unsubscribe',
             'version'       => '3',
             'order_id'      => $subscription->getOrderId()
-        ));
+        ];
+        $res = $liqPay->api("request", $data);
+
+        Logger::log('subscription_unsubscribe', [
+            'request' => $data,
+            'response' => $res,
+        ]);
         
         if ($res->result == 'ok' && $res->status == LIQ_PAY_STATUS_UNSUBSCRIBE) {
             $unsubscriptionResult = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->unsubscribe([], $subscription);
