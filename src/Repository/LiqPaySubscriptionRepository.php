@@ -140,6 +140,25 @@ class LiqPaySubscriptionRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function findActiveSubscriptionForUser(User $user): ?LiqpaySubscriptions
+    {
+        $qb = $this->createQueryBuilder('ls')
+            ->where('ls.status = :status')
+            ->andWhere('ls.expiredAt > :expiredAt')
+            ->andWhere('ls.user = :user')
+        ;
+
+        $qb->setParameters([
+            'status' => LiqpaySubscriptions::STATUS_SUBSCRIBED,
+            'expiredAt' => (new \DateTime())->format('Y-m-d H:i:s'),
+            'user' => $user
+        ]);
+
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result;
+    }
+
     /**
      * @param $order_id
      * @return object|null

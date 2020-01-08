@@ -16,6 +16,10 @@
             <b>
                 <span style="color: green;">Subscribed</span>
             </b> - you are a premium member now, and you could use all features of BlindTyper.
+        {% elseif status == 'unsubscribed' %}
+            <b>
+                <span style="color: red;">Unsubscribed</span>
+            </b> - you are not a premium member now, and you couldn't use all features of BlindTyper.
         {% else %}
             <b>Undefined</b> - we couldn't find subscription with orderId: <b>{{ app.request.get('orderId') }}</b>.
         {% endif %}

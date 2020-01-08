@@ -69,6 +69,43 @@ class LiqPayController extends AbstractController
     }
 
     /**
+     * @Route("/subscription/unsubscribe", name="liqpay_unsubscribe", methods={"GET"})
+     */
+    public function unsubscribe(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        if (empty($user) || is_string($user) || !$user->getIsPremium()) {
+            return $this->redirectToRoute('index');
+        }
+
+        $subscription = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->findActiveSubscriptionForUser($user);
+        if (empty($subscription)) {
+            throw new \Exception("Couldn't find active subscription for user {$user->getId()}");
+        }
+        
+        $liqPay = new LiqPay($this->public_key, $this->private_key);
+        $res = $liqPay->api("request", array(
+            'action'        => 'unsubscribe',
+            'version'       => '3',
+            'order_id'      => $subscription->getOrderId()
+        ));
+        
+        if ($res->result == 'ok' && $res->status == LIQ_PAY_STATUS_UNSUBSCRIBE) {
+            $unsubscriptionResult = $this->getDoctrine()->getRepository(LiqpaySubscriptions::class)->unsubscribe([], $subscription);
+            if ($unsubscriptionResult['status']) {
+                return $this->render('liqpay/result.html.twig', [
+                    'status' => 'unsubscribed'
+                ]);
+            } else {
+                throw new \Exception($unsubscriptionResult['error']);
+            }
+        }
+
+        return $this->redirectToRoute('index');
+    }
+
+    /**
      * @Route("/result", name="liqpay_subscription_result")
      *
      * @param Request $request
