@@ -34,16 +34,16 @@ class Keyboard
                     <div class="keyboardRow">   
                     
                         <span class="key" data-key="~">~</span>
-                        <span class="key" data-key="1">1</span>
-                        <span class="key" data-key="2">2</span>
-                        <span class="key" data-key="3">3</span>
-                        <span class="key" data-key="4">4</span>
-                        <span class="key" data-key="5">5</span>
-                        <span class="key" data-key="6">6</span>
-                        <span class="key" data-key="7">7</span>
-                        <span class="key" data-key="8">8</span>
-                        <span class="key" data-key="9">9</span>
-                        <span class="key" data-key="0">0</span>
+                        <span class="key" data-key="1" data-finger="1">1</span>
+                        <span class="key" data-key="2" data-finger="2">2</span>
+                        <span class="key" data-key="3" data-finger="3">3</span>
+                        <span class="key" data-key="4" data-finger="4">4</span>
+                        <span class="key" data-key="5" data-finger="4">5</span>
+                        <span class="key" data-key="6" data-finger="6">6</span>
+                        <span class="key" data-key="7" data-finger="6">7</span>
+                        <span class="key" data-key="8" data-finger="7">8</span>
+                        <span class="key" data-key="9" data-finger="8" data-shift="lshift" data-shift-key="(">9<sub>(</sub></span>
+                        <span class="key" data-key="0" data-finger="9" data-shift="lshift" data-shift-key=")">0<sub>)</sub></span>
                         <span class="key" data-key="-">-</span>
                         <span class="key" data-key="=">=</span>
                         <span class="key key-length-1" data-key="del">delete</span>
