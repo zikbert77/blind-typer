@@ -97,6 +97,9 @@
                     {{ keyboard|raw }}
                 </div>
             </div>
+            <div class="note text-right" style="margin-top: -10px">
+                <p>*You could change test options in <a href="{{ path('profileSettings') }}" class="link">profile settings</a>.</p>
+            </div>
         </div>
         <div class="test-container-error text-center">
             <h1>Text not found, please try again later</h1>
@@ -291,11 +294,13 @@
             }
 
             function highlightKeyOnKeyboard(letter) {
-                letter = letter.replace(/'/g, "\\'");
+                if (!$.isNumeric(letter)) {
+                    letter = letter.replace(/'/g, "\\'");
+                }
                 $(".key-current").removeClass('key-current');
                 $(".shift").removeClass('shift');
 
-                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
+                let key = $(".test-keyboard-box").find(`[data-key='${!$.isNumeric(letter) ? letter.toLowerCase() : letter}']`);
                 if (key.length === 0) {
                     let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                     if (shiftKey.length !== 0) {
@@ -307,7 +312,7 @@
                     highlightFinger(key.data('finger'));
                     key.addClass('key-current');
 
-                    if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    if (!$.isNumeric(letter) && isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
                         highlightShift(key.data('shift'));
                         highlightShift(key.data('shift'));
                     }
