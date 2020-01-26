@@ -125,16 +125,16 @@ class Keyboard
                     <div class="keyboardRow">   
                     
                         <span class="key" data-key="&pm;">&pm;</span>
-                        <span class="key" data-key="1">1</span>
-                        <span class="key" data-key="2">2</span>
-                        <span class="key" data-key="3">3</span>
-                        <span class="key" data-key="4">4</span>
-                        <span class="key" data-key="5">5</span>
-                        <span class="key" data-key="6">6</span>
-                        <span class="key" data-key="7">7</span>
-                        <span class="key" data-key="8">8</span>
-                        <span class="key" data-key="9">9</span>
-                        <span class="key" data-key="0">0</span>
+                        <span class="key" data-key="1" data-finger="1">1</span>
+                        <span class="key" data-key="2" data-finger="2">2</span>
+                        <span class="key" data-key="3" data-finger="3">3</span>
+                        <span class="key" data-key="4" data-finger="4">4</span>
+                        <span class="key" data-key="5" data-finger="4">5</span>
+                        <span class="key" data-key="6" data-finger="6">6</span>
+                        <span class="key" data-key="7" data-finger="6">7</span>
+                        <span class="key" data-key="8" data-finger="7">8</span>
+                        <span class="key" data-key="9" data-finger="8">9</span>
+                        <span class="key" data-key="0" data-finger="9">0</span>
                         <span class="key" data-key="-">-</span>
                         <span class="key" data-key="=">=</span>
                         <span class="key key-length-1" data-key="tab">delete</span>
@@ -217,16 +217,16 @@ class Keyboard
                     <div class="keyboardRow">   
                     
                         <span class="key" data-key="~">~</span>
-                        <span class="key" data-key="1" data-shift-key="!">1<sub>!</sub></span>
-                        <span class="key" data-key="2" data-shift-key="&quot;">2<sub>&quot;</sub></span>
-                        <span class="key" data-key="3" data-shift-key="№">3<sub>№</sub></span>
-                        <span class="key" data-key="4" data-shift-key="%">4<sub>%</sub></span>
-                        <span class="key" data-key="5" data-shift-key=":">5<sub>:</sub></span>
-                        <span class="key" data-key="6" data-shift-key=",">6<sub>,</sub></span>
-                        <span class="key" data-key="7" data-shift-key=".">7<sub>.</sub></span>
-                        <span class="key" data-key="8" data-shift-key=";">8 <sub>;</sub></span>
-                        <span class="key" data-key="9" data-shift-key="(">9<sub>(</sub></span>
-                        <span class="key" data-key="0" data-shift-key=")">0<sub>)</sub></span>
+                        <span class="key" data-key="1" data-finger="1" data-shift-key="!" data-shift="rshift">1<sub>!</sub></span>
+                        <span class="key" data-key="2" data-finger="2" data-shift-key="&quot;" data-shift="rshift">2<sub>&quot;</sub></span>
+                        <span class="key" data-key="3" data-finger="3" data-shift-key="№" data-shift="rshift">3<sub>№</sub></span>
+                        <span class="key" data-key="4" data-finger="4" data-shift-key="%" data-shift="rshift">4<sub>%</sub></span>
+                        <span class="key" data-key="5" data-finger="4" data-shift-key=":" data-shift="rshift">5<sub>:</sub></span>
+                        <span class="key" data-key="6" data-finger="6" data-shift-key="," data-shift="lshift">6<sub>,</sub></span>
+                        <span class="key" data-key="7" data-finger="6" data-shift-key="." data-shift="lshift">7<sub>.</sub></span>
+                        <span class="key" data-key="8" data-finger="7" data-shift-key=";" data-shift="lshift">8 <sub>;</sub></span>
+                        <span class="key" data-key="9" data-finger="8" data-shift-key="(" data-shift="lshift">9<sub>(</sub></span>
+                        <span class="key" data-key="0" data-finger="9" data-shift-key=")" data-shift="lshift">0<sub>)</sub></span>
                         <span class="key" data-key="-">-</span>
                         <span class="key" data-key="=">=</span>
                         <span class="key key-length-1" data-key="del">delete</span>
