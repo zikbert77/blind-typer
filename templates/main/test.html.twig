@@ -30,13 +30,13 @@
 {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
             <label for="test-duration">Test duration: </label>
-            <select name="test-duration" id="test-duration">
+            <select name="test-duration" id="test-duration" class="form-select">
                 <option value="1" {% if app.request.get('duration') == 1 %} selected {% endif %}>1 minute</option>
                 <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
                 <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
             </select>
             <label for="test-language">Language</label>
-            <select name="test-language" id="test-language">
+            <select name="test-language" id="test-language" class="form-select">
                 {% for language in languages %}
                     <option value="{{ language.id }}"
                             {% if app.request.query.get('language') == language.id %}
