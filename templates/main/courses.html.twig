@@ -53,6 +53,7 @@
 {% endblock %}
 {% block two_rows_content_2 %}
     <div class="content">
+        {% set i = 0 %}
         {% for title, categories in courses %}
             <div class="course-item{% if title in premiumCourses %} premium{% endif %}">
                 {% if title in premiumCourses and (app.user.isPremium ?? false) == false %}
@@ -63,7 +64,7 @@
                     </div>
                 {% endif %}
                 <h1>{{ title }}:</h1>
-                <div id="accordion">
+                <div id="accordion-{{ i }}">
                     {% for subtitle, subcourses in categories %}
                         <h3 class="accordion-header">{{ subtitle }}</h3>
                         <div class="accordion-body">
@@ -89,6 +90,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% set i = i + 1 %}
         {% endfor %}
     </div>
 {% endblock %}
@@ -98,7 +100,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $( function() {
-            $("#accordion").accordion();
+            {% set i = 0 %}
+            {% for title, categories in courses %}
+                $("#accordion-{{ i }}").accordion();
+            {% set i = i + 1 %}
+            {% endfor %}
         } );
     </script>
 {% endblock %}
