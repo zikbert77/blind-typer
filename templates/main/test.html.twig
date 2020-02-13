@@ -538,7 +538,7 @@
 
             function getTestHistoryForUser() {
                 $.get('{{ path('getTestHistoryForUser') }}', {
-                    limit: 3
+                    limit: 6
                 }, function (data, status) {
                     if (status === 'success') {
                         buildLastUserTestHistoryChart(data);
