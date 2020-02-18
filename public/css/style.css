@@ -226,6 +226,10 @@ span.small {
     justify-content: center;
 }
 
+.ads-container {
+    height: 150px;
+}
+
 /* One row */
 .test-box {
     width: 100%;
