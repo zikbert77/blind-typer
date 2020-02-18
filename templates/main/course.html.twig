@@ -132,12 +132,11 @@
     <script src="{{ asset('js/test.js') }}"></script>
     <script>
         $(document).ready(function () {
-            let lettersCount = 0;
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScrollDown = 195;
-            let positionToScrollUp = 130;
+            let positionToScrollDown = 195 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
+            let positionToScrollUp = 132 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
             let scrollPx = 64;
             let globalTimerInterval;
             let $testTextDisplayBox = $("#test-text-display");
@@ -356,8 +355,10 @@
 
             function showTestStatModal() {
                 $("textarea#test-input").blur();
-                saveResult();
-                getCourseHistoryForUser();
+                {% if app.user %}
+                    saveResult();
+                    getCourseHistoryForUser();
+                {% endif %}
                 testStatModal.css("display", "block");
             }
 
