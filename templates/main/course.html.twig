@@ -245,11 +245,13 @@
             }
 
             function highlightKeyOnKeyboard(letter) {
-                letter = letter.replace(/'/g, "\\'");
+                if (!$.isNumeric(letter)) {
+                    letter = letter.replace(/'/g, "\\'");
+                }
                 $(".key-current").removeClass('key-current');
                 $(".shift").removeClass('shift');
 
-                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
+                let key = $(".test-keyboard-box").find(`[data-key='${!$.isNumeric(letter) ? letter.toLowerCase() : letter}']`);
                 if (key.length === 0) {
                     let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                     if (shiftKey.length !== 0) {
@@ -261,7 +263,7 @@
                     highlightFinger(key.data('finger'));
                     key.addClass('key-current');
 
-                    if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    if (!$.isNumeric(letter) && isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
                         highlightShift(key.data('shift'));
                         highlightShift(key.data('shift'));
                     }
