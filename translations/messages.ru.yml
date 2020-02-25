@@ -67,6 +67,27 @@ If you want to view your typing statistic, please: Если вы хотите п
 please.log.in: войдите
 please.register: зарегистрируйтесь
 
+#Courses page
+Change: Измените
+your premium plan, and get access to premium courses: свой тип аккаунта  и получите доступ к премиум-курсам
+
+Basic course: Базовый курс
+Advanced course: Продвинутный курс
+
+Top row: Верхний ряд
+Middle row: Средний ряд
+Bottom row: Нижний ряд
+Number row: Числовой ряд
+
+Typing course : Урок
+
+#Course page
+Time: Время
+Your course result: Результат урока
+next.course: Следующий урок
+Courses: Курсы
+Retry: Повторить
+
 #Footer
 Info: Информация
 Privacy & terms of service: Условия сервиса
