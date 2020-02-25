@@ -1,3 +1,11 @@
+#Titles
+title.typing.test: Test
+title.course.test: Typing course
+title.courses.test: Typing courses
+title.profile: Profile
+title.profile.plans: Subscriptions
+
+
 contact.us: Contact us
 
 #Register page
@@ -10,3 +18,7 @@ please.log.in: log in
 
 #Course page
 next.course: Next
+
+#
+select.subscription: Select
+selected.subscription: Selected

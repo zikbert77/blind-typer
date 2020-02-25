@@ -1,3 +1,11 @@
+#Titles
+title.typing.test: Тест
+title.course.test: Печатный курс
+title.courses.test: Печатные курсы
+title.profile: Профиль
+title.profile.plans: Подписки
+
+
 #General
 Sorry, but access to this web-site available only from computers: Извините, но доступ к этому сайту возможен только с компьютеров
 
@@ -87,6 +95,28 @@ Your course result: Результат урока
 next.course: Следующий урок
 Courses: Курсы
 Retry: Повторить
+
+#Profile page
+Premium subscription: Премиум подписка
+Settings: Настройки
+Statistic for: Статистика для
+All tests: Всех тестов
+minute test: минутный тест
+
+#Premium plans page
+Select your subscription: Выберите тип подписки
+Free: Бесплатная
+Premium: Премиум
+Access to typing test: Доступ к печатным тестам
+Access to basic courses: Доступ к базовым курсам
+Access to advanced courses: Доступ к продвинутым курсам
+Access to premium features: Доступ к премиум-функциям
+No advertisements: Отсутсвие рекламы
+
+month: месяц
+select.subscription: Подключить
+selected.subscription: Текущяя подписка
+cancel subscription: отменить подписку
 
 #Footer
 Info: Информация

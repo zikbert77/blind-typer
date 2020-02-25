@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %} - {{ "title.profile.plans"|trans }}{% endblock %}
 
 {% block one_row_content %}
     <link rel="stylesheet" href="{{ asset('chartjs/Chart.css') }}">
@@ -15,32 +15,32 @@
             </h1>
             <hr>
             <div class="text-center">
-                <h1>Select your subscription</h1>
+                <h1>{{ "Select your subscription"|trans }}</h1>
             </div>
             <div class="premium-plans-wrapper">
                 <div class="premium-plans">
                     <div class="plan">
                         <div class="title">
-                            <h3>Free</h3>
+                            <h3>{{ "Free"|trans }}</h3>
                         </div>
                         <div class="conditions">
                             <ul>
-                                <li>Access to typing test</li>
-                                <li>Access to basic courses</li>
+                                <li>{{ "Access to typing test"|trans }}</li>
+                                <li>{{ "Access to basic courses"|trans }}</li>
                             </ul>
                         </div>
                         <div class="price-footer">
                             <div class="price">
-                                $0 <span class="small">/month</span>
+                                $0 <span class="small">/{{ "month"|trans }}</span>
                             </div>
                             <div class="select {% if not app.user.isPremium %} current {% endif %}">
                                 {% if not app.user.isPremium %}
                                     <button class="btn selected" disabled title="Your current premium plan">
-                                        Selected <i class="fal fa-check"></i>
+                                        {{ "selected.subscription"|trans }} <i class="fal fa-check"></i>
                                     </button>
                                 {% else %}
                                     <div class="select">
-                                        <button class="btn">Select</button>
+                                        <button class="btn">{{ "select.subscription"|trans }}</button>
                                     </div>
                                 {% endif %}
                             </div>
@@ -48,31 +48,31 @@
                     </div>
                     <div class="plan">
                         <div class="title">
-                            <h3>Premium</h3>
+                            <h3>{{ "Premium"|trans }}</h3>
                         </div>
                         <div class="conditions">
                             <ul>
-                                <li>Access to typing test</li>
-                                <li>Access to basic courses</li>
-                                <li>Access to advanced courses</li>
-                                <li>Access to premium features</li>
-                                <li>No advertisements</li>
+                                <li>{{ "Access to typing test"|trans }}</li>
+                                <li>{{ "Access to basic courses"|trans }}</li>
+                                <li>{{ "Access to advanced courses"|trans }}</li>
+                                <li>{{ "Access to premium features"|trans }}</li>
+                                <li>{{ "No advertisements"|trans }}</li>
                             </ul>
                         </div>
                         <div class="price-footer">
                             <div class="price">
-                                $3<span class="small-price">.99</span> <span class="small">/month</span>
+                                $3<span class="small-price">.99</span> <span class="small">/{{ "month"|trans }}</span>
                             </div>
                             <div class="select {% if app.user.isPremium %} current {% endif %}">
                                 {% if app.user.isPremium %}
                                     <button class="btn selected" disabled title="Your current premium plan">
-                                        Selected <i class="fal fa-check"></i>
+                                        {{ "selected.subscription"|trans }} <i class="fal fa-check"></i>
                                     </button>
                                     <br>
-                                    <a href="#" class="link cancel-subscription">cancel subscription</a>
+                                    <a href="#" class="link cancel-subscription">{{ "cancel subscription"|trans }}</a>
                                 {% else %}
                                     <div class="select">
-                                        <a class="btn" href="{{ path('liqpay_subscription') }}">Select</a>
+                                        <a class="btn" href="{{ path('liqpay_subscription') }}">{{ "select.subscription"|trans }}</a>
                                     </div>
                                 {% endif %}
                             </div>
