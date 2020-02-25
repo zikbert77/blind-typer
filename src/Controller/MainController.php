@@ -76,4 +76,9 @@ class MainController extends AbstractController
 
         return $this->redirectToRoute('courses');
     }
+
+    public function terms()
+    {
+        return $this->render('main/terms.html.twig');
+    }
 }
