@@ -13,18 +13,29 @@ Log in: Войти
 Create new account: Создать новый аккаунт
 Forgot your password?: Забыли свой пароль?
 
-This website is under construction, some bugs are possible: Этот сайт находится в стадии разработки, возможны ошибки
+This website is under construction, some bugs are possible: Этот сайт находится на стадии разработки, возможны ошибки
 If you'll meet them, please: Если вы встретите их, пожалуйста
 contact us: сообщите нам
 immediately: немедленно
 
 and: и
+or: или
+
+contact.us: Обратная связь
 
 #Top menu
 Typing courses: Печатные курсы
 Typing test: Тест
 Profile: Профиль
 Log out: Выйти
+
+#Log in page
+You are logged in as: Вы вошли как
+Please sign in: Пожалуйста войдите
+
+#Register page
+Register: Регистрация
+register.action: Создать аккаунт
 
 #Index page
 BlindTyper is a service that allows you to improve your typing skill, increase speed and accuracy.: BlindTyper - это сервис, который позволяет вам улучшить свои навыки набора текста, повысить скорость и точность.
@@ -34,6 +45,27 @@ the tests: печатних тестах
 courses: курсах
 to become an advanced in typing: чтобы стать продвинутым в наборе текста
 Start typing: Начать печатать
+
+#Test page
+Test duration: Длительность теста
+Language: Язык
+Chars per minute: Символов за минуту
+Typing accuracy: Качество
+Time left: Осталось времени
+minute: минута
+minutes: минут
+You could change test options in: Вы можете изменить параметры теста в
+profile settings: настройках профиля
+
+Text not found, please try again later: Текст не найден, попробуйте позже
+Report a problem: Сообщить о проблеме
+
+Your test result: Результат теста
+View advanced statistic in the: Посмотреть расширенную статистику в
+in.the.profile: профиле
+If you want to view your typing statistic, please: Если вы хотите просмотреть вашу статистику, пожалуйста
+please.log.in: войдите
+please.register: зарегистрируйтесь
 
 #Footer
 Info: Информация
