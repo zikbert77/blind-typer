@@ -17,6 +17,10 @@ course:
 terms:
     path: /terms
     controller: App\Controller\MainController::terms
+
+setLocale:
+    path: /setLocale
+    controller: App\Controller\MainController::setLocale
 #------------------profile------------------
 profileIndex:
     path: /profile

@@ -6,8 +6,9 @@ use App\Entity\Courses;
 use App\Entity\Languages;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MainController extends AbstractController
@@ -80,5 +81,12 @@ class MainController extends AbstractController
     public function terms()
     {
         return $this->render('main/terms.html.twig');
+    }
+
+    public function setLocale(Request $request)
+    {
+        $request->getSession()->set('_locale', $request->get('_locale', $request->getDefaultLocale()));
+
+        return new Response('ok');
     }
 }

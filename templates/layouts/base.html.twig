@@ -30,7 +30,7 @@
 {% endif %}
 
 <div class="mobile-device-mask">
-    <h1>Sorry, but access to this web-site available only from computers :(</h1>
+    <h1>{{ "Sorry, but access to this web-site available only from computers"|trans }} :(</h1>
 </div>
 
 <div class="container ads-container">
@@ -83,14 +83,14 @@
         <div class="row main-row">
             <div class="col-12 footer">
                 <div class="left" style="line-height: 18px">
-                    <b>Info:</b><br>
-                    <a href="{{ path('terms') }}" class="link">Privacy & terms of service</a>
+                    <b>{{ "Info"|trans }}:</b><br>
+                    <a href="{{ path('terms') }}" class="link">{{ "Privacy & terms of service"|trans }}</a>
                     <br><br><b>Contact us:</b><br>
                     <a href="mailto:service.blindtyper@gmail.com" class="link">service.blindtyper@gmail.com</a><br>
                 </div>
                 <div class="right" style="height: 100%">
                     <div class="dasfasdf" style="display: flex; align-items: center; height: 100%;">
-                        <b>BlindTyper</b> &copy; all rights reserved
+                        <b>BlindTyper</b> &copy; {{ "all rights reserved"|trans }}
                     </div>
                 </div>
             </div>
