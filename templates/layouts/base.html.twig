@@ -101,11 +101,45 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
 </script>
+{#<link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet' type='text/css'>#}
+{#<scirpt src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css'></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>#}
+
 <script>
     $(document).ready(function () {
         if (document.domain == 'blindtyper.zzz.com.ua') {
             $('div').first().hide();
         }
+
+        $("#interface-language").change(function () {
+            $.get('{{ path('setLocale') }}', {
+                _locale: $(this).val()
+            }, function (data) {
+                if (data !== 'ok') {
+                    alert(data)
+                }
+                window.location.reload();
+            })
+        });
+
+        // For the images in the select
+        // $("#interface-language").select2({
+        //     templateResult: formatOptions,
+        //     theme: "none",
+        //     minimumResultsForSearch: -1
+        // });
+        //
+        // function formatOptions (state) {
+        //     if (!state.id) {
+        //         return state.text;
+        //     }
+        //
+        //     var $state = $(
+        //         '<span><img style="display: inline-block; height: 20px;" src="' + $(state.element).data('img') + '" /> </span>'
+        //     );
+        //
+        //     return $state;
+        // }
     });
 </script>
 {%block scripts %}{% endblock %}

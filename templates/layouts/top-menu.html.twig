@@ -15,20 +15,24 @@
                 </div>
             </a>
             <div class="top-menu-item right unhoverable">
-                <div class="dropdown">
-                    <img class="language-img" src="{{ asset('img/languages/united-states.png') }}" alt="">
-                    <div class="dropdown-content rounded-block">
-                        <div class="dropdown-item">
-                            <img class="language-img" src="{{ asset('img/languages/ukraine.png') }}" alt="">
-                        </div>
-                        <div class="dropdown-item">
-                            <img class="language-img" src="{{ asset('img/languages/russia.png') }}" alt="">
-                        </div>
-                    </div>
-                </div>
+                <select id="interface-language">
+                    <option value="en" data-img="{{ asset('img/languages/united-states.png') }}" {% if app.request.locale == 'en' %} selected{% endif %}>en</option>
+                    <option value="ru" data-img="{{ asset('img/languages/russia.png') }}" {% if app.request.locale == 'ru' %} selected{% endif %}>ru</option>
+                </select>
+{#                <div class="dropdown">#}
+{#                    <img class="language-img" src="{{ asset('img/languages/united-states.png') }}" alt="">#}
+{#                    <div class="dropdown-content rounded-block">#}
+{#                        <div class="dropdown-item">#}
+{#                            <img class="language-img" src="{{ asset('img/languages/ukraine.png') }}" alt="">#}
+{#                        </div>#}
+{#                        <div class="dropdown-item">#}
+{#                            <img class="language-img" src="{{ asset('img/languages/russia.png') }}" alt="">#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
             </div>
             {% if app.user %}
-                <div class="top-menu-item right unhoverable">
+                <div class="top-menu-item right unhoverable" style="margin-right: 20px">
                     <a href="{{ path('app_logout') }}"><i class="fal fa-sign-out" style="position: relative;top: 1px;"></i> {{ "Log out"|trans }}</a>
                 </div>
                 <a href="{{ path('profileIndex') }}">
