@@ -183,23 +183,6 @@ table tr:nth-child(even) {
     background-color: #cee4f0;
 }
 
-select#interface-language {
-    background-color: #ffffff;
-    border: 5px solid #ddf3ff;
-    border-radius: 15px;
-    position: absolute;
-    top: 12px;
-    right: 20px;
-    display: inline-block;
-    padding: 5px;
-    outline: none;
-}
-
-select#interface-language option[value="en"] {
-    background-image:url(../img/languages/united-states.png);
-    border-radius: 10px;
-}
-
 .dropdown {
     position: relative;
     top: 2px;
