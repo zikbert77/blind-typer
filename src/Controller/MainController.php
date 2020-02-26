@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Courses;
 use App\Entity\Languages;
 use App\Component\Keyboard;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class MainController extends AbstractController
 {
+    /** @var User|string|null $user */
     private $user = null;
     
     public function __construct(TokenStorageInterface $tokenStorage)
@@ -85,7 +87,21 @@ class MainController extends AbstractController
 
     public function setLocale(Request $request)
     {
-        $request->getSession()->set('_locale', $request->get('_locale', $request->getDefaultLocale()));
+        $locale = $request->get('_locale', $request->getDefaultLocale());
+        if (!is_string($this->user)) {
+            $em = $this->getDoctrine()->getManager();
+            /** @var Languages $language */
+            $language = $em->getRepository(Languages::class)->find(
+                array_flip(Languages::LANGUAGES_TITLES)[ucfirst($locale)] ?? Languages::DEFAULT_LANGUAGE
+            );
+            
+            if (!empty($language)) {
+                $this->user->setDefaultLanguage($language);
+                $em->persist($this->user);
+                $em->flush();
+            }
+        }
+        $request->getSession()->set('_locale', $locale);
 
         return new Response('ok');
     }
