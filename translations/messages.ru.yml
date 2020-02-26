@@ -111,12 +111,20 @@ Access to typing test: Доступ к печатным тестам
 Access to basic courses: Доступ к базовым курсам
 Access to advanced courses: Доступ к продвинутым курсам
 Access to premium features: Доступ к премиум-функциям
-No advertisements: Отсутсвие рекламы
+No advertisements: Отсутствие рекламы
 
 month: месяц
 select.subscription: Подключить
 selected.subscription: Текущяя подписка
 cancel subscription: отменить подписку
+
+#Terms page
+Privacy and terms of service: Конфиденциальность и условия обслуживания
+Account terms: Аккаунт
+You must be 13 years or older to use our Services.: Вам должно быть не менее 13 лет, чтобы пользоваться нашими Услугами.
+You must be a human. Accounts registered by "bots" or other automated methods are not permitted and will be deleted.: Вы должны быть человеком. Аккаунты, зарегистрированные "ботами" или другими автоматическими методами, не разрешены и будут удалены.
+You are responsible for maintaining the security of your account and password (credential).: Вы несете ответственность за поддержание безопасности вашей учетной записи и пароля (учетных данных).
+BlindTyper cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.: BlindTyper не может и не будет нести ответственность за любые убытки или ущерб, вызванные несоблюдением вами этого обязательства по безопасности.
 
 #Footer
 Info: Информация

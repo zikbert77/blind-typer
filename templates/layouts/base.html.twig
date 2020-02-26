@@ -101,9 +101,6 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
 </script>
-{#<link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet' type='text/css'>#}
-{#<scirpt src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css'></script>#}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>#}
 
 <script>
     $(document).ready(function () {
@@ -122,9 +119,7 @@
             })
         });
 
-        // For the images in the select
         prepareTopMenu();
-
         $(".language-img").click(function () {
             if ($(this).data('selected') === 0) {
                 $.get('{{ path('setLocale') }}', {

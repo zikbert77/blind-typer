@@ -5,15 +5,14 @@
 {% block one_row_content %}
     <div class="content">
         <div class="text-center">
-            <h1>Privacy and terms of service</h1>
+            <h1>{{ "Privacy and terms of service"|trans }}</h1>
         </div>
         <div>
-            <h3>Account terms</h3>
-            &emsp;You must be 13 years or older to use our Services.
-
-            You must be a human. Accounts registered by "bots" or other automated methods are not permitted and will be deleted.
-
-            You are responsible for maintaining the security of your account and password (credential). BlindTyper cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.
+            <h3>{{ "Account terms"|trans }}</h3>
+            &emsp;{{ "You must be 13 years or older to use our Services."|trans }}
+            {{ 'You must be a human. Accounts registered by "bots" or other automated methods are not permitted and will be deleted.'|trans }}
+            {{ "You are responsible for maintaining the security of your account and password (credential)."|trans }}
+            {{ "BlindTyper cannot and will not be liable for any loss or damage from your failure to comply with this security obligation."|trans }}
         </div>
         <div>
             <h3>Warranty</h3>
