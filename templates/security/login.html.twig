@@ -12,17 +12,17 @@
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                {{ "You are logged in as"|trans }} {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">{{ "Please sign in"|trans }}</h1>
         <div class="form-control">
             <label for="inputEmail" class="sr-only">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required autofocus>
         </div>
         <div class="form-control">
-            <label for="inputPassword" class="sr-only">Password</label>
+            <label for="inputPassword" class="sr-only">{{ "Password"|trans }}</label>
             <input type="password" name="password" id="inputPassword" class="form-control rounded-block" placeholder="Password" required>
         </div>
 
@@ -43,13 +43,13 @@
 
         <div class="form-control">
             <button class="btn btn-lg btn-primary" type="submit">
-                Sign in
+                {{ "Sign in"|trans }}
             </button>
         </div>
 
         <div class="form-control" style="line-height: 24px; padding-top: 0">
-            <a href="{{ path('register') }}">Create new account</a><br>
-            <a href="{{ path('resetPassword') }}" class="link">Forgot your password?</a>
+            <a href="{{ path('register') }}">{{ "Create new account"|trans }}</a><br>
+            <a href="{{ path('resetPassword') }}" class="link">{{ "Forgot your password?"|trans }}</a>
         </div>
     </form>
 </div>

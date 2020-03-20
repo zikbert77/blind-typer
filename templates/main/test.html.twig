@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %} - Test{% endblock %}
+{% block title %} - {{ "title.typing.test"|trans }}{% endblock %}
 
 {% block meta %}
     <meta http-equiv="cache-control" content="no-cache" />
@@ -29,14 +29,14 @@
     <div class="test-wrapper" id="test-wrapper">
 {#        <button id="myBtn">Open</button>#}
         <div class="test-settings-container" id="test-settings-container">
-            <label for="test-duration">Test duration: </label>
-            <select name="test-duration" id="test-duration">
-                <option value="1" {% if app.request.get('duration') == 1 %} selected {% endif %}>1 minute</option>
-                <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 minute</option>
-                <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 minute</option>
+            <label for="test-duration">{{ "Test duration"|trans }}: </label>
+            <select name="test-duration" id="test-duration" class="form-select">
+                <option value="1" {% if app.request.get('duration') == 1 %} selected {% endif %}>1 {{ "minute"|trans }}</option>
+                <option value="3" {% if app.request.get('duration') == 3 %} selected {% endif %}>3 {{ "minutes"|trans }}</option>
+                <option value="5" {% if app.request.get('duration') == 5 %} selected {% endif %}>5 {{ "minutes"|trans }}</option>
             </select>
-            <label for="test-language">Language</label>
-            <select name="test-language" id="test-language">
+            <label for="test-language">{{ "Language"|trans }}</label>
+            <select name="test-language" id="test-language" class="form-select">
                 {% for language in languages %}
                     <option value="{{ language.id }}"
                             {% if app.request.query.get('language') == language.id %}
@@ -49,16 +49,16 @@
             </select>
             <div class="right">
                 <span id="words-per-minute">
-                    <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
+                    <b>{{ "Words per minute"|trans }}:</b> <span id="count-words-per-minute">0</span>
                 </span> |
                     <span id="chars-per-minute">
-                    <b>Chars per minute:</b> <span id="count-chars-per-minute">0</span>
+                    <b>{{ "Chars per minute"|trans }}:</b> <span id="count-chars-per-minute">0</span>
                 </span> |
                     <span id="typing-accuracy">
-                    <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
+                    <b>{{ "Typing accuracy"|trans }}:</b> <span id="count-typing-accuracy">0</span>%
                 </span> |
                     <span id="timer">
-                    <b>Time left:</b> <span id="timer-left"></span>s
+                    <b>{{ "Time left"|trans }}:</b> <span id="timer-left"></span>s
                 </span>
             </div>
             <hr>
@@ -98,12 +98,12 @@
                 </div>
             </div>
             <div class="note text-right" style="margin-top: -10px">
-                <p>*You could change test options in <a href="{{ path('profileSettings') }}" class="link">profile settings</a>.</p>
+                <p>*{{ "You could change test options in"|trans }} <a href="{{ path('profileSettings') }}" class="link">{{ "profile settings"|trans }}</a>.</p>
             </div>
         </div>
         <div class="test-container-error text-center">
-            <h1>Text not found, please try again later</h1>
-            <a href="https://t.me/zikbert77" target="_blank" class="link">Report a problem</a>
+            <h1>{{ "Text not found, please try again later"|trans }}</h1>
+            <a href="https://t.me/zikbert77" target="_blank" class="link">{{ "Report a problem"|trans }}</a>
         </div>
     </div>
 
@@ -111,29 +111,29 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>Your test result</h2>
+                <h2>{{ "Your test result"|trans }}</h2>
             </div>
             <div class="modal-body">
                 <p>
-                    <b>Words per minute (WPM):</b> <span id="modal-test-result-wpm">0</span>
+                    <b>{{ "Words per minute"|trans }} (WPM):</b> <span id="modal-test-result-wpm">0</span>
                 </p>
                 <p>
-                    <b>Chars per minute (CPM):</b> <span id="modal-test-result-cpm">0</span>
+                    <b>{{ "Chars per minute"|trans }} (CPM):</b> <span id="modal-test-result-cpm">0</span>
                 </p>
                 <p>
-                   <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
+                   <b>{{ "Typing accuracy"|trans }}:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
                 {% if app.user %}
                     <canvas id="lastStatChart" height="100"></canvas>
 
                     <span style="font-size: 14px;">
-                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
+                        {{ "View advanced statistic in the"|trans }} <a href="{{ path('profileIndex') }}" class="link">{{ "in.the.profile"|trans }}</a>.
                     </span>
                 {% else %}
                     <p>
-                        If you want to view your typing statistic, please
-                        <a href="{{ path('app_login') }}" class="link">log in</a> or
-                        <a href="{{ path('register') }}" class="link">register</a>
+                        {{ "If you want to view your typing statistic, please"|trans }}
+                        <a href="{{ path('app_login') }}" class="link">{{ "please.log.in"|trans }}</a> {{ "or"|trans }}
+                        <a href="{{ path('register') }}" class="link">{{ "please.register"|trans }}</a>
                         .
                     </p>
                 {% endif %}
@@ -158,8 +158,8 @@
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScrollDown = 195;
-            let positionToScrollUp = 130;
+            let positionToScrollDown = 195 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
+            let positionToScrollUp = 132 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
             let scrollPx = 64;
             let blockCompare = false;
             let $testTextDisplayBox = $("#test-text-display");
@@ -480,7 +480,7 @@
                     data: {
                         labels: data.datetime,
                         datasets: [{
-                            label: 'Words per minute (WPM)',
+                            label: '{{ "Words per minute"|trans }} (WPM)',
                             data: data.wpm,
                             backgroundColor: [
                                 'rgba(61, 163, 232, 0.1)',
@@ -538,7 +538,7 @@
 
             function getTestHistoryForUser() {
                 $.get('{{ path('getTestHistoryForUser') }}', {
-                    limit: 3
+                    limit: 6
                 }, function (data, status) {
                     if (status === 'success') {
                         buildLastUserTestHistoryChart(data);

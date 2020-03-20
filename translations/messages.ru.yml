@@ -1,0 +1,132 @@
+#Titles
+title.typing.test: Тест
+title.course.test: Печатный курс
+title.courses.test: Печатные курсы
+title.profile: Профиль
+title.profile.plans: Подписки
+
+
+#General
+Sorry, but access to this web-site available only from computers: Извините, но доступ к этому сайту возможен только с компьютеров
+
+Welcome: Привет
+Last: Последний
+Words per minute: Слов за минуту
+Password: Пароль
+
+Premium member: Премиум пользователь
+Warning: Внимание
+Sign in: Войти в аккаунт
+Log in: Войти
+Create new account: Создать новый аккаунт
+Forgot your password?: Забыли свой пароль?
+
+This website is under construction, some bugs are possible: Этот сайт находится на стадии разработки, возможны ошибки
+If you'll meet them, please: Если вы встретите их, пожалуйста
+contact us: сообщите нам
+immediately: немедленно
+
+and: и
+or: или
+
+contact.us: Обратная связь
+
+#Top menu
+Typing courses: Печатные курсы
+Typing test: Тест
+Profile: Профиль
+Log out: Выйти
+
+#Log in page
+You are logged in as: Вы вошли как
+Please sign in: Пожалуйста войдите
+
+#Register page
+Register: Регистрация
+register.action: Создать аккаунт
+
+#Index page
+BlindTyper is a service that allows you to improve your typing skill, increase speed and accuracy.: BlindTyper - это сервис, который позволяет вам улучшить свои навыки набора текста, повысить скорость и точность.
+Warm up your fingers before start working. Be more productive!: Разогрейте пальцы перед началом работы. Станьте более продуктивны!
+Take: Принимайте участие в
+the tests: печатних тестах
+courses: курсах
+to become an advanced in typing: чтобы стать продвинутым в наборе текста
+Start typing: Начать печатать
+
+#Test page
+Test duration: Длительность теста
+Language: Язык
+Chars per minute: Символов за минуту
+Typing accuracy: Качество
+Time left: Осталось времени
+minute: минута
+minutes: минут
+You could change test options in: Вы можете изменить параметры теста в
+profile settings: настройках профиля
+
+Text not found, please try again later: Текст не найден, попробуйте позже
+Report a problem: Сообщить о проблеме
+
+Your test result: Результат теста
+View advanced statistic in the: Посмотреть расширенную статистику в
+in.the.profile: профиле
+If you want to view your typing statistic, please: Если вы хотите просмотреть вашу статистику, пожалуйста
+please.log.in: войдите
+please.register: зарегистрируйтесь
+
+#Courses page
+Change: Измените
+your premium plan, and get access to premium courses: свой тип аккаунта  и получите доступ к премиум-курсам
+
+Basic course: Базовый курс
+Advanced course: Продвинутный курс
+
+Top row: Верхний ряд
+Middle row: Средний ряд
+Bottom row: Нижний ряд
+Number row: Числовой ряд
+
+Typing course : Урок
+
+#Course page
+Time: Время
+Your course result: Результат урока
+next.course: Следующий урок
+Courses: Курсы
+Retry: Повторить
+
+#Profile page
+Premium subscription: Премиум подписка
+Settings: Настройки
+Statistic for: Статистика для
+All tests: Всех тестов
+minute test: минутный тест
+
+#Premium plans page
+Select your subscription: Выберите тип подписки
+Free: Бесплатная
+Premium: Премиум
+Access to typing test: Доступ к печатным тестам
+Access to basic courses: Доступ к базовым курсам
+Access to advanced courses: Доступ к продвинутым курсам
+Access to premium features: Доступ к премиум-функциям
+No advertisements: Отсутствие рекламы
+
+month: месяц
+select.subscription: Подключить
+selected.subscription: Текущяя подписка
+cancel subscription: отменить подписку
+
+#Terms page
+Privacy and terms of service: Конфиденциальность и условия обслуживания
+Account terms: Аккаунт
+You must be 13 years or older to use our Services.: Вам должно быть не менее 13 лет, чтобы пользоваться нашими Услугами.
+You must be a human. Accounts registered by "bots" or other automated methods are not permitted and will be deleted.: Вы должны быть человеком. Аккаунты, зарегистрированные "ботами" или другими автоматическими методами, не разрешены и будут удалены.
+You are responsible for maintaining the security of your account and password (credential).: Вы несете ответственность за поддержание безопасности вашей учетной записи и пароля (учетных данных).
+BlindTyper cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.: BlindTyper не может и не будет нести ответственность за любые убытки или ущерб, вызванные несоблюдением вами этого обязательства по безопасности.
+
+#Footer
+Info: Информация
+Privacy & terms of service: Условия сервиса
+all rights reserved: все права защищены

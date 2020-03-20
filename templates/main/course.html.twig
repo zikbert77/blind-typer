@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %} - Typing course{% endblock %}
+{% block title %} - {{ "title.course.test"|trans }}{% endblock %}
 
 {% block meta %}
     <meta http-equiv="cache-control" content="no-cache" />
@@ -26,16 +26,16 @@
         <div class="test-settings-container" id="test-settings-container">
             <div style="text-align: center">
                 <span id="words-per-minute">
-                    <b>Words per minute:</b> <span id="count-words-per-minute">0</span>
+                    <b>{{ "Words per minute"|trans }}:</b> <span id="count-words-per-minute">0</span>
                 </span> |
                 <span id="chars-per-minute">
-                    <b>Chars per minute:</b> <span id="count-chars-per-minute">0</span>
+                    <b>{{ "Chars per minute"|trans }}:</b> <span id="count-chars-per-minute">0</span>
                 </span> |
                 <span id="typing-accuracy">
-                    <b>Typing accuracy:</b> <span id="count-typing-accuracy">0</span>%
+                    <b>{{ "Typing accuracy"|trans }}:</b> <span id="count-typing-accuracy">0</span>%
                 </span> |
                 <span id="timer">
-                    <b>Time:</b> <span id="timer-left">0</span>s
+                    <b>{{ "Time"|trans }}:</b> <span id="timer-left">0</span>s
                 </span>
             </div>
             <hr>
@@ -81,30 +81,30 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>Your course result</h2>
+                <h2>{{ "Your course result"|trans }}</h2>
             </div>
             <div class="modal-body">
                 <p>
-                    <b>Words per minute (WPM):</b> <span id="modal-test-result-wpm">0</span>
+                    <b>{{ "Words per minute"|trans }} (WPM):</b> <span id="modal-test-result-wpm">0</span>
                 </p>
                 <p>
-                    <b>Chars per minute (CPM):</b> <span id="modal-test-result-cpm">0</span>
+                    <b>{{ "Chars per minute"|trans }} (CPM):</b> <span id="modal-test-result-cpm">0</span>
                 </p>
                 <p>
-                    <b>Typing accuracy:</b> <span id="modal-test-result-accuracy">100</span>%
+                    <b>{{ "Typing accuracy"|trans }}:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
                 <div class="loader"></div>
                 {% if app.user %}
                     <canvas id="lastCourseChart" height="100"></canvas>
 
                     <span style="font-size: 14px;">
-                        View advanced statistic in the <a href="{{ path('profileIndex') }}" class="link">profile</a>.
+                        {{ "View advanced statistic in the"|trans }} <a href="{{ path('profileIndex') }}" class="link">{{ "in.the.profile"|trans }}</a>.
                     </span>
                 {% else %}
                     <p>
-                        If you want to view your typing statistic, please
-                        <a href="{{ path('app_login') }}" class="link">log in</a> or
-                        <a href="{{ path('register') }}" class="link">register</a>
+                        {{ "If you want to view your typing statistic, please"|trans }}
+                        <a href="{{ path('app_login') }}" class="link">{{ "please.log.in"|trans }}</a> {{ "or" }}
+                        <a href="{{ path('register') }}" class="link">{{ "please.register"|trans }}</a>
                         .
                     </p>
                 {% endif %}
@@ -112,11 +112,11 @@
             <hr>
             <div class="modal-footer">
                 {% if nextCourse %}
-                    <a href="{{ path('course', {'id' : nextCourse.id}) }}" class="btn right">Next</a>
+                    <a href="{{ path('course', {'id' : nextCourse.id}) }}" class="btn right">{{ "next.course"|trans }}</a>
                     {% else %}
-                    <a href="{{ path('courses') }}" class="btn right">Courses</a>
+                    <a href="{{ path('courses') }}" class="btn right">{{ "Courses"|trans }}</a>
                 {% endif %}
-                <a class="close right link retry-btn">Retry</a>
+                <a class="close right link retry-btn">{{ "Retry"|trans }}</a>
             </div>
         </div>
     </div>
@@ -132,12 +132,11 @@
     <script src="{{ asset('js/test.js') }}"></script>
     <script>
         $(document).ready(function () {
-            let lettersCount = 0;
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScrollDown = 195;
-            let positionToScrollUp = 130;
+            let positionToScrollDown = 195 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
+            let positionToScrollUp = 132 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
             let scrollPx = 64;
             let globalTimerInterval;
             let $testTextDisplayBox = $("#test-text-display");
@@ -246,11 +245,13 @@
             }
 
             function highlightKeyOnKeyboard(letter) {
-                letter = letter.replace(/'/g, "\\'");
+                if (!$.isNumeric(letter)) {
+                    letter = letter.replace(/'/g, "\\'");
+                }
                 $(".key-current").removeClass('key-current');
                 $(".shift").removeClass('shift');
 
-                let key = $(".test-keyboard-box").find(`[data-key='${letter.toLowerCase()}']`);
+                let key = $(".test-keyboard-box").find(`[data-key='${!$.isNumeric(letter) ? letter.toLowerCase() : letter}']`);
                 if (key.length === 0) {
                     let shiftKey = $(".test-keyboard-box").find(`[data-shift-key='${letter}']`);
                     if (shiftKey.length !== 0) {
@@ -262,7 +263,7 @@
                     highlightFinger(key.data('finger'));
                     key.addClass('key-current');
 
-                    if (isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
+                    if (!$.isNumeric(letter) && isShiftKeyShouldBeHighlighted(letter) && letter === letter.toUpperCase()) {
                         highlightShift(key.data('shift'));
                         highlightShift(key.data('shift'));
                     }
@@ -356,8 +357,10 @@
 
             function showTestStatModal() {
                 $("textarea#test-input").blur();
-                saveResult();
-                getCourseHistoryForUser();
+                {% if app.user %}
+                    saveResult();
+                    getCourseHistoryForUser();
+                {% endif %}
                 testStatModal.css("display", "block");
             }
 
@@ -373,7 +376,7 @@
                     data: {
                         labels: data.datetime,
                         datasets: [{
-                            label: 'Words per minute (WPM)',
+                            label: '{{ "Words per minute"|trans }} (WPM)',
                             data: data.wpm,
                             backgroundColor: [
                                 'rgba(61, 163, 232, 0.1)',
@@ -392,7 +395,7 @@
                             ],
                             borderWidth: 3
                         }, {
-                            label: 'Chars per minute (CPM)',
+                            label: '{{ "Chars per minute"|trans }} (CPM)',
                             data: data.cpm,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.1)',

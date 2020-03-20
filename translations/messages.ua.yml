@@ -1,0 +1,123 @@
+#Titles
+title.typing.test: Тест
+title.course.test: Курс друкування
+title.courses.test: Курси друкування
+title.profile: Профіль
+title.profile.plans: Підписки
+
+#General
+Sorry, but access to this web-site available only from computers: Вибачте, але доступ до цього сайту можливий тільки з комп'ютерів
+
+Welcome: Вітаю
+Last: Останній
+Words per minute: Слів за хвилину
+Password: Пароль
+
+Premium member: Преміум користувач
+Warning: Увага
+Sign in: Увійти в аккаунт
+Log in: Увійти
+Create new account: Створити новий аккаунт
+Forgot your password?: Забули свій пароль?
+
+This website is under construction, some bugs are possible: Цей сайт знаходиться на стадії розробки, можливі помилки
+If you'll meet them, please: Якщо ви зустрінете їх, будь ласка
+contact us: повідомте нам
+immediately: негайнно
+
+and: і
+or: або
+
+contact.us: Зворотній зв'язок
+
+#Top menu
+Typing courses: Уроки
+Typing test: Тест
+Profile: Профіль
+Log out: Вийти
+
+#Log in page
+You are logged in as: Ви увійшли як
+Please sign in: Будь ласка увійдіть
+
+#Register page
+Register: Реєстрація
+register.action: Створити аккаунт
+
+#Index page
+BlindTyper is a service that allows you to improve your typing skill, increase speed and accuracy.: BlindTyper - це сервіс, який дозволяє вам поліпшити свої навички набору тексту, підвищити швидкість і точність.
+Warm up your fingers before start working. Be more productive!: Розігрійте пальці перед початком роботи. Станьте більш продуктивні!
+Take: Приймайте участь в
+the tests: тестах
+courses: курсах
+to become an advanced in typing: щоб стати експертом в наборі тексту
+Start typing: Почати друкувати
+
+#Test page
+Test duration: Длительность теста
+Language: Мова
+Chars per minute: Символів за хвилину
+Typing accuracy: Якість
+Time left: Залишилося часу
+minute: хвилина
+minutes: хвилин
+You could change test options in: Ви можете змінити параметри тесту в
+profile settings: налаштуваннях профілб
+
+Text not found, please try again later: Текст не знайдено, спробуйте пізніше
+Report a problem: Повідомити про проблему
+
+Your test result: Результат тесту
+View advanced statistic in the: Подивитися розширену статистику в
+in.the.profile: профілі
+If you want to view your typing statistic, please: Якщо ви хочете переглянути вашу статистику, будь ласка
+please.log.in: увійдіть
+please.register: зареєструйтеся
+
+#Courses page
+Change: Змініть
+your premium plan, and get access to premium courses: свій тип аккаунта і отримайте доступ до преміум курсів
+
+Basic course: Базовий курс
+Advanced course: Продвинутный курс
+
+Top row: Верхній ряд
+Middle row: Средній ряд
+Bottom row: Нижній ряд
+Number row: Числовий ряд
+
+Typing course: Урок
+
+#Course page
+Time: Час
+Your course result: Результат уроку
+next.course: Наступний урок
+Courses: Курси
+Retry: Повторити
+
+#Profile page
+Premium subscription: Преміум підписка
+Settings: Налаштування
+Statistic for: Статистика для
+All tests: Всіх тестів
+minute test: хвилинний тест
+
+#Premium plans page
+Select your subscription: Виберіть тип підписки
+Free: Безкоштовна
+Premium: Преміум
+Access to typing test: Доступ до тестів
+Access to basic courses: Доступ до базових курсів
+Access to advanced courses: Доступ до преміуи курсам
+Access to premium features: Доступ до преміум-функцій
+No advertisements: Відсутність реклами
+
+month: місяц
+select.subscription: Підключити
+selected.subscription: Поточна підписка
+cancel subscription: відмінити подписку
+
+#Footer
+Info: Інформація
+Privacy & terms of service: Умови сервісу
+all rights reserved: всі права захищені

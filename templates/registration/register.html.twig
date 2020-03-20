@@ -4,7 +4,7 @@
 
 {% block one_row_content %}
     <div class="registration-form">
-        <h1>Register</h1>
+        <h1>{{ "Register"|trans }}</h1>
 
         {{ form_start(registrationForm) }}
 
@@ -23,7 +23,7 @@
         {% endfor %}
 
         <div class="form-control">
-            <button class="btn">Register</button>
+            <button class="btn">{{ "register.action"|trans }}</button>
         </div>
         {{ form_end(registrationForm) }}
     </div>

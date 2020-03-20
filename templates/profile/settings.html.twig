@@ -19,6 +19,10 @@
             </div>
             <div class="user-settings-right" style="width: 50%; padding: 0 0 0 30px; float: right;">
                 <div class="form-group">
+                    {{ form_label(userProfileForm.interfaceLanguage) }}:
+                    {{ form_widget(userProfileForm.interfaceLanguage) }}
+                </div>
+                <div class="form-group">
                     {{ form_label(userProfileForm.defaultLanguage) }}:
                     {{ form_widget(userProfileForm.defaultLanguage) }}
                 </div>

@@ -5,3 +5,8 @@ Install
 3) `php bin/console server:run`
 
 Host will be displayed in console (default is `127.0.0.1:8000`)
+
+Make migrations flow
+1) `php bin\console doctrine:migrations:execute 20200228131647 --up`
+2) `php bin/console doctrine:mapping:import "App\Entity" yml --path=config/doctrine`
+3)  `php bin/console make:entity --regenerate App`

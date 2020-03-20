@@ -14,6 +14,13 @@ course:
     path: /course/{id}
     controller: App\Controller\MainController::course
 
+terms:
+    path: /terms
+    controller: App\Controller\MainController::terms
+
+setLocale:
+    path: /setLocale
+    controller: App\Controller\MainController::setLocale
 #------------------profile------------------
 profileIndex:
     path: /profile

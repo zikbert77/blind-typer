@@ -30,7 +30,7 @@
 {% endif %}
 
 <div class="mobile-device-mask">
-    <h1>Sorry, but access to this web-site available only from computers :(</h1>
+    <h1>{{ "Sorry, but access to this web-site available only from computers"|trans }} :(</h1>
 </div>
 
 <div class="container ads-container">
@@ -82,12 +82,16 @@
     <div class="container">
         <div class="row main-row">
             <div class="col-12 footer">
-                <span><b>BlindTyper</b> &copy; all rights reserved</span>
-                <div class="right">
-                    Development and support:
-                    <a href="http://zikbert77.zzz.com.ua" target="_blank">
-                        <b>zikbert77</b>
-                    </a>
+                <div class="left" style="line-height: 18px">
+                    <b>{{ "Info"|trans }}:</b><br>
+                    <a href="{{ path('terms') }}" class="link">{{ "Privacy & terms of service"|trans }}</a>
+                    <br><br><b>{{ "contact.us"|trans }}:</b><br>
+                    <a href="mailto:service.blindtyper@gmail.com" class="link">service.blindtyper@gmail.com</a><br>
+                </div>
+                <div class="right" style="height: 100%">
+                    <div class="dasfasdf" style="display: flex; align-items: center; height: 100%;">
+                        <b>BlindTyper</b> &copy; {{ "all rights reserved"|trans }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,12 +101,62 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
 </script>
+
 <script>
     $(document).ready(function () {
         if (document.domain == 'blindtyper.zzz.com.ua') {
             $('div').first().hide();
         }
+
+        $("#interface-language").change(function () {
+            $.get('{{ path('setLocale') }}', {
+                _locale: $(this).val()
+            }, function (data) {
+                if (data !== 'ok') {
+                    alert(data)
+                }
+                window.location.reload();
+            })
+        });
+
+        prepareTopMenu();
+        $(".language-img").click(function () {
+            if ($(this).data('selected') === 0) {
+                $.get('{{ path('setLocale') }}', {
+                    _locale: $(this).data('language')
+                }, function (data) {
+                    if (data !== 'ok') {
+                        alert(data)
+                    }
+                    window.location.reload();
+                })
+            }
+        })
     });
+
+    function prepareTopMenu() {
+        let locale = '{{ app.request.locale }}';
+        let languages = ['en', 'ru', 'ua'];
+
+        let selectedLanguageIndex = languages.indexOf(locale);
+        if (selectedLanguageIndex > -1) {
+            languages.splice(selectedLanguageIndex, 1);
+        }
+
+        let interfaceLanguageDropdown = '';
+        interfaceLanguageDropdown += '<img class="language-img" data-selected="1" src="/img/languages/'+ locale +'.png" alt="">';
+        interfaceLanguageDropdown += '<div class="dropdown-content rounded-block">';
+
+        $.each(languages, function (index, value) {
+            interfaceLanguageDropdown += '<div class="dropdown-item">' +
+                '<img class="language-img" src="/img/languages/'+ value +'.png" data-selected="0" data-language="'+ value +'" alt="'+ value +'">' +
+                '</div>';
+        });
+
+        interfaceLanguageDropdown += '</div>';
+
+        $(".interface-language-dropdown").html(interfaceLanguageDropdown);
+    }
 </script>
 {%block scripts %}{% endblock %}
 </body>

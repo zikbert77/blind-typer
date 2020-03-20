@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Courses;
 use App\Entity\Languages;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MainController extends AbstractController
 {
+    /** @var User|string|null $user */
     private $user = null;
     
     public function __construct(TokenStorageInterface $tokenStorage)
@@ -75,5 +78,31 @@ class MainController extends AbstractController
         }
 
         return $this->redirectToRoute('courses');
+    }
+
+    public function terms()
+    {
+        return $this->render('main/terms.html.twig');
+    }
+
+    public function setLocale(Request $request)
+    {
+        $locale = $request->get('_locale', $request->getDefaultLocale());
+        if (!is_string($this->user)) {
+            $em = $this->getDoctrine()->getManager();
+            /** @var Languages $language */
+            $language = $em->getRepository(Languages::class)->find(
+                array_flip(Languages::LANGUAGES_TITLES)[ucfirst($locale)] ?? Languages::DEFAULT_LANGUAGE
+            );
+            
+            if (!empty($language)) {
+                $this->user->setInterfaceLanguage($language);
+                $em->persist($this->user);
+                $em->flush();
+            }
+        }
+        $request->getSession()->set('_locale', $locale);
+
+        return new Response('ok');
     }
 }

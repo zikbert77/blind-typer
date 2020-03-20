@@ -59,6 +59,16 @@ App\Entity\User:
                 default: current_timestamp()
             column: updated_at
     manyToOne:
+        interfaceLanguage:
+            targetEntity: Languages
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                interface_language:
+                    referencedColumnName: id
+            orphanRemoval: false
         defaultLanguage:
             targetEntity: Languages
             cascade: {  }

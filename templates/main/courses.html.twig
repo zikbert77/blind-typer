@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %} - Typing courses{% endblock %}
+{% block title %} - {{ "title.courses.test"|trans }}{% endblock %}
 
 {% block meta %}
     <meta http-equiv="cache-control" content="no-cache" />
@@ -11,31 +11,31 @@
     <div class="rounded-block left-main-block">
         <div class="content" style="text-align: center">
             {% if app.user %}
-                <h1>Welcome</h1>
+                <h1>{{ "Welcome"|trans }}</h1>
                 {% if app.user.isPremium %}
-                    <img src="{{ asset('img/reward.png') }}" width="30" align="center" alt="Premium member reward" title="Premium member award">
+                    <img src="{{ asset('img/reward.png') }}" width="30" align="center" alt="Premium member reward" title="{{ "Premium member"|trans }}">
                 {% endif %}
                 {{ app.user.email }}
                 <br><br>
-                <span class="small">Last <span title="Words per minute">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
+                <span class="small">{{ "Last"|trans }} <span title="{{ "Words per minute"|trans }}">WPM</span>:</span> <b>{{ lastResult.wordsPerMinute ?? 0}}</b>
             {% else %}
-                <h1>Sign in</h1>
+                <h1>{{ "Sign in"|trans }}</h1>
                 <form class="login-form" method="post" action="{{ path('app_login') }}">
                     <div class="form-group">
                         <input type="email" name="email" id="inputEmail" class="form-control rounded-block" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="Password" required>
+                        <input type="password" class="form-control rounded-block" name="password" id="inputPassword" placeholder="{{ "Password"|trans }}" required>
                     </div>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <div class="form-group">
                         <button class="btn btn-block">
-                            Sign in
+                            {{ "Log in"|trans }}
                         </button>
                     </div>
                     <div class="form-group">
-                        <a href="{{ path('register') }}">Create new account</a><br>
-                        <a href="{{ path('resetPassword') }}" class="link">Forgot your password?</a>
+                        <a href="{{ path('register') }}">{{ "Create new account"|trans }}</a><br>
+                        <a href="{{ path('resetPassword') }}" class="link">{{ "Forgot your password?"|trans }}</a>
                     </div>
                 </form>
             {% endif %}
@@ -43,45 +43,47 @@
     </div>
     <div class="rounded-block left-main-block" style="margin-top: 25px">
         <div class="content" style="text-align: center">
-            <h1>Warning!</h1>
+            <h1>{{ "Warning"|trans }}!</h1>
             <p>
-                This website is under construction, some bugs are possible. If you'll meet them, please <a
-                        href="https://t.me/zikbert77" target="_blank" class="link">contact us</a> immediately.
+                {{ "This website is under construction, some bugs are possible"|trans }}. {{ "If you'll meet them, please"|trans }} <a
+                        href="https://t.me/zikbert77" target="_blank" class="link">{{ "contact us"|trans }}</a> {{ "immediately"|trans }}.
             </p>
         </div>
     </div>
 {% endblock %}
+
 {% block two_rows_content_2 %}
     <div class="content">
+        {% set i = 0 %}
         {% for title, categories in courses %}
             <div class="course-item{% if title in premiumCourses %} premium{% endif %}">
                 {% if title in premiumCourses and (app.user.isPremium ?? false) == false %}
                     <div class="mask">
                         <div class="message">
-                            <a href="{{ path('profilePlans') }}" class="link">Change</a> your premium plan, and get access to premium courses
+                            <a href="{{ path('profilePlans') }}" class="link">{{ "Change"|trans }}</a> {{ "your premium plan, and get access to premium courses"|trans }}
                         </div>
                     </div>
                 {% endif %}
-                <h1>{{ title }}:</h1>
-                <div id="accordion">
+                <h1>{{ title|trans }}:</h1>
+                <div id="accordion-{{ i }}">
                     {% for subtitle, subcourses in categories %}
-                        <h3 class="accordion-header">{{ subtitle }}</h3>
+                        <h3 class="accordion-header">{{ subtitle|trans }}</h3>
                         <div class="accordion-body">
                             {% for course in subcourses %}
                                 {% if title in premiumCourses and (app.user.isPremium ?? false) != false %}
                                     <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                                        <span class="link">{{ 'Typing course ' ~ course.position }} - {{ course.description|raw }}</span>
+                                        <span class="link">{{ 'Typing course'|trans  ~ ' ' ~ course.position }} - {{ course.description|raw }}</span>
                                     </a>
                                 {% elseif title not in premiumCourses and (app.user.isPremium ?? false) == false %}
                                     <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                                        <span class="link">{{ 'Typing course ' ~ course.position }} - {{ course.description|raw }}</span>
+                                        <span class="link">{{ 'Typing course'|trans  ~ ' ' ~ course.position }} - {{ course.description|raw }}</span>
                                     </a>
                                 {% elseif title not in premiumCourses and (app.user.isPremium ?? false) != false %}
                                     <a href="{{ path('course', {'id': course.id}) }}" class="course-link">
-                                        <span class="link">{{ 'Typing course ' ~ course.position }} - {{ course.description|raw }}</span>
+                                        <span class="link">{{ 'Typing course'|trans  ~ ' ' ~ course.position }} - {{ course.description|raw }}</span>
                                     </a>
                                 {% else %}
-                                    <span class="link">{{ 'Typing course ' ~ course.position }}</span>
+                                    <span class="link">{{ 'Typing course' ~ ' ' ~ course.position }}</span>
                                 {% endif %}
                                 <br>
                             {% endfor %}
@@ -89,6 +91,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% set i = i + 1 %}
         {% endfor %}
     </div>
 {% endblock %}
@@ -98,7 +101,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $( function() {
-            $("#accordion").accordion();
+            {% set i = 0 %}
+            {% for title, categories in courses %}
+                $("#accordion-{{ i }}").accordion();
+            {% set i = i + 1 %}
+            {% endfor %}
         } );
     </script>
 {% endblock %}

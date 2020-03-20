@@ -32,6 +32,8 @@ class User implements UserInterface
 
     private $defaultKeyboard;
 
+    private $interfaceLanguage;
+
     private $defaultLanguage;
 
     private $createdAt;
@@ -215,6 +217,18 @@ class User implements UserInterface
     public function setSubscriptionStatus(?bool $subscriptionStatus): self
     {
         $this->subscriptionStatus = $subscriptionStatus;
+
+        return $this;
+    }
+
+    public function getInterfaceLanguage(): ?Languages
+    {
+        return $this->interfaceLanguage;
+    }
+
+    public function setInterfaceLanguage(?Languages $interfaceLanguage): self
+    {
+        $this->interfaceLanguage = $interfaceLanguage;
 
         return $this;
     }

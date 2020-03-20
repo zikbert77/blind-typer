@@ -25,6 +25,10 @@ class UserProfileType extends AbstractType
                 'class' => Languages::class,
                 'choice_label' => 'title'
             ])
+            ->add('interfaceLanguage', EntityType::class, [
+                'class' => Languages::class,
+                'choice_label' => 'title'
+            ])
         ;
     }
 
