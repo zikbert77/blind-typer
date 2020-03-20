@@ -96,7 +96,7 @@ class MainController extends AbstractController
             );
             
             if (!empty($language)) {
-                $this->user->setDefaultLanguage($language);
+                $this->user->setInterfaceLanguage($language);
                 $em->persist($this->user);
                 $em->flush();
             }
