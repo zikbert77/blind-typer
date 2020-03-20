@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TestsHistory;
+use App\Entity\User;
 use App\Form\UserProfileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,12 +25,15 @@ class ProfileController extends AbstractController
 
     public function settings(TokenStorageInterface $tokenStorage, Request $request)
     {
+        /** @var User $user */
         $user = $tokenStorage->getToken()->getUser();
 
         $userProfileForm = $this->createForm(UserProfileType::class, $user);
         $userProfileForm->handleRequest($request);
         if ($userProfileForm->isSubmitted() && $userProfileForm->isValid()) {
             $user = $userProfileForm->getData();
+
+            $request->getSession()->set('_locale', $user->getInterfaceLanguage()->getTitle());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
