@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\TestsHistory;
 use App\Entity\User;
 use App\Form\UserProfileType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -46,6 +47,20 @@ class ProfileController extends AbstractController
             'user' => $user,
             'userProfileForm' => $userProfileForm->createView()
         ]);
+    }
+    
+    public function ajaxDisableTooltips(TokenStorageInterface $tokenStorage, Request $request)
+    {
+        /** @var User $user */
+        $user = $tokenStorage->getToken()->getUser();
+        $showTooltips = $request->request->get("showTooltips", false) == "true";
+
+        $em = $this->getDoctrine()->getManager();
+        $user->setShowTooltips($showTooltips);
+        $em->persist($user);
+        $em->flush();
+
+        return new JsonResponse('ok');
     }
 
     public function plans(TokenStorageInterface $tokenStorage)

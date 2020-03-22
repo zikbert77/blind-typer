@@ -75,6 +75,10 @@ If you want to view your typing statistic, please: Если вы хотите п
 please.log.in: войдите
 please.register: зарегистрируйтесь
 
+Before you start: Перед тем, как начать
+Place your fingers as on picture below: Разместите пальцы так, как показано на картинке
+Show this tooltip before start: Показывать эту подсказку перед началом
+
 #Courses page
 Change: Измените
 your premium plan, and get access to premium courses: свой тип аккаунта  и получите доступ к премиум-курсам
@@ -102,6 +106,16 @@ Settings: Настройки
 Statistic for: Статистика для
 All tests: Всех тестов
 minute test: минутный тест
+
+#Profile settings page
+Return to profile: Вернуться к профилю
+Save: Cохранить
+Interface language: Язык интерфейса
+Default language: Язык по умолчанию
+Default keyboard: Тип клавиатуры
+Show tooltips: Показывать подсказки
+Yes: Да
+No: Нет
 
 #Premium plans page
 Select your subscription: Выберите тип подписки

@@ -29,6 +29,12 @@ class UserProfileType extends AbstractType
                 'class' => Languages::class,
                 'choice_label' => 'title'
             ])
+            ->add('showTooltips', ChoiceType::class, [
+                'choices' => [
+                    "No" => 0,
+                    "Yes" => 1
+                ]
+            ])
         ;
     }
 

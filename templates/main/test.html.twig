@@ -117,7 +117,7 @@
                 <p>
                     <b>{{ "Place your fingers as on picture below"|trans }}</b>
                 </p>
-                <img src="{{ asset('img/finger-position.jpg') }}" alt="">
+                <img src="{{ asset('img/finger-position.jpg') }}" style="width: 100%" alt="">
             </div>
             <div class="content" style="text-align: right">
                 <label>
@@ -207,7 +207,9 @@
                 showTestStatModal()
             });
 
-            showFingerPreviewModal();
+            {% if app.user and app.user.showTooltips %}
+                showFingerPreviewModal();
+            {% endif %}
             fingerPreviewModalCloseSpan.click(function () {
                 hideFingerPreviewModal();
             });
@@ -617,6 +619,12 @@
             }
         });
 
+        $("input[name='disable-finger-preview']").change(function () {
+            let showTooltips = $(this).is(':checked');
+            $.post("{{ path('profileAjaxDisableTooltips') }}", {
+                showTooltips: showTooltips
+            })
+        });
 
         function showTextLoadError() {
             $(".test-container").hide();

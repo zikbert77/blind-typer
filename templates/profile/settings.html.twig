@@ -5,8 +5,8 @@
 {% block one_row_content %}
     <div class="content">
         <br>
-        <a href="{{ path('profileIndex') }}" class="link"><i class="fal fa-long-arrow-left"></i> Return to profile</a>
-        <h3>Settings: </h3>
+        <a href="{{ path('profileIndex') }}" class="link"><i class="fal fa-long-arrow-left"></i> {{ "Return to profile"|trans }}</a>
+        <h3>{{ "Settings"|trans }}: </h3>
 
         {{ form_start(userProfileForm) }}
             <div class="user-settings-left" style="width: 50%; padding: 0 30px 0 0; float: left;">
@@ -14,7 +14,7 @@
                     {{ form_widget(userProfileForm.email, {'attr': {'class': 'form-control rounded-block', 'placeholder' : 'Email'}}) }}
                 </div>
                 <div class="form-group">
-                    <button class="btn">{{ button_label|default('Save') }}</button>
+                    <button class="btn">{{ button_label|default('Save')|trans }}</button>
                 </div>
             </div>
             <div class="user-settings-right" style="width: 50%; padding: 0 0 0 30px; float: right;">
@@ -29,6 +29,10 @@
                 <div class="form-group">
                     {{ form_label(userProfileForm.defaultKeyboard) }}:
                     {{ form_widget(userProfileForm.defaultKeyboard) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(userProfileForm.showTooltips) }}:
+                    {{ form_widget(userProfileForm.showTooltips) }}
                 </div>
             </div>
         {{ form_end(userProfileForm) }}
