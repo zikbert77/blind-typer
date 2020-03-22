@@ -77,6 +77,31 @@
         </div>
     </div>
 
+    <div id="fingerPreviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close finger-preview-close">&times;</span>
+                <h2>{{ "Before you start"|trans }}</h2>
+            </div>
+            <div class="modal-body text-center">
+                <p>
+                    <b>{{ "Place your fingers as on picture below"|trans }}</b>
+                </p>
+                <img src="{{ asset('img/finger-position.jpg') }}" style="width: 100%" alt="">
+            </div>
+            <div class="content" style="text-align: right">
+                <label>
+                    {{ "Show this tooltip before start"|trans }}
+                    <input type="checkbox" name="disable-finger-preview" checked>
+                </label>
+            </div>
+            <hr>
+            <div class="modal-footer">
+                <button class="btn close finger-preview-close right">Ok</button>
+            </div>
+        </div>
+    </div>
+
     <div id="testStatModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -116,7 +141,7 @@
                     {% else %}
                     <a href="{{ path('courses') }}" class="btn right">{{ "Courses"|trans }}</a>
                 {% endif %}
-                <a class="close right link retry-btn">{{ "Retry"|trans }}</a>
+                <a class="close right test-stat-modal-close link retry-btn">{{ "Retry"|trans }}</a>
             </div>
         </div>
     </div>
@@ -147,14 +172,24 @@
             let $testDurationBox = $("select#test-duration");
             let $originalTextBox = $("#original-text");
 
+            let fingerPreviewModal = $("#fingerPreviewModal");
+            let fingerPreviewModalCloseSpan = $(".finger-preview-close");
+
             let testStatModal = $("#testStatModal");
-            let testStatModalCloseSpan = $(".close");
+            let testStatModalCloseSpan = $(".test-stat-modal-close");
 
             scrollToElement($("#test-wrapper"));
 
             let btn = $("#myBtn");
             btn.click(function () {
                 showTestStatModal()
+            });
+
+            {% if app.user and app.user.showTooltips %}
+                showFingerPreviewModal();
+            {% endif %}
+            fingerPreviewModalCloseSpan.click(function () {
+                hideFingerPreviewModal();
             });
 
             testStatModalCloseSpan.click(function () {
@@ -353,6 +388,16 @@
                 $("span#modal-test-result-cpm").text($countCharsPerMinuteBox.text());
                 $("span#modal-test-result-accuracy").text($countAccuracyBox.text());
                 showTestStatModal();
+            }
+
+            function showFingerPreviewModal() {
+                $("textarea#test-input").blur();
+                fingerPreviewModal.css("display", "block");
+            }
+
+            function hideFingerPreviewModal() {
+                fingerPreviewModal.css("display", "none");
+                focusOnTextarea()
             }
 
             function showTestStatModal() {
