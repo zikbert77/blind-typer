@@ -46,6 +46,13 @@ App\Entity\User:
                 unsigned: true
                 default: 'NULL'
             column: default_keyboard
+        showTooltips:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+                default: '1'
+            column: show_tooltips
         createdAt:
             type: datetime
             nullable: true

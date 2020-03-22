@@ -61,8 +61,8 @@ Typing accuracy: Якість
 Time left: Залишилося часу
 minute: хвилина
 minutes: хвилин
-You could change test options in: Ви можете змінити параметри тесту в
-profile settings: налаштуваннях профілб
+You could change test options in: Ви можете змінити параметри тесту у
+profile settings: налаштуваннях профілю
 
 Text not found, please try again later: Текст не знайдено, спробуйте пізніше
 Report a problem: Повідомити про проблему
@@ -73,6 +73,10 @@ in.the.profile: профілі
 If you want to view your typing statistic, please: Якщо ви хочете переглянути вашу статистику, будь ласка
 please.log.in: увійдіть
 please.register: зареєструйтеся
+
+Before you start: Перед тим, як розпочати
+Place your fingers as on picture below: Розмістіть пальці так, як зображено на картинці
+Show this tooltip before start: Показувати цю підказку перед початком
 
 #Courses page
 Change: Змініть
@@ -101,6 +105,16 @@ Settings: Налаштування
 Statistic for: Статистика для
 All tests: Всіх тестів
 minute test: хвилинний тест
+
+#Profile settings page
+Return to profile: Повернутися до профілю
+Save: Зберегти
+Interface language: Мова інтерфейсу
+Default language: Мова за замовчуванням
+Default keyboard: Тип клавіатури
+Show tooltips: Показувати підказки
+Yes: Так
+No: Ні
 
 #Premium plans page
 Select your subscription: Виберіть тип підписки

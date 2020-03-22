@@ -33,6 +33,10 @@ profileSettings:
 profilePlans:
     path: /profile/plans
     controller: App\Controller\ProfileController::plans
+
+profileAjaxDisableTooltips:
+    path: /profile/ajaxDisableTooltips
+    controller: App\Controller\ProfileController::ajaxDisableTooltips
 #--------------------api--------------------
 prepareText:
     path: /api/text/prepare

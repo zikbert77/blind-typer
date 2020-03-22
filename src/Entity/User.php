@@ -36,6 +36,8 @@ class User implements UserInterface
 
     private $defaultLanguage;
 
+    private $showTooltips;
+
     private $createdAt;
 
     private $updatedAt;
@@ -229,6 +231,18 @@ class User implements UserInterface
     public function setInterfaceLanguage(?Languages $interfaceLanguage): self
     {
         $this->interfaceLanguage = $interfaceLanguage;
+
+        return $this;
+    }
+
+    public function getShowTooltips(): ?int
+    {
+        return $this->showTooltips;
+    }
+
+    public function setShowTooltips(?int $showTooltips): self
+    {
+        $this->showTooltips = $showTooltips;
 
         return $this;
     }
