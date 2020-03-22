@@ -107,10 +107,35 @@
         </div>
     </div>
 
+    <div id="fingerPreviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close finger-preview-close">&times;</span>
+                <h2>{{ "Before you start"|trans }}</h2>
+            </div>
+            <div class="modal-body text-center">
+                <p>
+                    <b>{{ "Place your fingers as on picture below"|trans }}</b>
+                </p>
+                <img src="{{ asset('img/finger-position.jpg') }}" alt="">
+            </div>
+            <div class="content" style="text-align: right">
+                <label>
+                    {{ "Show this tooltip before start"|trans }}
+                    <input type="checkbox" name="disable-finger-preview" checked>
+                </label>
+            </div>
+            <hr>
+            <div class="modal-footer">
+                <button class="btn close finger-preview-close right">Ok</button>
+            </div>
+        </div>
+    </div>
+
     <div id="testStatModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close">&times;</span>
+                <span class="close test-stat-modal-close">&times;</span>
                 <h2>{{ "Your test result"|trans }}</h2>
             </div>
             <div class="modal-body">
@@ -140,7 +165,7 @@
             </div>
             <hr>
             <div class="modal-footer">
-                <button class="btn close right">Ok</button>
+                <button class="btn close test-stat-modal-clos right">Ok</button>
             </div>
         </div>
     </div>
@@ -171,12 +196,20 @@
             let $testLanguageBox = $("select#test-language");
             let $originalTextBox = $("#original-text");
 
+            let fingerPreviewModal = $("#fingerPreviewModal");
+            let fingerPreviewModalCloseSpan = $(".finger-preview-close");
+
             let testStatModal = $("#testStatModal");
-            let testStatModalCloseSpan = $(".close");
+            let testStatModalCloseSpan = $(".test-stat-modal-close");
 
             let btn = $("#myBtn");
             btn.click(function () {
                 showTestStatModal()
+            });
+
+            showFingerPreviewModal();
+            fingerPreviewModalCloseSpan.click(function () {
+                hideFingerPreviewModal();
             });
 
             testStatModalCloseSpan.click(function () {
@@ -408,6 +441,16 @@
 
             function stopTimer(interval) {
                 clearInterval(interval);
+            }
+
+            function showFingerPreviewModal() {
+                $("textarea#test-input").blur();
+                fingerPreviewModal.css("display", "block");
+            }
+
+            function hideFingerPreviewModal() {
+                fingerPreviewModal.css("display", "none");
+                focusOnTextarea()
             }
 
             function showTestStatModal() {
