@@ -183,6 +183,12 @@ table tr:nth-child(even) {
     background-color: #cee4f0;
 }
 
+.logo-img {
+    height: 16px;
+    margin: 2px 0 0;
+    padding: 0;
+}
+
 .dropdown {
     position: relative;
     top: 2px;
