@@ -184,8 +184,10 @@ table tr:nth-child(even) {
 }
 
 .logo-img {
+    position: relative;
     height: 16px;
-    margin: 2px 0 0;
+    top: 3px;
+    margin: 0;
     padding: 0;
 }
 
