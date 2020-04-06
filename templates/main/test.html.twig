@@ -148,20 +148,25 @@
                 <p>
                    <b>{{ "Typing accuracy"|trans }}:</b> <span id="modal-test-result-accuracy">100</span>%
                 </p>
-                {% if app.user %}
-                    <canvas id="lastStatChart" height="100"></canvas>
+                <p id="too-low-test-history" style="display: none">
+                    {{ "Keep going, progress statistic will appear after more tests will be passed"|trans }}.
+                </p>
+                <div class="stat">
+                    {% if app.user %}
+                        <canvas id="lastStatChart" height="100"></canvas>
 
-                    <span style="font-size: 14px;">
+                        <span style="font-size: 14px;">
                         {{ "View advanced statistic in the"|trans }} <a href="{{ path('profileIndex') }}" class="link">{{ "in.the.profile"|trans }}</a>.
                     </span>
-                {% else %}
-                    <p>
-                        {{ "If you want to view your typing statistic, please"|trans }}
-                        <a href="{{ path('app_login') }}" class="link">{{ "please.log.in"|trans }}</a> {{ "or"|trans }}
-                        <a href="{{ path('register') }}" class="link">{{ "please.register"|trans }}</a>
-                        .
-                    </p>
-                {% endif %}
+                    {% else %}
+                        <p>
+                            {{ "If you want to view your typing statistic, please"|trans }}
+                            <a href="{{ path('app_login') }}" class="link">{{ "please.log.in"|trans }}</a> {{ "or"|trans }}
+                            <a href="{{ path('register') }}" class="link">{{ "please.register"|trans }}</a>
+                            .
+                        </p>
+                    {% endif %}
+                </div>
             </div>
             <hr>
             <div class="modal-footer">
@@ -519,50 +524,55 @@
             }
 
             function buildLastUserTestHistoryChart(data) {
-                let ctx = document.getElementById('lastStatChart').getContext('2d');
-                let myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: data.datetime,
-                        datasets: [{
-                            label: '{{ "Words per minute"|trans }} (WPM)',
-                            data: data.wpm,
-                            backgroundColor: [
-                                'rgba(61, 163, 232, 0.1)',
-                            ],
-                            borderColor: [
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                                'rgba(61, 163, 232, 1)',
-                            ],
-                            borderWidth: 3
-                        }]
-                    },
-                    options: {
-                        tooltips: {
-                            mode: 'x-axis',
-                            intercept: true
-                        },
-                        hover: {
-                            mode: 'nearest',
-                            intersect: true
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
+                if (data.wpm.length <= 10) {
+                    $(".stat").hide();
+                    $("#too-low-test-history").show();
+                } else {
+                    let ctx = document.getElementById('lastStatChart').getContext('2d');
+                    let myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.datetime,
+                            datasets: [{
+                                label: '{{ "Words per minute"|trans }} (WPM)',
+                                data: data.wpm,
+                                backgroundColor: [
+                                    'rgba(61, 163, 232, 0.1)',
+                                ],
+                                borderColor: [
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                    'rgba(61, 163, 232, 1)',
+                                ],
+                                borderWidth: 3
                             }]
+                        },
+                        options: {
+                            tooltips: {
+                                mode: 'x-axis',
+                                intercept: true
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             function saveResult() {
