@@ -160,8 +160,8 @@
             let passedWords = 0;
             let mistakes = 0;
             let isTimerStarted = false;
-            let positionToScrollDown = 195 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
-            let positionToScrollUp = 132 + {% if app.user and app.user.isPremium %}0{% else %}169{% endif %};
+            let positionToScrollDown = 195 + {% if true or (app.user and app.user.isPremium) %}0{% else %}169{% endif %};
+            let positionToScrollUp = 132 + {% if true or (app.user and app.user.isPremium) %}0{% else %}169{% endif %};
             let scrollPx = 64;
             let globalTimerInterval;
             let $testTextDisplayBox = $("#test-text-display");

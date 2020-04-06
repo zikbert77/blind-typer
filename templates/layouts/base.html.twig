@@ -21,7 +21,7 @@
 <body>
 {% include 'layouts/top-menu.html.twig' %}
 
-{% if app.user and app.user.isPremium %}
+{% if true or (app.user and app.user.isPremium) %}
     <style>
         .ads-container {
             display: none !important;
