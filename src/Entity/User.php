@@ -16,6 +16,9 @@ class User implements UserInterface
     const IS_NOT_PREMIUM = 0;
     const IS_PREMIUM = 1;
 
+    const SHOW_TOOLTIPS_NO = 0;
+    const SHOW_TOOLTIPS_YES = 1;
+
     private $id;
 
     private $email;
@@ -242,7 +245,7 @@ class User implements UserInterface
 
     public function setShowTooltips(?int $showTooltips): self
     {
-        $this->showTooltips = $showTooltips;
+        $this->showTooltips = is_null($showTooltips) ? self::SHOW_TOOLTIPS_YES : $showTooltips;
 
         return $this;
     }

@@ -37,6 +37,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setCreatedAt(new \DateTime());
+            $user->setShowTooltips(User::SHOW_TOOLTIPS_YES);
             $user->setDefaultLanguage($entityManager->getRepository(Languages::class)->find(Languages::DEFAULT_LANGUAGE));
 
             $entityManager->persist($user);
