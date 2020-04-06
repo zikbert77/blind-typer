@@ -89,12 +89,14 @@
                 </p>
                 <img src="{{ asset('img/finger-position.jpg') }}" style="width: 100%" alt="">
             </div>
+            {% if app.user and app.user.showTooltips %}
             <div class="content" style="text-align: right">
                 <label>
                     {{ "Show this tooltip before start"|trans }}
                     <input type="checkbox" name="disable-finger-preview" checked>
                 </label>
             </div>
+            {% endif %}
             <hr>
             <div class="modal-footer">
                 <button class="btn close finger-preview-close right">Ok</button>
@@ -185,7 +187,7 @@
                 showTestStatModal()
             });
 
-            {% if app.user and app.user.showTooltips %}
+            {% if not app.user or (app.user and app.user.showTooltips) %}
                 showFingerPreviewModal();
             {% endif %}
             fingerPreviewModalCloseSpan.click(function () {
@@ -558,6 +560,13 @@
                     }
                 });
             }
+
+            $("input[name='disable-finger-preview']").change(function () {
+                let showTooltips = $(this).is(':checked');
+                $.post("{{ path('profileAjaxDisableTooltips') }}", {
+                    showTooltips: showTooltips
+                })
+            });
         })
     </script>
 {% endblock %}
