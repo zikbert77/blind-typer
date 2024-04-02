@@ -6,12 +6,14 @@ use App\Entity\Courses;
 use App\Entity\Languages;
 use App\Component\Keyboard;
 use App\Entity\TestsHistory;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MainController extends AbstractController
 {
+    /** @var User */
     private $user = null;
     
     public function __construct(TokenStorageInterface $tokenStorage)
