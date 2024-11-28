@@ -38,25 +38,95 @@
     <div class="content" style="text-align: center">
         <h1>Warning!</h1>
         <p>
-            This website is under construction, some bugs are possible. If you'll meet them, please <a
-                    href="https://t.me/zikbert77" target="_blank" class="link">contact us</a> immediately.
+            This website is currently under construction, and some bugs may be present.
+            If you encounter any issues, please  <a href="https://t.me/zikbert77" target="_blank" class="link">contact us</a> immediately.
         </p>
     </div>
 </div>
 {% endblock %}
 {% block two_rows_content_2 %}
+<style>
+    img.typer-placeholder {
+        max-width: 100%;
+        border-radius: 15px;
+    }
+</style>
 
 <div class="content">
-    <h1>Blind typer</h1>
-    <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blind typer is a service that allows you to improve your typing skill, increase speed and accuracy.
-        Take <a href="{{ path('test') }}" class="link">the tests</a> and <a href="{{ path('courses') }}" class="link">courses</a> to become an advanced in typing.
-        Warm up your fingers before start working. Be more productive!
-    </p>
+    <div class="text-center">
+        <h1>Welcome to Blind Typer</h1>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <h3>Unlock Your Potential with Touch Typing</h3>
+            <p>
+                Imagine typing with confidence, speed, and accuracy—all without looking at your keyboard.
+                Blind Typer is your ultimate tool for mastering touch typing, a skill that saves time, boosts productivity,
+                and enhances your digital communication.
+            </p>
+        </div>
+        <div class="col-4">
+            <img src="{{ asset('img/typer-placeholder.webp') }}" class="typer-placeholder" title="Learn to type without looking" alt="Learn to type without looking">
+        </div>
+    </div>
+
     <a href="{{ path('test') }}">
         <button class="btn">
-            Start typing <i class="fad fa-keyboard"></i>
+            Start typing now <i class="fad fa-keyboard"></i>
         </button>
     </a>
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Why Learn Touch Typing?</h3>
+            <p>In today’s fast-paced world, typing is an essential skill for work, study, and personal projects. Here’s why you should learn to type without looking at the keyboard:</p>
+            <ul>
+                <li><strong>Save Time</strong>: Stop hunting and pecking at keys. Touch typing dramatically increases your words per minute (WPM) so you can get more done in less time.</li>
+                <li><strong>Boost Accuracy</strong>: Reduce embarrassing typos and errors. Touch typing trains you to type accurately from muscle memory.</li>
+                <li><strong>Enhance Productivity</strong>: Focus on your ideas, not the keyboard. Type effortlessly while keeping your attention on the content you’re creating.</li>
+                <li><strong>Improve Ergonomics</strong>: Touch typing reduces unnecessary hand and neck movements, helping to prevent strain and discomfort.</li>
+                <li><strong>Stay Competitive</strong>: Typing fast and accurately is a must-have skill in any professional or academic setting. Don’t fall behind!</li>
+            </ul>
+        </div>
+    </div>
+
+{#    <h3>Advantages of Using Blind Typer</h3>#}
+{#    <p>We make learning touch typing simple, fun, and effective. Here’s what sets Blind Typer apart:</p>#}
+{#    <ul>#}
+{#        <li><strong>Interactive Lessons</strong>: Learn at your own pace with step-by-step guidance and engaging exercises designed to build your skills gradually.</li>#}
+{#        <li><strong>Real-Time Feedback</strong>: Receive instant feedback on your speed and accuracy, so you know exactly where to improve.</li>#}
+{#        <li><strong>Customizable Training</strong>: Whether you're a beginner or looking to refine your skills, Blind Typer adapts to your current level and goals.</li>#}
+{#        <li><strong>Track Your Progress</strong>: Monitor your improvement over time with detailed statistics on words per minute, accuracy, and more.</li>#}
+{#        <li><strong>Gamified Experience</strong>: Typing practice has never been this enjoyable. Play fun games that reinforce your skills while keeping you motivated.</li>#}
+{#        <li><strong>Accessible Anywhere</strong>: Practice anytime, anywhere on your computer, tablet, or smartphone. No special equipment required!</li>#}
+{#        <li><strong>Multilingual Support</strong>: Learn to type in multiple languages and keyboard layouts tailored to your needs.</li>#}
+{#    </ul>#}
+
+{#    <h3>Start Typing Smarter Today</h3>#}
+{#    <p>It’s time to level up your typing skills and unlock your full potential. Join thousands of users who have transformed their productivity with Blind Typer. Start your journey now and see the difference touch typing can make in your life!</p>#}
+
+{#    <hr>#}
+
+{#    <h3>Keywords for SEO Optimization</h3>#}
+{#    <ul>#}
+{#        <li>Touch typing lessons</li>#}
+{#        <li>Learn to type without looking</li>#}
+{#        <li>Improve typing speed</li>#}
+{#        <li>Typing practice online</li>#}
+{#        <li>Best typing app</li>#}
+{#        <li>How to type faster</li>#}
+{#        <li>Typing training for beginners</li>#}
+{#        <li>Multilingual typing practice</li>#}
+{#        <li>Boost typing accuracy</li>#}
+{#        <li>Ergonomic typing skills</li>#}
+{#    </ul>#}
+
+{#    <p>#}
+{#        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blind typer is a service that allows you to improve your typing skill, increase speed and accuracy.#}
+{#        Take <a href="{{ path('test') }}" class="link">the tests</a> and <a href="{{ path('courses') }}" class="link">courses</a> to become an advanced in typing.#}
+{#        Warm up your fingers before start working. Be more productive!#}
+{#    </p>#}
 </div>
 {% endblock %}
